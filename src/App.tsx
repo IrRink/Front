@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Main from "./views/Main/main";
 import Signin from "./views/login/signin";
 import Navber from "./components/navbar";
+import CreateAccount from "./views/login/createAccount";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/signin" element={<Signin />} />
+        <Route path="/createAccount" element={<CreateAccount />} />
       </Routes>
     </Router>
   );

@@ -63,7 +63,7 @@ function Signin() {
   return (
     <SigninfirstDiv>
       <Filter>
-        <div style={{ paddingTop: '10vh', margin: '0 auto', backgroundColor: 'white', width: '1000px', height: '600px' }}>
+        <div style={{ paddingTop: '10vh', margin: ' auto', backgroundColor: 'white', width: '1000px', height: '600px' }}>
           <h1>회원가입</h1>
           <form id="signupForm" method="POST" action="http://localhost:5500/process/adduser">
             <div>
@@ -84,7 +84,7 @@ function Signin() {
             </div>
             <button type="submit">가입하기</button>
           </form>
-          <button onClick={() => (window.location.href = 'index.html')}>로그인</button>
+          <a href="/createAccount">로그인</a>
         </div>
       </Filter>
     </SigninfirstDiv>
