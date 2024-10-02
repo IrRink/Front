@@ -1,5 +1,4 @@
-import styled, { createGlobalStyle } from "styled-components"; // createGlobalStyle 추가
-import React from "react";
+import styled from "styled-components"; // createGlobalStyle 추가
 
 const NavberMainDiv = styled.div`
   width: 250px;

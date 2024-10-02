@@ -62,7 +62,7 @@ function FirstMainPage() {
             color: "white",
             fontSize: "4vw",
             paddingTop: "30vh",
-          }}
+          }}s
           id="writtext"
         >
           knjh
