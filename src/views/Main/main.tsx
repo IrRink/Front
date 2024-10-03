@@ -1,5 +1,6 @@
 import Navber from "../../components/navbar";
 import Fistmainpage from "./firstpage";
+import Second from "./second";
 
 function Main() {
   return (
@@ -9,7 +10,10 @@ function Main() {
         <Fistmainpage />
       </div>
       <div></div>
-      <div style={{ marginLeft: "250px", height: "100vh" }} id="section1"></div>
+      <div style={{ marginLeft: "250px", height: "100vh" }} id="section1">
+
+        <Second />
+      </div>
     </>
   );
 }

@@ -53,7 +53,7 @@ function Navber() {
             <a href="/signin">🏡 Sign in</a>
           </li>
           <li>
-            <a href="#">🏡 Create</a>
+            <a href="/CreateAccount">🏡 Create</a>
           </li>
         </ul>
       </div>
