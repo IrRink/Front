@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 const SigninfirstDiv = styled.div`
   width: calc(100% - 250px);
@@ -18,8 +18,12 @@ const Filter = styled.div`
 `;
 
 function CreateAccount() {
+  const userIdInput = useRef<HTMLInputElement | null>(null);
+
   useEffect(() => {
-    const signupForm = document.getElementById("signupForm") as HTMLFormElement | null;
+    const signupForm = document.getElementById(
+      "signupForm"
+    ) as HTMLFormElement | null;
 
     if (!signupForm) return; // signupForm이 null이면 return으로 실행 중단
 
@@ -61,13 +65,26 @@ function CreateAccount() {
   }, []);
 
   const checkIdAvailability = async () => {
-    const userId = (document.getElementById("id") as HTMLInputElement).value;
+    // const userId = (document.getElementById("id") as HTMLInputElement).value;
+
+    // const a = userIdInput.current
+
+    const userId = userIdInput.current?.value;
+
+    // if (a === null) {
+    //   return;
+    // }
+
+    // const b = a?.value;
 
     if (userId) {
       try {
-        const response = await fetch(`http://localhost:5500/process/check-id?userId=${userId}`, {
-          method: "GET",
-        });
+        const response = await fetch(
+          `http://localhost:5500/process/check-id?userId=${userId}`,
+          {
+            method: "GET",
+          }
+        );
 
         const result = await response.json();
         document.getElementById("idCheckResult")!.innerText = result.message; // 결과 메시지 표시
@@ -75,14 +92,22 @@ function CreateAccount() {
         console.error("아이디 중복 확인 중 오류 발생:", error);
       }
     } else {
-      document.getElementById("idCheckResult")!.innerText = "아이디를 입력하세요.";
+      document.getElementById("idCheckResult")!.innerText =
+        "아이디를 입력하세요.";
     }
   };
 
   return (
     <SigninfirstDiv>
       <Filter>
-        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100vh",
+          }}
+        >
           <div
             style={{
               padding: "20px 40px",
@@ -92,11 +117,34 @@ function CreateAccount() {
               boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
             }}
           >
-            <h1 style={{ textAlign: "center", color: "#333", marginBottom: "20px" }}>회원가입</h1>
-            <form id="signupForm" method="POST" action="http://localhost:5500/process/adduser" style={{ textAlign: "center" }}>
+            <h1
+              style={{
+                textAlign: "center",
+                color: "#333",
+                marginBottom: "20px",
+              }}
+            >
+              회원가입
+            </h1>
+            <form
+              id="signupForm"
+              method="POST"
+              action="http://localhost:5500/process/adduser"
+              style={{ textAlign: "center" }}
+            >
               <div style={{ marginBottom: "15px" }}>
-                <label htmlFor="id" style={{ display: "block", marginBottom: "5px", color: "#555" }}>아이디:</label>
+                <label
+                  htmlFor="id"
+                  style={{
+                    display: "block",
+                    marginBottom: "5px",
+                    color: "#555",
+                  }}
+                >
+                  아이디:
+                </label>
                 <input
+                  ref={userIdInput}
                   id="id"
                   name="id"
                   required
@@ -108,20 +156,37 @@ function CreateAccount() {
                     fontSize: "14px",
                   }}
                 />
-                <button type="button" onClick={checkIdAvailability} style={{
-                  marginTop: "5px",
-                  padding: "5px 10px",
-                  backgroundColor: "#f0f0f0",
-                  border: "1px solid #ddd",
-                  borderRadius: "4px",
-                  cursor: "pointer",
-                }}>
+                <button
+                  type="button"
+                  onClick={checkIdAvailability}
+                  style={{
+                    marginTop: "5px",
+                    padding: "5px 10px",
+                    backgroundColor: "#f0f0f0",
+                    border: "1px solid #ddd",
+                    borderRadius: "4px",
+                    cursor: "pointer",
+                  }}
+                >
                   아이디 중복 확인
                 </button>
-                <div id="idCheckResult" style={{ marginTop: "5px", color: "#d9534f" }}></div> {/* 결과 메시지 */}
+                <div
+                  id="idCheckResult"
+                  style={{ marginTop: "5px", color: "#d9534f" }}
+                ></div>{" "}
+                {/* 결과 메시지 */}
               </div>
               <div style={{ marginBottom: "15px" }}>
-                <label htmlFor="name" style={{ display: "block", marginBottom: "5px", color: "#555" }}>이름:</label>
+                <label
+                  htmlFor="name"
+                  style={{
+                    display: "block",
+                    marginBottom: "5px",
+                    color: "#555",
+                  }}
+                >
+                  이름:
+                </label>
                 <input
                   type="text"
                   id="name"
@@ -137,7 +202,16 @@ function CreateAccount() {
                 />
               </div>
               <div style={{ marginBottom: "15px" }}>
-                <label htmlFor="age" style={{ display: "block", marginBottom: "5px", color: "#555" }}>나이:</label>
+                <label
+                  htmlFor="age"
+                  style={{
+                    display: "block",
+                    marginBottom: "5px",
+                    color: "#555",
+                  }}
+                >
+                  나이:
+                </label>
                 <input
                   type="number"
                   id="age"
@@ -153,7 +227,16 @@ function CreateAccount() {
                 />
               </div>
               <div style={{ marginBottom: "20px" }}>
-                <label htmlFor="password" style={{ display: "block", marginBottom: "5px", color: "#555" }}>비밀번호:</label>
+                <label
+                  htmlFor="password"
+                  style={{
+                    display: "block",
+                    marginBottom: "5px",
+                    color: "#555",
+                  }}
+                >
+                  비밀번호:
+                </label>
                 <input
                   type="password"
                   id="password"
@@ -168,19 +251,29 @@ function CreateAccount() {
                   }}
                 />
               </div>
-              <button type="submit" style={{
-                width: "100%",
-                padding: "12px",
-                backgroundColor: "#4CAF50",
-                color: "white",
-                border: "none",
-                borderRadius: "4px",
-                fontSize: "16px",
-                cursor: "pointer",
-              }}>가입하기</button>
+              <button
+                type="submit"
+                style={{
+                  width: "100%",
+                  padding: "12px",
+                  backgroundColor: "#4CAF50",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "4px",
+                  fontSize: "16px",
+                  cursor: "pointer",
+                }}
+              >
+                가입하기
+              </button>
             </form>
             <div style={{ textAlign: "center", marginTop: "20px" }}>
-              <a href="/signin" style={{ textDecoration: "none", fontSize: "14px" }}>이미 회원이신가요? 로그인하러 가기</a>
+              <a
+                href="/signin"
+                style={{ textDecoration: "none", fontSize: "14px" }}
+              >
+                이미 회원이신가요? 로그인하러 가기
+              </a>
             </div>
           </div>
         </div>

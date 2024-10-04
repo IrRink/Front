@@ -7,6 +7,7 @@ import Navber from "./components/navbar";
 import CreateAccount from "./views/login/createAccount";
 import Fourgongfour from "./views/404";
 import Adminsign from "./views/login/admin/adminsign";
+import Admincreate from "./views/login/admin/adminsignup";
 
 function App() {
   return (
@@ -17,7 +18,8 @@ function App() {
         <Route path="/*" element={<Fourgongfour />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/createAccount" element={<CreateAccount />} />
-        <Route path='adminsign' element={<Adminsign />}/>
+        <Route path="/adminsign" element={<Adminsign />} />
+        <Route path="/admincreate" element={<Admincreate />} />
       </Routes>
     </Router>
   );

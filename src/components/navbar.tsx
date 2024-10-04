@@ -23,29 +23,49 @@ const Profilimg = styled.img`
 
 const RainbowText = styled.p`
   @keyframes rainbow {
-    0% {color : red;}
-    15% {color : red;}
-    20% {color : orange;}
-    35% {color : orange;}
-    40% {color : yellow;}
-    55% {color : yellow;}
-    60% {color : green;}
-    75% {color : green;}
-    80% {color : blue;}
-    95% {color : purple;}
-    100% {color : red}
+    0% {
+      color: red;
+    }
+    15% {
+      color: red;
+    }
+    20% {
+      color: orange;
+    }
+    35% {
+      color: orange;
+    }
+    40% {
+      color: yellow;
+    }
+    55% {
+      color: yellow;
+    }
+    60% {
+      color: green;
+    }
+    75% {
+      color: green;
+    }
+    80% {
+      color: blue;
+    }
+    95% {
+      color: purple;
+    }
+    100% {
+      color: red;
+    }
   }
   font-size: 20px;
   animation: rainbow 8s linear infinite;
-`
+`;
 const MenuLi = styled.li`
   margin-left: 20px;
   margin-top: 15px;
-`
+`;
 function Navber() {
-
-
-  var name = localStorage.getItem('name')
+  var name = localStorage.getItem("name");
   return (
     <NavberMainDiv>
       <img
@@ -55,7 +75,7 @@ function Navber() {
       />
       <Profilimg src="irlinklogo.png" alt="" />
       <div style={{ height: "60px" }}></div>
-      <p style={{ textAlign: "center", marginTop: "10px" }}>{name}</p>  
+      <p style={{ textAlign: "center", marginTop: "10px" }}>{name}</p>
       <div>
         <ul
           style={{
@@ -78,12 +98,22 @@ function Navber() {
       <div
         style={{ borderBottom: "1px solid #d8d8d8", marginTop: "30px" }}
       ></div>
-      <ul style={{marginLeft : '30px', listStyleType : 'none', paddingTop : '20px'}}>
+      <ul
+        style={{
+          marginLeft: "30px",
+          listStyleType: "none",
+          paddingTop: "20px",
+        }}
+      >
         <li style={{}}>
-          <a href="#goRoot"><RainbowText>ROOT</RainbowText></a>
+          <a href="#goRoot">
+            <RainbowText>ROOT</RainbowText>
+          </a>
         </li>
         <MenuLi>
-          <a href="#section1"><p>introduce  &nbsp; ▶</p></a>
+          <a href="#section1">
+            <p>introduce &nbsp; ▶</p>
+          </a>
         </MenuLi>
       </ul>
     </NavberMainDiv>

@@ -52,7 +52,7 @@ const Signin: React.FC = () => {
       }
     } catch (error) {
       console.error('로그인 요청 중 오류 발생:', error);
-      setResultMessage('<p>로그인 요청 중 오류 발생</p>'); // Display error message
+      setResultMessage('로그인 요청 중 오류 발생'); // Display error message
     }
   };
 
@@ -115,12 +115,12 @@ const Signin: React.FC = () => {
             cursor: 'pointer' 
           }}>로그인</button>
         </form>
-        <div id="result" style={{ 
+        {resultMessage && <div id="result" style={{ 
           marginTop: '15px', 
           textAlign: 'center', 
           color: '#d9534f',
           display : 'none'
-        }} dangerouslySetInnerHTML={{ __html: resultMessage }} />
+        }}>{resultMessage}</div>}
         <button id="signupButton" onClick={() => window.location.href = '/createAccount'} style={{ 
           width: '100%', 
           padding: '12px', 
