@@ -4,7 +4,7 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior:smooth
 }
 
   @font-face {
@@ -17,3 +17,9 @@ html {
   body {
     font-family: 'TTLaundryGothicB', sans-serif;
   }
+
+a {
+  text-decoration: none;
+  color: gray;
+  font-family: none;
+}

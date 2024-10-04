@@ -21,8 +21,31 @@ const Profilimg = styled.img`
   border-radius: 25px;
 `;
 
-const name = "김민서";
+const RainbowText = styled.p`
+  @keyframes rainbow {
+    0% {color : red;}
+    15% {color : red;}
+    20% {color : orange;}
+    35% {color : orange;}
+    40% {color : yellow;}
+    55% {color : yellow;}
+    60% {color : green;}
+    75% {color : green;}
+    80% {color : blue;}
+    95% {color : purple;}
+    100% {color : red}
+  }
+  font-size: 20px;
+  animation: rainbow 8s linear infinite;
+`
+const MenuLi = styled.li`
+  margin-left: 20px;
+  margin-top: 15px;
+`
 function Navber() {
+
+
+  var name = localStorage.getItem('name')
   return (
     <NavberMainDiv>
       <img
@@ -32,7 +55,7 @@ function Navber() {
       />
       <Profilimg src="irlinklogo.png" alt="" />
       <div style={{ height: "60px" }}></div>
-      <p style={{ textAlign: "center", marginTop: "10px" }}>{name}</p>
+      <p style={{ textAlign: "center", marginTop: "10px" }}>{name}</p>  
       <div>
         <ul
           style={{
@@ -43,17 +66,11 @@ function Navber() {
             borderRadius: "100px",
             padding: "10px",
             boxShadow: "0px 0px 6px 4px #a5a5a56c",
-            marginTop: "40px",
+            marginTop: "20px",
           }}
         >
           <li>
             <a href="/">🏡 home</a>
-          </li>
-          <li>
-            <a href="/signin">🏡 Sign in</a>
-          </li>
-          <li>
-            <a href="/CreateAccount">🏡 Create</a>
           </li>
         </ul>
       </div>
@@ -61,10 +78,13 @@ function Navber() {
       <div
         style={{ borderBottom: "1px solid #d8d8d8", marginTop: "30px" }}
       ></div>
-      <ul>
-        <li>
-          <a href="#section1">section 1</a>
+      <ul style={{marginLeft : '30px', listStyleType : 'none', paddingTop : '20px'}}>
+        <li style={{}}>
+          <a href="#goRoot"><RainbowText>ROOT</RainbowText></a>
         </li>
+        <MenuLi>
+          <a href="#section1"><p>introduce  &nbsp; ▶</p></a>
+        </MenuLi>
       </ul>
     </NavberMainDiv>
   );

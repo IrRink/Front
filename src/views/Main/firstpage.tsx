@@ -65,7 +65,7 @@ function FirstMainPage() {
           }}
           id="writtext"
         >
-          knjh
+          .
         </h1>
         <div
           style={{
