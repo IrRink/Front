@@ -80,7 +80,7 @@ function Navber() {
         alt=""
         style={{ width: "100%", height: "95px", objectFit: "cover" }}
       />
-      <Profilimg src="irlinklogo.png" alt="" />
+      <Profilimg src="./irlinklogo.png" alt="" />
       <div style={{ height: "60px" }}></div>
       <p style={{ textAlign: "center", marginTop: "10px" }}>{name}</p>
       <div>

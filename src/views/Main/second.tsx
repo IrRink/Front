@@ -13,6 +13,7 @@ const Box = styled.div`
 
 function Second() {
   const [member, setMember] = useState(0);
+  const [date, newDate] = useState(0);
   async function info() {
     const response = await fetch("http://localhost:5500/process/adminAndUserCount");
     const data = await response.json();
@@ -21,6 +22,7 @@ function Second() {
     setMember(num);
 
     console.log(data.admin_date.split('T')[0].split('-'))
+    newDate(data.admin_date.split('T')[0])
     let today=new Date();
     var nowyear: number = today.getFullYear();
     var nowmonth: number = parseInt(('0' + (today.getMonth() + 1)).slice(-2),10);
@@ -33,7 +35,7 @@ function Second() {
     var usuallyday: number = parseInt(data.admin_date.split('T')[0].split('-')[2], 10);
 
     var getyear = (nowyear - usuallyYear)*365;
-    var getmonth = (nowmonth - usuallyMonth)*31
+    var getmonth = (nowmonth - usuallyMonth)*31 //?????????????????
     var getday = usuallyday - nowday
 
     console.log(usuallyYear, usuallyMonth, usuallyday)
@@ -106,7 +108,11 @@ function Second() {
               }}
             >
               블로그 운영
+              <h2 style={{textAlign : 'center', marginTop : '15px'}}>
+              {date}
+              </h2>
             </Box>
+
           </div>
         </div>
       </div>

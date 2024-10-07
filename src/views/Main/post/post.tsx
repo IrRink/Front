@@ -77,25 +77,30 @@ function Post() {
       ];
 
   return (
-    <div style={{marginTop : '30px'}}>
-    <ul style={{margin : '0 auto'}}>
-      {data.map((item) => (
-        <li key={item.id} style={{
-            listStyleType : 'none',
-            marginBottom : '50px',
-            // boxShadow : '0px 15px 4px 2px rgba(180, 180, 180, 0.24)',
-            borderBottom : '1px solid  rgb(128, 128, 128)',
-            borderRadius : '5px',
-            width : '90%'         
-        }}>
-          <h2>{item.title}</h2>
-          <h3>{item.subtitle}</h3>
-          <p style={{textAlign : 'right'}}>작성자: {item.author}</p>
-          <p style={{textAlign : 'right'}}>날짜: {item.date}</p>
-        </li>
-      ))}
+<div style={{ marginTop: '30px' }}>
+    <ul style={{
+        margin: '0 auto',
+        padding: '0', // 패딩 제거
+        width: '80%', // 너비를 설정
+    }}>
+        {data.map((item) => (
+            <li key={item.id} style={{
+                listStyleType: 'none',
+                marginBottom: '50px',
+                borderBottom: '1px solid rgb(128, 128, 128)',
+                borderRadius: '5px',
+                width: '100%', // li가 ul의 너비에 맞춰지도록 설정
+                padding: '10px 0', // 상하 여백 추가
+            }}>
+                <h2>{item.title}</h2>
+                <h3>{item.subtitle}</h3>
+                <p style={{ textAlign: 'right' }}>작성자: {item.author}</p>
+                <p style={{ textAlign: 'right' }}>날짜: {item.date}</p>
+            </li>
+        ))}
     </ul>
-  </div>
+</div>
+
   );
 }
 
