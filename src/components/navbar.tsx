@@ -64,6 +64,13 @@ const MenuLi = styled.li`
   margin-left: 20px;
   margin-top: 15px;
 `;
+
+const SideAndText = styled.p `
+  border-left : 1.5px solid #414141;
+  border-radius : 3px;
+  padding-left : 20px;
+  margin-bottom: 20px;
+`
 function Navber() {
   var name = localStorage.getItem("name");
   return (
@@ -86,7 +93,7 @@ function Navber() {
             borderRadius: "100px",
             padding: "10px",
             boxShadow: "0px 0px 6px 4px #a5a5a56c",
-            marginTop: "20px",
+            marginTop: "20px"
           }}
         >
           <li>
@@ -105,14 +112,17 @@ function Navber() {
           paddingTop: "20px",
         }}
       >
-        <li style={{}}>
+        <li>
           <a href="#goRoot">
             <RainbowText>ROOT</RainbowText>
           </a>
         </li>
-        <MenuLi>
+        <MenuLi style={{}}>
           <a href="#section1">
-            <p>introduce &nbsp; ▶</p>
+            <SideAndText>introduce ▶</SideAndText>
+          </a>
+          <a href="#thrid">
+            <SideAndText>Post ▶</SideAndText>
           </a>
         </MenuLi>
       </ul>

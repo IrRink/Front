@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const Box = styled.div`
   margin: 0 auto;
@@ -10,26 +10,67 @@ const Box = styled.div`
   border-radius: 15px;
 `;
 
+
 function Second() {
+  const [member, setMember] = useState(0);
   async function info() {
-    const response = await fetch("http://localhost:5500/process/admininfo");
+    const response = await fetch("http://localhost:5500/process/adminAndUserCount");
     const data = await response.json();
-    console.log(data[0]);
+    console.log(data.userCount)
+    const num = Number(data.userCount); 
+    setMember(num);
+
+    console.log(data.admin_date.split('T')[0].split('-'))
+    let today=new Date();
+    var nowyear: number = today.getFullYear();
+    var nowmonth: number = parseInt(('0' + (today.getMonth() + 1)).slice(-2),10);
+    var nowday: number = parseInt(('0' + today.getDate()).slice(-2), 10);
+
+
+    // 딱봐도 타입 오류날 것 같은곳에 타입 지정
+    var usuallyYear: number = parseInt(data.admin_date.split('T')[0].split('-')[0], 10);
+    var usuallyMonth: number = parseInt(data.admin_date.split('T')[0].split('-')[1], 10);
+    var usuallyday: number = parseInt(data.admin_date.split('T')[0].split('-')[2], 10);
+
+    var getyear = (nowyear - usuallyYear)*365;
+    var getmonth = (nowmonth - usuallyMonth)*31
+    var getday = usuallyday - nowday
+
+    console.log(usuallyYear, usuallyMonth, usuallyday)
+
   }
 
-  info();
-
-  const people = 1200;
   useEffect(() => {
-    const box1 = document.getElementById("box1");
-    if (box1) {
+    info();
+  }, []);
+  
+
+
+  const box1Ref = useRef<HTMLHeadingElement>(null);
+  console.log('member', member)
+
+  const people = member;
+  
+  const counting = () => {
+
       for (let i = 0; i <= people; i++) {
         setTimeout(() => {
-          box1.innerText = i + "명";
+          if (box1Ref.current) {
+            box1Ref.current.innerText = i.toString();
+          }
         }, i * 10);
+      } 
+  };
+  
+  let hasScrolled = false; // 실행 여부를 확인할 변수
+
+  window.addEventListener('scroll', function() {
+      if (window.scrollY > 300 && !hasScrolled) {
+          hasScrolled = true; // 이미 실행된 경우를 표시
+          counting();
       }
-    }
-  }, []);
+  });
+  
 
   return (
     <div style={{ display: "flex" }}>
@@ -41,8 +82,7 @@ function Second() {
             }}
           >
             총 회원수
-            <h1 id="box1" style={{ textAlign: "center" }}>
-              sad
+            <h1 id="box1" style={{ textAlign: "center" }} ref={box1Ref}>
             </h1>
           </Box>
           <div style={{ display: "flex", marginTop: "30px" }}>

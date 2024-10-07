@@ -5,7 +5,7 @@ import Main from "./views/Main/main";
 import Signin from "./views/login/signin";
 import Navber from "./components/navbar";
 import CreateAccount from "./views/login/createAccount";
-import Fourgongfour from "./views/404";
+import NotFound from "./views/NotFound";
 import Adminsign from "./views/login/admin/adminsign";
 import Admincreate from "./views/login/admin/adminsignup";
 
@@ -15,7 +15,7 @@ function App() {
       <Navber />
       <Routes>
         <Route path="/" element={<Main />} />
-        <Route path="/*" element={<Fourgongfour />} />
+        <Route path="/*" element={<NotFound />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/createAccount" element={<CreateAccount />} />
         <Route path="/adminsign" element={<Adminsign />} />

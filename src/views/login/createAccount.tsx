@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { useEffect, useRef } from "react";
+import { useRef, useState } from "react";
 
-const SigninfirstDiv = styled.div`
+const SigninFirstDiv = styled.div`
   width: calc(100% - 250px);
   height: 100vh;
   background-image: url("image1.jpg");
@@ -17,88 +17,85 @@ const Filter = styled.div`
   background-color: rgba(0, 2, 18, 0.568);
 `;
 
-function CreateAccount() {
-  const userIdInput = useRef<HTMLInputElement | null>(null);
+const LoginForm = styled.form`
+  text-align: center;
+`;
 
-  useEffect(() => {
-    const signupForm = document.getElementById(
-      "signupForm"
-    ) as HTMLFormElement | null;
+const Input = styled.input`
+  width: 100%;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  margin-bottom: 15px;
+`;
 
-    if (!signupForm) return; // signupForm이 null이면 return으로 실행 중단
+const Button = styled.button`
+  width: 100%;
+  padding: 12px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+`;
 
-    const handleFormSubmit = (event: Event) => {
-      event.preventDefault(); // 기본 제출 동작 방지
+const Result = styled.div`
+  margin-top: 10px;
+  color: #d9534f;
+`;
 
-      const formData = new FormData(signupForm);
-      const data = Object.fromEntries(formData.entries());
+function Login() {
+  const userIdRef = useRef<HTMLInputElement | null>(null);
+  const passwordRef = useRef<HTMLInputElement | null>(null);
+  const adminCheckboxRef = useRef<HTMLInputElement | null>(null);
+  const [resultMessage, setResultMessage] = useState<string>("");
 
-      // 서버에 데이터 전송
-      fetch(signupForm.action, {
-        method: signupForm.method,
+  const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const userId = userIdRef.current?.value;
+    const password = passwordRef.current?.value;
+    const isAdmin = adminCheckboxRef.current?.checked;
+
+    if (!userId || !password) {
+      setResultMessage("사용자 ID와 비밀번호를 입력하세요.");
+      return;
+    }
+
+    const loginUrl = isAdmin
+      ? "http://localhost:5500/process/login/admin"
+      : "http://localhost:5500/process/login";
+
+    const formData = new URLSearchParams();
+    formData.append("userId", userId);
+    formData.append("password", password);
+
+    try {
+      const response = await fetch(loginUrl, {
+        method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded",
         },
-        body: JSON.stringify(data),
-      })
-        .then((response) => {
-          if (response.ok) {
-            return response.text();
-          }
-          throw new Error("회원가입 실패");
-        })
-        .then((data) => {
-          alert(data); // 서버로부터 받은 메시지 표시
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-          alert("회원가입 중 오류 발생");
-        });
-    };
+        body: formData.toString(),
+      });
 
-    signupForm.addEventListener("submit", handleFormSubmit);
-
-    // 컴포넌트가 언마운트되면 이벤트 리스너 제거
-    return () => {
-      signupForm.removeEventListener("submit", handleFormSubmit);
-    };
-  }, []);
-
-  const checkIdAvailability = async () => {
-    // const userId = (document.getElementById("id") as HTMLInputElement).value;
-
-    // const a = userIdInput.current
-
-    const userId = userIdInput.current?.value;
-
-    // if (a === null) {
-    //   return;
-    // }
-
-    // const b = a?.value;
-
-    if (userId) {
-      try {
-        const response = await fetch(
-          `http://localhost:5500/process/check-id?userId=${userId}`,
-          {
-            method: "GET",
-          }
-        );
-
-        const result = await response.json();
-        document.getElementById("idCheckResult")!.innerText = result.message; // 결과 메시지 표시
-      } catch (error) {
-        console.error("아이디 중복 확인 중 오류 발생:", error);
+      if (response.ok) {
+        const result = await response.text();
+        setResultMessage(result);
+      } else {
+        const error = await response.text();
+        setResultMessage(error);
       }
-    } else {
-      document.getElementById("idCheckResult")!.innerText =
-        "아이디를 입력하세요.";
+    } catch (error) {
+      console.error("로그인 요청 중 오류 발생:", error);
+      setResultMessage("로그인 요청 중 오류 발생");
     }
   };
 
   return (
-    <SigninfirstDiv>
+    <SigninFirstDiv>
       <Filter>
         <div
           style={{
@@ -112,174 +109,51 @@ function CreateAccount() {
             style={{
               padding: "20px 40px",
               backgroundColor: "#ffffff",
-              width: "600px",
+              width: "400px",
               borderRadius: "8px",
               boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
             }}
           >
-            <h1
-              style={{
-                textAlign: "center",
-                color: "#333",
-                marginBottom: "20px",
-              }}
-            >
-              회원가입
+            <h1 style={{ textAlign: "center", color: "#333", marginBottom: "20px" }}>
+              로그인
             </h1>
-            <form
-              id="signupForm"
-              method="POST"
-              action="http://localhost:5500/process/adduser"
-              style={{ textAlign: "center" }}
-            >
-              <div style={{ marginBottom: "15px" }}>
-                <label
-                  htmlFor="id"
-                  style={{
-                    display: "block",
-                    marginBottom: "5px",
-                    color: "#555",
-                  }}
-                >
-                  아이디:
-                </label>
-                <input
-                  ref={userIdInput}
-                  id="id"
-                  name="id"
-                  required
-                  style={{
-                    width: "100%",
-                    padding: "10px",
-                    borderRadius: "4px",
-                    border: "1px solid #ddd",
-                    fontSize: "14px",
-                  }}
-                />
-                <button
-                  type="button"
-                  onClick={checkIdAvailability}
-                  style={{
-                    marginTop: "5px",
-                    padding: "5px 10px",
-                    backgroundColor: "#f0f0f0",
-                    border: "1px solid #ddd",
-                    borderRadius: "4px",
-                    cursor: "pointer",
-                  }}
-                >
-                  아이디 중복 확인
-                </button>
-                <div
-                  id="idCheckResult"
-                  style={{ marginTop: "5px", color: "#d9534f" }}
-                ></div>{" "}
-                {/* 결과 메시지 */}
-              </div>
-              <div style={{ marginBottom: "15px" }}>
-                <label
-                  htmlFor="name"
-                  style={{
-                    display: "block",
-                    marginBottom: "5px",
-                    color: "#555",
-                  }}
-                >
-                  이름:
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  required
-                  style={{
-                    width: "100%",
-                    padding: "10px",
-                    borderRadius: "4px",
-                    border: "1px solid #ddd",
-                    fontSize: "14px",
-                  }}
-                />
-              </div>
-              <div style={{ marginBottom: "15px" }}>
-                <label
-                  htmlFor="age"
-                  style={{
-                    display: "block",
-                    marginBottom: "5px",
-                    color: "#555",
-                  }}
-                >
-                  나이:
-                </label>
-                <input
-                  type="number"
-                  id="age"
-                  name="age"
-                  required
-                  style={{
-                    width: "100%",
-                    padding: "10px",
-                    borderRadius: "4px",
-                    border: "1px solid #ddd",
-                    fontSize: "14px",
-                  }}
-                />
-              </div>
-              <div style={{ marginBottom: "20px" }}>
-                <label
-                  htmlFor="password"
-                  style={{
-                    display: "block",
-                    marginBottom: "5px",
-                    color: "#555",
-                  }}
-                >
-                  비밀번호:
-                </label>
-                <input
-                  type="password"
-                  id="password"
-                  name="password"
-                  required
-                  style={{
-                    width: "100%",
-                    padding: "10px",
-                    borderRadius: "4px",
-                    border: "1px solid #ddd",
-                    fontSize: "14px",
-                  }}
-                />
-              </div>
-              <button
-                type="submit"
-                style={{
-                  width: "100%",
-                  padding: "12px",
-                  backgroundColor: "#4CAF50",
-                  color: "white",
-                  border: "none",
-                  borderRadius: "4px",
-                  fontSize: "16px",
-                  cursor: "pointer",
-                }}
-              >
-                가입하기
-              </button>
-            </form>
+            <LoginForm id="loginForm" onSubmit={handleFormSubmit}>
+              <Input
+                type="text"
+                ref={userIdRef}
+                name="userId"
+                placeholder="사용자 ID"
+                required
+                autoComplete="username"
+              />
+              <Input
+                type="password"
+                ref={passwordRef}
+                name="password"
+                placeholder="비밀번호"
+                required
+                autoComplete="current-password"
+              />
+              <label>
+                <input type="checkbox" ref={adminCheckboxRef} id="adminCheckbox" />
+                관리자 로그인
+              </label>
+              <Button type="submit">로그인</Button>
+            </LoginForm>
+            {resultMessage && <Result id="result">{resultMessage}</Result>}
             <div style={{ textAlign: "center", marginTop: "20px" }}>
-              <a
-                href="/signin"
+              <button
+                onClick={() => (window.location.href = "/signup")}
                 style={{ textDecoration: "none", fontSize: "14px" }}
               >
-                이미 회원이신가요? 로그인하러 가기
-              </a>
+                회원가입
+              </button>
             </div>
           </div>
         </div>
       </Filter>
-    </SigninfirstDiv>
+    </SigninFirstDiv>
   );
 }
 
-export default CreateAccount;
+export default Login;

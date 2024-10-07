@@ -1,6 +1,6 @@
-import styled, { createGlobalStyle } from "styled-components";
+import styled from "styled-components";
 
-function Fourgongfour() {
+function NotFound() {
   const FirstMainDiv = styled.div`
     width: calc(100% - 250px);
     height: 100vh;
@@ -9,6 +9,16 @@ function Fourgongfour() {
     background-position: center;
     background-repeat: no-repeat;
     margin-left: 250px;
+  `;
+
+  const Button = styled.button`
+    background-color: rgba(255, 255, 255, 0);
+    border: 1px solid red;
+    font-size: 20px;
+    font-weight: 700;
+    padding: 15px;
+    border-radius: 100px;
+    margin-top: 60px;
   `;
 
   return (
@@ -35,20 +45,9 @@ function Fourgongfour() {
             >
               권한이 없거나 존재하지 않는 페이지입니다.
               <br />
-              <button
-                style={{
-                  backgroundColor: " rgba(255, 255, 255, 0)",
-                  border: "1px solid red",
-                  fontSize: "20px",
-                  fontWeight: "700",
-                  padding: "15px",
-                  borderRadius: "100px",
-                  marginTop: "60px",
-                }}
-                onClick={() => (window.location.href = "/")}
-              >
+              <Button onClick={() => (window.location.href = "/")}>
                 돌아가기
-              </button>
+              </Button>
             </h1>
           </div>
         </div>
@@ -57,4 +56,4 @@ function Fourgongfour() {
   );
 }
 
-export default Fourgongfour;
+export default NotFound;

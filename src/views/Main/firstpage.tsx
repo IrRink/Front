@@ -1,19 +1,6 @@
-import styled, { createGlobalStyle } from "styled-components";
-import React, { useCallback, useEffect } from "react";
+import styled  from "styled-components";
+import  { useCallback, useRef  } from "react";
 
-// 글로벌 스타일 정의
-const GlobalStyle = createGlobalStyle`
-  @font-face {
-    font-family: 'TTLaundryGothicB';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2403-2@1.0/TTLaundryGothicB.woff2') format('woff2');
-    font-weight: 700;
-    font-style: normal;
-  }
-
-  body {
-    font-family: 'TTLaundryGothicB', sans-serif;
-  }
-`;
 
 const FirstMainDiv = styled.div`
   width: calc(100% - 250px);
@@ -31,15 +18,24 @@ const Filter = styled.div`
   background-color: rgba(0, 2, 18, 0.568);
 `;
 
+const Down = styled.h2`
+              margin: 50px auto;
+            text-align: center;
+            border: 1px solid white;
+            width: 30px;
+            padding: 20px;
+            border-radius: 50%;
+            color: white;
+`
+
 function FirstMainPage() {
-  const list = ["Math", "Science", "english", "Korean", "Social"];
+  const writtext = useRef<HTMLSpanElement | null>(null);
+  const list = [" Math", " Science", " english", " Korean", " Social"];
   let num = 0;
 
   const running = useCallback(() => {
-    const writtextElement = document.getElementById("writtext");
-    if (writtextElement) {
-      writtextElement.innerHTML = `Hello World !<br />Let’s Get it <span style="color: rgb(255, 201, 64);">${list[num]}</span>`;
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (writtext.current) {
+      writtext.current.innerText = list[num];
       num += 1;
       if (num > 4) {
         num = 0;
@@ -48,14 +44,11 @@ function FirstMainPage() {
     setTimeout(running, 2000);
   }, []);
 
-  useEffect(() => {
-    running();
-  }, [running]);
+  running();
 
   return (
     <FirstMainDiv>
       <Filter>
-        <GlobalStyle />
         <h1
           style={{
             textAlign: "center",
@@ -63,9 +56,11 @@ function FirstMainPage() {
             fontSize: "4vw",
             paddingTop: "30vh",
           }}
-          id="writtext"
         >
-          .
+          Hello World !<br />Let’s Get it 
+          <span ref={writtext} style={{ color : 'rgb(255, 201, 64)'}}>
+          &nbsp;history
+          </span>
         </h1>
         <div
           style={{
@@ -77,22 +72,12 @@ function FirstMainPage() {
         <h2 style={{ color: "white", textAlign: "center" }}>
           안녕 세계! 나에게 프로그래밍 세상을 보여줘서 고마워
         </h2>
-        <h2
-          style={{
-            margin: "50px auto",
-            textAlign: "center",
-            border: "1px solid white",
-            width: "30px",
-            padding: "20px",
-            borderRadius: "50%",
-            color: "white",
-          }}
-        >
+        <Down>
           v
-        </h2>
+        </Down>
       </Filter>
     </FirstMainDiv>
   );
 }
 
-export default FirstMainPage; // Exporting the component
+export default FirstMainPage;
