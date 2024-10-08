@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
+// Styled components for maintaining the design
 const FirstMainDiv = styled.div`
   width: calc(100% - 250px);
   height: 100vh;
@@ -27,58 +28,72 @@ const Filter = styled.div`
   height: 100%;
   background-color: rgba(0, 2, 18, 0.568);
 `;
-function Admincreate() {
-  const [id, setId] = useState("");
+
+function Signup() {
+  const [userId, setUserId] = useState("");
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [password, setPassword] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [idCheckResult, setIdCheckResult] = useState<string | null>(null);
 
-  // const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-  //     event.preventDefault(); // Prevent the default form submission
-
-  //     const data = { id, name, age, password };
-
-  //     try {
-  //         const response = await fetch('http://localhost:5500/process/addadmin', {
-  //             method: 'POST',
-  //             headers: {
-  //                 'Content-Type': 'application/json',
-  //             },
-  //             body: JSON.stringify(data),
-  //         });
-
-  //         if (response.ok) {
-  //             const result = await response.text(); // or response.json() if you send JSON back
-  //             alert(result); // Show success message
-  //         } else {
-  //             const errorMessage = await response.text();
-  //             throw new Error(errorMessage); // Handle server errors
-  //         }
-  //     } catch (error) {
-  //         console.error('Error:', error);
-  //     }
-  // };
-  const handleSubmit = async () => {
-    const data = { id, name, age, password };
+  // 아이디 중복 체크 함수
+  const handleCheckId = async () => {
+    if (!userId) {
+      setIdCheckResult("아이디를 입력해주세요.");
+      return;
+    }
 
     try {
-      const response = await fetch("http://localhost:5500/process/addadmin", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+      const response = await fetch(`http://localhost:5500/process/checkid/${userId}`);
+      const result = await response.json();
 
       if (response.ok) {
-        const result = await response.text(); // or response.json() if you send JSON back
-        alert(result); // Show success message
+        setIdCheckResult("사용 가능한 아이디입니다.");
       } else {
-        const errorMessage = await response.text();
-        throw new Error(errorMessage); // Handle server errors
+        setIdCheckResult("이미 사용 중인 아이디입니다.");
       }
     } catch (error) {
-      console.error("Error:", error);
+      console.error("아이디 중복 체크 중 오류 발생:", error);
+      setIdCheckResult("아이디 중복 체크 오류 발생.");
+    }
+  };
+
+  // 회원가입 제출 함수
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const data = new URLSearchParams({
+      userId,
+      name,
+      age,
+      password,
+    }).toString();
+
+    // 관리자 여부에 따라 URL 결정
+    const signupUrl = isAdmin
+      ? "http://localhost:5500/process/adduseroradmin"
+      : "http://localhost:5500/process/adduseroruser";
+
+    try {
+      const response = await fetch(signupUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: data,
+      });
+
+      const result = await response.text();
+      if (response.ok) {
+        // alert(result); // 성공 메시지
+        window.location.href = '/signin'
+      } else {
+        alert("회원가입 실패: " + result); // 실패 메시지
+      }
+    } catch (error) {
+      console.error("회원가입 요청 중 오류 발생:", error);
+      alert("회원가입 요청 중 오류가 발생했습니다.");
     }
   };
 
@@ -96,17 +111,34 @@ function Admincreate() {
             borderRadius: "15px",
           }}
         >
-          <h1 style={{ marginBottom: "30px" }}>관리자 회원가입</h1>
+          <h1 style={{ marginBottom: "30px" }}>회원가입</h1>
           <form id="signupForm" onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="id">아이디:</label> <br />
+              <label htmlFor="userId">아이디:</label> <br />
               <Input
                 type="text"
-                id="id"
-                value={id}
-                onChange={(e) => setId(e.target.value)}
+                id="userId"
+                value={userId}
+                onChange={(e) => setUserId(e.target.value)}
                 required
               />
+              <button type="button" onClick={handleCheckId} style={{backgroundColor : 'white', border : '1px solid gray', padding : '5px', borderRadius : '15px'}}>
+                아이디 중복 체크
+              </button>
+              <div>
+                {idCheckResult && (
+                  <span
+                    style={{
+                      color:
+                        idCheckResult === "사용 가능한 아이디입니다."
+                          ? "green"
+                          : "red",
+                    }}
+                  >
+                    {idCheckResult}
+                  </span>
+                )}
+              </div>
             </div>
             <div>
               <label htmlFor="name">이름:</label>
@@ -141,17 +173,18 @@ function Admincreate() {
                 required
               />
             </div>
-            {/* <button type="submit" style={{
-                    backgroundColor : '#007bff',
-                    color : 'white',
-                    border : 'none',
-                    padding : '10px',
-                    fontWeight : '600',
-                    width : '60%',
-                    borderRadius : '10px'
-                }}>가입하기</button> */}
+            <div>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={isAdmin}
+                  onChange={(e) => setIsAdmin(e.target.checked)}
+                />
+                관리자 추가
+              </label>
+            </div>
             <button
-              type="button"
+              type="submit"
               style={{
                 backgroundColor: "#007bff",
                 color: "white",
@@ -161,7 +194,6 @@ function Admincreate() {
                 width: "60%",
                 borderRadius: "10px",
               }}
-              onClick={handleSubmit}
             >
               가입하기
             </button>
@@ -177,9 +209,9 @@ function Admincreate() {
               borderRadius: "10px",
               cursor: "pointer",
             }}
-            onClick={() => (window.location.href = "/adminsign")}
-          >
-            이미 관리자 이신가요? 관리자 로그인
+            onClick={() => (window.location.href = "/signin")}
+          > 
+            이미 계정이 있으신가요? 로그인
           </button>
         </div>
       </Filter>
@@ -187,4 +219,4 @@ function Admincreate() {
   );
 }
 
-export default Admincreate;
+export default Signup;

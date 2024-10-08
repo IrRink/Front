@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
+// Styled components for design
 const FirstMainDiv = styled.div`
   width: calc(100% - 250px);
   height: 100vh;
@@ -28,43 +29,58 @@ const Filter = styled.div`
   background-color: rgba(0, 2, 18, 0.568);
 `;
 
+// ResultMessage를 위한 styled-components에서 props를 처리하는 방법 수정
+interface ResultMessageProps {
+  success: boolean;
+}
+
+const ResultMessage = styled.div<ResultMessageProps>`
+  margin-top: 10px;
+  font-size: 14px;
+  color: ${(props) => (props.success ? "green" : "red")};
+`;
+
 function Adminsign() {
-  const [id, setId] = useState("");
+  const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
-  const [result, setResult] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [result, setResult] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const formData = new URLSearchParams();
-    formData.append("id", id);
+    formData.append("userId", userId);
     formData.append("password", password);
 
-    try {
-      const response = await fetch(
-        "http://localhost:5500/process/admin/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          body: formData.toString(),
-        }
-      );
+    const loginUrl = isAdmin
+      ? "http://localhost:5500/process/login/admin"
+      : "http://localhost:5500/process/login";
 
+    try {
+      const response = await fetch(loginUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: formData.toString(),
+      });
+
+      var resultText = await response.text();
+      console.log(resultText)
+      setSuccess(response.ok);
+      setResult(resultText);
+      resultText = resultText.replace(/"/g, '');
       if (response.ok) {
-        const resultText = await response.text();
-        setResult(resultText);
-        console.log(resultText);
-        localStorage.setItem("name", resultText);
-        console.log(result);
+        setSuccess(response.ok);
+        localStorage.setItem('userName', resultText);
         window.location.href = "../";
-      } else {
-        const errorText = await response.text();
-        setResult(errorText);
       }
     } catch (error) {
       console.error("로그인 요청 중 오류 발생:", error);
+      setSuccess(false);
+      setResult("로그인 요청 중 오류가 발생했습니다.");
     }
   };
 
@@ -82,20 +98,17 @@ function Adminsign() {
             borderRadius: "15px",
           }}
         >
-          <h1 style={{ marginBottom: "30px" }}>관리자 로그인</h1>
+          <h1 style={{ marginBottom: "30px" }}>로그인</h1>
           <form id="loginForm" onSubmit={handleSubmit}>
-            <label htmlFor="id">아이디:</label>
-            <br />
             <Input
               type="text"
-              name="id"
-              placeholder="아이디"
-              value={id}
-              onChange={(e) => setId(e.target.value)}
+              name="userId"
+              placeholder="사용자 ID"
+              value={userId}
+              onChange={(e) => setUserId(e.target.value)}
               required
+              autoComplete="username"
             />
-            <br />
-            <label htmlFor="id">비밀번호:</label>
             <br />
             <Input
               type="password"
@@ -104,7 +117,17 @@ function Adminsign() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              autoComplete="current-password"
             />
+            <br />
+            <label>
+              <input
+                type="checkbox"
+                checked={isAdmin}
+                onChange={(e) => setIsAdmin(e.target.checked)}
+              />
+              관리자 로그인
+            </label>
             <br />
             <button
               type="submit"
@@ -116,11 +139,18 @@ function Adminsign() {
                 fontWeight: "600",
                 width: "60%",
                 borderRadius: "10px",
+                marginTop: "15px",
               }}
             >
               로그인
             </button>
           </form>
+
+          {result && (
+            <ResultMessage success={success}>
+              {result}
+            </ResultMessage>
+          )}
 
           <button
             id="signupButton"
@@ -133,26 +163,11 @@ function Adminsign() {
               width: "60%",
               borderRadius: "10px",
               cursor: "pointer",
+              marginTop: "15px",
             }}
-            onClick={() => (window.location.href = "/admincreate")}
+            onClick={() => (window.location.href = "/createAccount")}
           >
-            관리자가 아니신가요? 회원가입 하러 가기
-          </button>
-          <button
-            id="signupButton"
-            style={{
-              backgroundColor: "white",
-              color: "gray",
-              border: "none",
-              padding: "10px",
-              fontWeight: "600",
-              width: "60%",
-              borderRadius: "10px",
-              cursor: "pointer",
-            }}
-            onClick={() => (window.location.href = "/signin")}
-          >
-            게스트로 로그인 하기
+            회원이 아니신가요? 회원가입
           </button>
         </div>
       </Filter>

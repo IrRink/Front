@@ -1,25 +1,25 @@
 import styled from "styled-components";
+const FirstMainDiv = styled.div`
+width: calc(100% - 250px);
+height: 100vh;
+background-image: url("404.jpg");
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+margin-left: 250px;
+`;
+
+const Button = styled.button`
+background-color: rgba(255, 255, 255, 0);
+border: 1px solid red;
+font-size: 20px;
+font-weight: 700;
+padding: 15px;
+border-radius: 100px;
+margin-top: 60px;
+`;
 
 function NotFound() {
-  const FirstMainDiv = styled.div`
-    width: calc(100% - 250px);
-    height: 100vh;
-    background-image: url("404.jpg");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    margin-left: 250px;
-  `;
-
-  const Button = styled.button`
-    background-color: rgba(255, 255, 255, 0);
-    border: 1px solid red;
-    font-size: 20px;
-    font-weight: 700;
-    padding: 15px;
-    border-radius: 100px;
-    margin-top: 60px;
-  `;
 
   return (
     <>

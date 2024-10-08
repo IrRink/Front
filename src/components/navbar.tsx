@@ -1,4 +1,5 @@
 import styled from "styled-components"; // createGlobalStyle 추가
+import irlinkLogoImg  from '../assets/irlinklogo.png'
 
 const NavberMainDiv = styled.div`
   width: 250px;
@@ -72,7 +73,6 @@ const SideAndText = styled.p `
   margin-bottom: 20px;
 `
 function Navber() {
-  var name = localStorage.getItem("name");
   return (
     <NavberMainDiv>
       <img
@@ -80,9 +80,9 @@ function Navber() {
         alt=""
         style={{ width: "100%", height: "95px", objectFit: "cover" }}
       />
-      <Profilimg src="./irlinklogo.png" alt="" />
+      <Profilimg src={irlinkLogoImg} alt="" />
       <div style={{ height: "60px" }}></div>
-      <p style={{ textAlign: "center", marginTop: "10px" }}>{name}</p>
+      <p style={{ textAlign: "center", marginTop: "10px" }}>{localStorage.getItem('adName')}</p>
       <div>
         <ul
           style={{
@@ -123,6 +123,9 @@ function Navber() {
           </a>
           <a href="#thrid">
             <SideAndText>Post ▶</SideAndText>
+          </a>
+          <a href="#Footer">
+            <SideAndText>Footer ▶</SideAndText>
           </a>
         </MenuLi>
       </ul>

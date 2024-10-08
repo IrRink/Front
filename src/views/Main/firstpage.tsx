@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import styled  from "styled-components";
 import  { useCallback, useRef  } from "react";
 
@@ -31,9 +32,10 @@ const Down = styled.h2`
 function FirstMainPage() {
   const writtext = useRef<HTMLSpanElement | null>(null);
   const list = [" Math", " Science", " english", " Korean", " Social"];
-  let num = 0;
+
 
   const running = useCallback(() => {
+    let num:number = 0;
     if (writtext.current) {
       writtext.current.innerText = list[num];
       num += 1;

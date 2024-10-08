@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 function Loginnavbar() {
   var name = localStorage.getItem("name");
   console.log(name);
@@ -5,6 +7,18 @@ function Loginnavbar() {
     localStorage.clear();
     window.location.href = "/signin";
   }
+  const [adname, setAdname] = useState("");
+  async function adminName() {
+    const res = await fetch('http://localhost:5500/process/admin-name');
+    const data = await res.json();
+    console.log(data)
+    setAdname(data)
+  }
+  localStorage.setItem('adName', adname)
+
+  useEffect(() => {
+    adminName()
+  }, []);
   return (
     <>
       <div
@@ -29,10 +43,10 @@ function Loginnavbar() {
           }}
         >
           <div style={{ flex: "1", textAlign: "center", marginTop: "25px" }}>
-            {name}님 반가워요.
+            {localStorage.getItem('userName')}님 반가워요.
           </div>
           <div style={{ flex: "1", textAlign: "center", marginTop: "25px" }}>
-            블로거 네임
+            {adname} 블로그
           </div>
           <div style={{ flex: "1", textAlign: "center", marginTop: "25px" }}>
             <p style={{ cursor: "pointer" }} onClick={logout}>

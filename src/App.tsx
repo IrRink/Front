@@ -16,10 +16,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/*" element={<NotFound />} />
-        <Route path="/signin" element={<Signin />} />
-        <Route path="/createAccount" element={<CreateAccount />} />
-        <Route path="/adminsign" element={<Adminsign />} />
-        <Route path="/admincreate" element={<Admincreate />} />
+        <Route path="/signin" element={<Adminsign />} />
+        <Route path="/createAccount" element={<Admincreate />} />
       </Routes>
     </Router>
   );
