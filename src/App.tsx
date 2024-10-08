@@ -8,6 +8,7 @@ import CreateAccount from "./views/login/createAccount";
 import NotFound from "./views/NotFound";
 import Adminsign from "./views/login/admin/adminsign";
 import Admincreate from "./views/login/admin/adminsignup";
+import PostDetail from "./views/Main/post/postDetail";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/*" element={<NotFound />} />
         <Route path="/signin" element={<Adminsign />} />
         <Route path="/createAccount" element={<Admincreate />} />
+        <Route path="/post/:num" element={<PostDetail />} />
       </Routes>
     </Router>
   );

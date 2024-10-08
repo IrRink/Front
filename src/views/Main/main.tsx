@@ -2,6 +2,7 @@ import Footer from "../../components/footer/footer";
 import Navber from "../../components/navbar";
 import Loginnavbar from "../login/loginnavbar";
 import Fistmainpage from "./firstpage";
+import Post from "./post/post";
 import Second from "./second";
 import Third from "./third";
 
@@ -26,8 +27,12 @@ function Main() {
       </div>
       <div style={{ marginLeft: "250px", height: "60vh" }} id="section1" >
         <Third />
-        <Footer /> 
+
       </div>
+    <div style={{position : 'relative', bottom : '0'}}>
+    {/* <Footer/>  */}
+    </div>
+    
     </>
   );
 }

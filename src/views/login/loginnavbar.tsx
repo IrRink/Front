@@ -11,10 +11,9 @@ function Loginnavbar() {
   async function adminName() {
     const res = await fetch('http://localhost:5500/process/admin-name');
     const data = await res.json();
-    console.log(data)
-    setAdname(data)
+    setAdname(data.adminName)
   }
-  localStorage.setItem('adName', adname)
+  // localStorage.setItem('adName', adname)
 
   useEffect(() => {
     adminName()
