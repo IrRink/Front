@@ -1,7 +1,5 @@
 # Study-Blog
 
----
-
 ![이미지 오류](image.png)
 
 ### 프로젝트 소개
@@ -9,7 +7,7 @@
 ---
 
 - 플랫폼: Web / 웹
-- 제작인원: 3 인 ( 팀 구성 -- Frontend 1명, Backend 2명 )
+- 제작인원: 3 인 ( 팀 구성: Frontend 1명, Backend 2명 )
 - 제작 기간: 30 일 (2024.10.01 ~ 2024.31.)
 - 사용 기술: React, Express
 
