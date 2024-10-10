@@ -62,21 +62,31 @@ function Second() {
 			}, i * 10);
 		}
 	};
+	const [length, setLength] = useState('');
+	async function view() {
+		const response = await fetch('http://localhost:4000/blogbord');
+		const data = await response.json();
+		setLength(data.length);
+	}
+
+	useEffect(() => {
+		view();
+	}, []);
 
 	useEffect(() => {
 		const handleScroll = () => {
 			if (window.scrollY > 300) {
 				counting();
-				window.removeEventListener('scroll', handleScroll); // 이벤트 리스너 제거
+				window.removeEventListener('scroll', handleScroll);
 			}
 		};
 
 		window.addEventListener('scroll', handleScroll);
 
 		return () => {
-			window.removeEventListener('scroll', handleScroll); // 정리 함수
+			window.removeEventListener('scroll', handleScroll);
 		};
-	}, [member]); // member가 변경될 때마다 이벤트 리스너 재설정
+	}, [member]);
 
 	return (
 		<div style={{ display: 'flex' }}>
@@ -97,6 +107,9 @@ function Second() {
 							}}
 						>
 							총 포스팅
+							<h1 style={{ textAlign: 'center', marginTop: '15px' }}>
+								{length}
+							</h1>
 						</Box>
 
 						<Box
