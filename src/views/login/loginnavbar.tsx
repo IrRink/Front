@@ -3,21 +3,37 @@ import { useEffect, useState } from "react";
 function Loginnavbar() {
   var name = localStorage.getItem("name");
   console.log(name);
-  function logout() {
-    localStorage.clear();
-    window.location.href = "/signin";
-  }
+
   const [adname, setAdname] = useState("");
   async function adminName() {
-    const res = await fetch('http://localhost:5500/process/admin-name');
+    const res = await fetch("http://localhost:5500/process/admin-name");
     const data = await res.json();
-    setAdname(data.adminName)
+    setAdname(data.adminName);
   }
   // localStorage.setItem('adName', adname)
 
   useEffect(() => {
-    adminName()
+    adminName();
   }, []);
+
+  async function logout() {
+    try {
+      const response = await fetch("http://localhost:5500/logout", {
+        method: "POST",
+        credentials: "include",
+      });
+
+      if (response.ok) {
+        alert("로그아웃 성공");
+        // window.location.href = "/signin";
+      } else {
+        alert("로그아웃 실패");
+      }
+    } catch (error) {
+      alert("로그아웃 요청 중 오류 발생");
+    }
+  }
+
   return (
     <>
       <div
@@ -42,7 +58,7 @@ function Loginnavbar() {
           }}
         >
           <div style={{ flex: "1", textAlign: "center", marginTop: "25px" }}>
-            {localStorage.getItem('userName')}님 반가워요.
+            {localStorage.getItem("userName")}님 반가워요.
           </div>
           <div style={{ flex: "1", textAlign: "center", marginTop: "25px" }}>
             {adname} 블로그

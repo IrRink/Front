@@ -1,3 +1,4 @@
+import styled from "styled-components";
 import Footer from "../../components/footer/footer";
 import Navber from "../../components/navbar";
 import Loginnavbar from "../login/loginnavbar";
@@ -5,6 +6,13 @@ import Fistmainpage from "./firstpage";
 import Post from "./post/post";
 import Second from "./second";
 import Third from "./third";
+import { useEffect } from "react";
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
 
 function Main() {
   if (localStorage.getItem("userName")) {
@@ -14,8 +22,29 @@ function Main() {
     window.location.href = "/signin";
   }
 
+  async function session() {
+    try {
+      const response = await fetch("http://localhost:5500/session", {
+        method: "GET",
+        credentials: "include",
+      });
+
+      if (response.ok) {
+        alert("세션이 연결되었습니다");
+        const resultname = response.text();
+        console.log("dataName", resultname);
+      }
+    } catch {
+      alert("세션 확인중 오류 발생");
+    }
+  }
+
+  useEffect(() => {
+    session();
+  }, []);
+
   return (
-    <>
+    <Container>
       <div style={{ display: "flex" }} id="goRoot">
         <Loginnavbar />
         <Navber />
@@ -25,15 +54,14 @@ function Main() {
       <div style={{ marginLeft: "250px", height: "60vh" }} id="section1">
         <Second />
       </div>
-      <div style={{ marginLeft: "250px", height: "60vh" }} id="section1" >
+      <div style={{ marginLeft: "250px", height: "60vh" }} id="section1">
         <Third />
-
+        <Footer />
       </div>
-    <div style={{position : 'relative', bottom : '0'}}>
-    {/* <Footer/>  */}
-    </div>
-    
-    </>
+      {/* <div style={{ position: "relative", bottom: "0" }}>
+       
+      </div> */}
+    </Container>
   );
 }
 

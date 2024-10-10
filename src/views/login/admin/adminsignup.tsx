@@ -45,10 +45,13 @@ function Signup() {
     }
 
     try {
-      const response = await fetch(`http://localhost:5500/process/checkid/${userId}`);
+      const response = await fetch(
+        `http://localhost:5500/process/checkid/${userId}`
+      );
       const result = await response.json();
+      console.log(result);
 
-      if (response.ok) {
+      if (result.message !== "이미 사용 중인 아이디입니다.") {
         setIdCheckResult("사용 가능한 아이디입니다.");
       } else {
         setIdCheckResult("이미 사용 중인 아이디입니다.");
@@ -86,8 +89,8 @@ function Signup() {
 
       const result = await response.text();
       if (response.ok) {
-        // alert(result); // 성공 메시지
-        window.location.href = '/signin'
+        alert(result); // 성공 메시지
+        window.location.href = "/signin";
       } else {
         alert("회원가입 실패: " + result); // 실패 메시지
       }
@@ -122,7 +125,16 @@ function Signup() {
                 onChange={(e) => setUserId(e.target.value)}
                 required
               />
-              <button type="button" onClick={handleCheckId} style={{backgroundColor : 'white', border : '1px solid gray', padding : '5px', borderRadius : '15px'}}>
+              <button
+                type="button"
+                onClick={handleCheckId}
+                style={{
+                  backgroundColor: "white",
+                  border: "1px solid gray",
+                  padding: "5px",
+                  borderRadius: "15px",
+                }}
+              >
                 아이디 중복 체크
               </button>
               <div>
@@ -210,7 +222,7 @@ function Signup() {
               cursor: "pointer",
             }}
             onClick={() => (window.location.href = "/signin")}
-          > 
+          >
             이미 계정이 있으신가요? 로그인
           </button>
         </div>

@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import styled  from "styled-components";
-import  { useCallback, useRef  } from "react";
-
+import styled from "styled-components";
+import { useCallback, useRef } from "react";
 
 const FirstMainDiv = styled.div`
   width: calc(100% - 250px);
@@ -20,22 +19,20 @@ const Filter = styled.div`
 `;
 
 const Down = styled.h2`
-              margin: 50px auto;
-            text-align: center;
-            border: 1px solid white;
-            width: 30px;
-            padding: 20px;
-            border-radius: 50%;
-            color: white;
-`
+  margin: 50px auto;
+  text-align: center;
+  border: 1px solid white;
+  width: 30px;
+  padding: 20px;
+  border-radius: 50%;
+  color: white;
+`;
 
 function FirstMainPage() {
   const writtext = useRef<HTMLSpanElement | null>(null);
   const list = [" Math", " Science", " english", " Korean", " Social"];
-
-
-  const running = useCallback(() => {
-    let num:number = 0;
+  let num: number = 0;
+  function running() {
     if (writtext.current) {
       writtext.current.innerText = list[num];
       num += 1;
@@ -44,7 +41,7 @@ function FirstMainPage() {
       }
     }
     setTimeout(running, 2000);
-  }, []);
+  }
 
   running();
 
@@ -59,9 +56,10 @@ function FirstMainPage() {
             paddingTop: "30vh",
           }}
         >
-          Hello World !<br />Let’s Get it 
-          <span ref={writtext} style={{ color : 'rgb(255, 201, 64)'}}>
-          &nbsp;history
+          Hello World !<br />
+          Let’s Get it
+          <span ref={writtext} style={{ color: "rgb(255, 201, 64)" }}>
+            &nbsp;history
           </span>
         </h1>
         <div
@@ -74,9 +72,7 @@ function FirstMainPage() {
         <h2 style={{ color: "white", textAlign: "center" }}>
           안녕 세계! 나에게 프로그래밍 세상을 보여줘서 고마워
         </h2>
-        <Down>
-          v
-        </Down>
+        <Down>v</Down>
       </Filter>
     </FirstMainDiv>
   );
