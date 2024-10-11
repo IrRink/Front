@@ -61,6 +61,16 @@ function Signup() {
 		}
 	};
 
+	const [isValid, setIsValid] = useState(false);
+
+	const reg = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/;
+
+	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		const value = event.target.value;
+		setPassword(value);
+		setIsValid(reg.test(value)); // 정규식 검사
+	};
+
 	// 회원가입 제출 함수
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -79,6 +89,16 @@ function Signup() {
 				: `${API_URL}/process/adduseroruser`;
 
 		try {
+			let ageTest = parseInt(age);
+			if ((0 < ageTest && ageTest < 100) !== false) {
+				alert('나이가 올바르지 않습니다.');
+				return;
+			}
+			setIsValid(reg.test(password));
+			if (isValid === false) {
+				alert('비밀번호가 올바르지 않습니다.');
+				return;
+			}
 			console.log(isAdmin);
 			console.log(signupUrl);
 			const response = await fetch(signupUrl, {
@@ -123,7 +143,7 @@ function Signup() {
 						<div>
 							<label htmlFor='userId'>아이디:</label> <br />
 							<Input
-								type='text'
+								type='email'
 								id='userId'
 								value={userId}
 								onChange={(e) => setUserId(e.target.value)}
@@ -188,6 +208,11 @@ function Signup() {
 								onChange={(e) => setPassword(e.target.value)}
 								required
 							/>
+							<p style={{ color: isValid ? 'green' : 'red' }}>
+								{isValid
+									? '비밀번호가 유효합니다.'
+									: '비밀번호는 8-15자, 숫자, 특수문자 포함해야 합니다.'}
+							</p>
 						</div>
 						<div>
 							<label>
