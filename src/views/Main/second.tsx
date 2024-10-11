@@ -26,9 +26,7 @@ function Second() {
 	}
 
 	async function info() {
-		const response = await fetch(
-			`${API_URL}/process/adminAndUserCount`
-		);
+		const response = await fetch(`${API_URL}/process/adminAndUserCount`);
 		const data = await response.json();
 
 		const num = Number(data.userCount);
@@ -36,7 +34,8 @@ function Second() {
 		if (data.admin_date) {
 			setDate(data.admin_date.split('T')[0]);
 		} else {
-			alert('오건호가 admin 지웠습니다.');
+			alert('현재 관리자가 없습니다.');
+			window.location.href = './signin';
 		}
 	}
 

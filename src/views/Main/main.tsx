@@ -1,11 +1,10 @@
 import styled from 'styled-components';
 import Footer from '../../components/footer/footer';
 import Navber from '../../components/navbar';
-import Loginnavbar from '../login/loginnavbar';
-import Fistmainpage from './firstpage';
-import Post from './post/post';
-import Second from './second';
-import Third from './third';
+import Loginnavbar from '../login/Loginnavbar';
+import Fistmainpage from './Firstpage';
+import Second from './Second';
+import Third from './Third';
 import { useEffect } from 'react';
 import { API_URL } from '../../constants';
 
@@ -19,8 +18,8 @@ function Main() {
 	if (localStorage.getItem('userName')) {
 		console.log('로그인 성공');
 	} else {
-		// alert('세션이 만료되었거나 로그인을 하지 않으셨습니다. 재 로그인 해주세요');
-		// window.location.href = '/signin';
+		alert('세션이 만료되었거나 로그인을 하지 않으셨습니다. 재 로그인 해주세요');
+		window.location.href = '/signin';
 	}
 
 	async function session() {

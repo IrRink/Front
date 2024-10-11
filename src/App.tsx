@@ -1,14 +1,14 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Main from './views/Main/main';
+import Main from './views/Main/Main';
 import Navber from './components/navbar';
 import NotFound from './views/NotFound';
-import Adminsign from './views/login/admin/adminsign';
-import Admincreate from './views/login/admin/adminsignup';
-import PostDetail from './views/Main/post/postDetail';
-import Write from './views/Main/post/write';
-import Del from './views/Main/post/Del/del';
+import Adminsign from './views/login/admin/Adminsign';
+import Admincreate from './views/login/admin/Adminsignup';
+import PostDetail from './views/Main/post/PostDetail';
+import Write from './views/Main/post/Write';
+import Del from './views/Main/post/Del/Del';
 
 function App() {
 	return (

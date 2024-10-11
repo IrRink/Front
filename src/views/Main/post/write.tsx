@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import styled from 'styled-components';
-import Loginnavbar from '../../login/loginnavbar';
+import Loginnavbar from '../../login/Loginnavbar';
 import { API_URL } from '../../../constants';
 
 const FirstMainDiv = styled.div`

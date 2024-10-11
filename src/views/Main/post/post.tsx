@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
-import Footer from '../../../components/footer/footer';
 import { Link } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
-import './new.css';
+import './New.css';
 import { API_URL } from '../../../constants';
 interface BlogPost {
 	num: number;

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Post from './post/post';
+import Post from './post/Post';
 import Footer from '../../components/footer/footer';
 
 function Third() {

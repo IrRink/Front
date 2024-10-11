@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import Loginnavbar from '../../login/loginnavbar';
+import Loginnavbar from '../../login/Loginnavbar';
 import { API_URL } from '../../../constants';
 
 interface BlogPost {
