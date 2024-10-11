@@ -6,7 +6,7 @@ function Loginnavbar() {
 
 	const [adname, setAdname] = useState('');
 	async function adminName() {
-		const res = await fetch('http://localhost:5500/process/admin-name');
+		const res = await fetch('http://localhost:5500/process/adminname');
 		const data = await res.json();
 		setAdname(data.adminName);
 	}

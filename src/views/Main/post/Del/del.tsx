@@ -45,7 +45,7 @@ function Del() {
 
 	// 게시물 목록 불러오기
 	const viewPosts = async () => {
-		const response = await fetch('http://localhost:4000/blogbord');
+		const response = await fetch('http://localhost:5500/blogbord');
 		const data = await response.json();
 		setPosts(data);
 	};
@@ -53,7 +53,7 @@ function Del() {
 	// 게시물 삭제
 	const deletePost = async (postId: number) => {
 		const response = await fetch(
-			`http://localhost:4000/delete-post/${postId}`,
+			`http://localhost:5500/delete-post/${postId}`,
 			{
 				method: 'DELETE',
 				headers: {
@@ -98,7 +98,19 @@ function Del() {
 								<h3>{item.subtitle}</h3>
 								<p style={{ textAlign: 'right' }}>작성자: {item.id}</p>
 								<p style={{ textAlign: 'right' }}>날짜: {item.uptime}</p>
-								<button onClick={() => deletePost(item.num)}>삭제하기</button>
+								<button
+									style={{
+										backgroundColor: 'red',
+										color: 'white',
+										border: 'none',
+										padding: '10px',
+										borderRadius: '5px',
+										fontWeight: '800',
+									}}
+									onClick={() => deletePost(item.num)}
+								>
+									삭제하기
+								</button>
 							</li>
 						</div>
 					))}

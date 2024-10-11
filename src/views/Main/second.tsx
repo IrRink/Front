@@ -12,9 +12,17 @@ const Box = styled.div`
 
 function Second() {
 	const [member, setMember] = useState(0);
+
 	const [date, setDate] = useState('');
 	const [getdays, setGetdays] = useState(0);
 	const box1Ref = useRef<HTMLHeadingElement>(null);
+	const box2Ref = useRef<HTMLHeadingElement>(null);
+	const [length, setLength] = useState(0);
+	async function view() {
+		const response = await fetch('http://localhost:5500/blogbord');
+		const data = await response.json();
+		setLength(parseInt(data.length));
+	}
 
 	async function info() {
 		const response = await fetch(
@@ -24,7 +32,11 @@ function Second() {
 
 		const num = Number(data.userCount);
 		setMember(num);
-		setDate(data.admin_date.split('T')[0]);
+		if (data.admin_date) {
+			setDate(data.admin_date.split('T')[0]);
+		} else {
+			alert('오건호가 admin 지웠습니다.');
+		}
 	}
 
 	const getDateDiff = (d1: string, d2: string) => {
@@ -51,7 +63,7 @@ function Second() {
 			const dats = getDateDiff(date, nowDay);
 			setGetdays(dats);
 		}
-	}, [date]); // date가 변경될 때마다 getdays 계산
+	}, [date]);
 
 	const counting = () => {
 		for (let i = 0; i <= member; i++) {
@@ -59,15 +71,19 @@ function Second() {
 				if (box1Ref.current) {
 					box1Ref.current.innerText = i.toString();
 				}
-			}, i * 10);
+			}, i * 30);
 		}
 	};
-	const [length, setLength] = useState('');
-	async function view() {
-		const response = await fetch('http://localhost:4000/blogbord');
-		const data = await response.json();
-		setLength(data.length);
-	}
+
+	const counting2 = () => {
+		for (let i = 0; i <= length; i++) {
+			setTimeout(() => {
+				if (box2Ref.current) {
+					box2Ref.current.innerText = i.toString();
+				}
+			}, i * 30);
+		}
+	};
 
 	useEffect(() => {
 		view();
@@ -77,6 +93,7 @@ function Second() {
 		const handleScroll = () => {
 			if (window.scrollY > 300) {
 				counting();
+				counting2();
 				window.removeEventListener('scroll', handleScroll);
 			}
 		};
@@ -107,9 +124,10 @@ function Second() {
 							}}
 						>
 							총 포스팅
-							<h1 style={{ textAlign: 'center', marginTop: '15px' }}>
-								{length}
-							</h1>
+							<h1
+								style={{ textAlign: 'center', marginTop: '15px' }}
+								ref={box2Ref}
+							></h1>
 						</Box>
 
 						<Box

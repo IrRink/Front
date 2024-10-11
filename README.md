@@ -40,3 +40,7 @@ admin 데이터 화면
 - admin이 가입한 날짜표기 기능
 - 회원 수 보기 기능
 - react-paginate 페이지네이션 구현하기
+
+### 배운 것
+
+react

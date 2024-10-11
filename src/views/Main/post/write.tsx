@@ -42,7 +42,7 @@ function Write() {
 		const bord_text = detailref.current?.value;
 
 		if (title && subtitle && bord_text) {
-			const response = await fetch('http://localhost:4000/add-post', {
+			const response = await fetch('http://localhost:5500/add-post', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',

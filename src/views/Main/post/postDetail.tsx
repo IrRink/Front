@@ -46,7 +46,7 @@ function PostDetail() {
 	const [post, setPost] = useState<BlogPost | null>(null);
 
 	async function fetchPost() {
-		const response = await fetch(`http://localhost:4000/post/${num}`);
+		const response = await fetch(`http://localhost:5500/post/${num}`);
 		const data = await response.json();
 		console.log(data.post);
 		setPost(data.post);

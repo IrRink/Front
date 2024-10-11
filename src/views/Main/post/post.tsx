@@ -18,7 +18,7 @@ function Post() {
 	const postsPerPage = 10; // 한 페이지에 표시할 게시물 수
 
 	async function view() {
-		const response = await fetch('http://localhost:4000/blogbord');
+		const response = await fetch('http://localhost:5500/blogbord');
 		const data = await response.json();
 		console.log(data);
 		setJson(data);
@@ -41,7 +41,7 @@ function Post() {
 	const pageCount = Math.ceil(json.length / postsPerPage);
 
 	return (
-		<div style={{ paddingTop: '30px' }}>
+		<div style={{ paddingTop: '30px', position: 'relative' }}>
 			<ul
 				style={{
 					margin: '0 auto',
@@ -73,7 +73,6 @@ function Post() {
 					</Link>
 				))}
 			</ul>
-
 			<ReactPaginate
 				containerClassName={'pagination'}
 				pageClassName={'pagination__item'} // 각 페이지의 클래스
