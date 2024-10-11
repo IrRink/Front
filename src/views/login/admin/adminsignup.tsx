@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { API_URL } from '../../../constants';
 
 // Styled components for maintaining the design
 const FirstMainDiv = styled.div`
@@ -45,9 +46,7 @@ function Signup() {
 		}
 
 		try {
-			const response = await fetch(
-				`http://localhost:5500/process/checkid/${userId}`
-			);
+			const response = await fetch(`${API_URL}/process/checkid/${userId}`);
 			const result = await response.json();
 			console.log(result);
 
@@ -71,12 +70,13 @@ function Signup() {
 			adminName: name,
 			adminAge: age,
 			password: password,
+			isAdmin: isAdmin,
 		};
 		// 관리자 여부에 따라 URL 결정
 		const signupUrl =
 			isAdmin === true
-				? 'http://localhost:5500/process/adduseroradmin'
-				: 'http://localhost:5500/process/adduseroruser';
+				? `${API_URL}/process/adduseroradmin`
+				: `${API_URL}/process/adduseroruser`;
 
 		try {
 			console.log(isAdmin);

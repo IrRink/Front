@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import React, { useEffect, useRef, useState } from 'react';
+import { API_URL } from '../../constants';
 
 const Box = styled.div`
 	margin: 0 auto;
@@ -19,14 +20,14 @@ function Second() {
 	const box2Ref = useRef<HTMLHeadingElement>(null);
 	const [length, setLength] = useState(0);
 	async function view() {
-		const response = await fetch('http://localhost:5500/blogbord');
+		const response = await fetch(`${API_URL}/blogbord`);
 		const data = await response.json();
 		setLength(parseInt(data.length));
 	}
 
 	async function info() {
 		const response = await fetch(
-			'http://localhost:5500/process/adminAndUserCount'
+			`${API_URL}/process/adminAndUserCount`
 		);
 		const data = await response.json();
 

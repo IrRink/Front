@@ -3,6 +3,7 @@ import Footer from '../../../components/footer/footer';
 import { Link } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
 import './new.css';
+import { API_URL } from '../../../constants';
 interface BlogPost {
 	num: number;
 	title: string;
@@ -18,7 +19,7 @@ function Post() {
 	const postsPerPage = 10; // 한 페이지에 표시할 게시물 수
 
 	async function view() {
-		const response = await fetch('http://localhost:5500/blogbord');
+		const response = await fetch(`${API_URL}/blogbord`);
 		const data = await response.json();
 		console.log(data);
 		setJson(data);

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Loginnavbar from '../../../login/loginnavbar';
+import { API_URL } from '../../../../constants';
 
 const FirstMainDiv = styled.div`
 	width: calc(100% - 250px);
@@ -45,22 +46,19 @@ function Del() {
 
 	// 게시물 목록 불러오기
 	const viewPosts = async () => {
-		const response = await fetch('http://localhost:5500/blogbord');
+		const response = await fetch(`${API_URL}/blogbord`);
 		const data = await response.json();
 		setPosts(data);
 	};
 
 	// 게시물 삭제
 	const deletePost = async (postId: number) => {
-		const response = await fetch(
-			`http://localhost:5500/delete-post/${postId}`,
-			{
-				method: 'DELETE',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-			}
-		);
+		const response = await fetch(`${API_URL}/delete-post/${postId}`, {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
 		if (response.ok) {
 			alert('삭제가 완료되었습니다.');
 			viewPosts(); // 게시물 목록 다시 불러오기

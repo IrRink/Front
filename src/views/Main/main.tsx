@@ -7,6 +7,7 @@ import Post from './post/post';
 import Second from './second';
 import Third from './third';
 import { useEffect } from 'react';
+import { API_URL } from '../../constants';
 
 const Container = styled.div`
 	display: flex;
@@ -18,13 +19,13 @@ function Main() {
 	if (localStorage.getItem('userName')) {
 		console.log('로그인 성공');
 	} else {
-		alert('세션이 만료되었거나 로그인을 하지 않으셨습니다. 재 로그인 해주세요');
-		window.location.href = '/signin';
+		// alert('세션이 만료되었거나 로그인을 하지 않으셨습니다. 재 로그인 해주세요');
+		// window.location.href = '/signin';
 	}
 
 	async function session() {
 		try {
-			const response = await fetch('http://localhost:5500/session', {
+			const response = await fetch(`${API_URL}/session`, {
 				method: 'GET',
 				credentials: 'include',
 			});

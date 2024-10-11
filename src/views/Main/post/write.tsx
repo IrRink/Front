@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import styled from 'styled-components';
 import Loginnavbar from '../../login/loginnavbar';
+import { API_URL } from '../../../constants';
 
 const FirstMainDiv = styled.div`
 	width: calc(100% - 250px);
@@ -42,7 +43,7 @@ function Write() {
 		const bord_text = detailref.current?.value;
 
 		if (title && subtitle && bord_text) {
-			const response = await fetch('http://localhost:5500/add-post', {
+			const response = await fetch(`${API_URL}/add-post`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',

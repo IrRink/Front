@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Loginnavbar from '../../login/loginnavbar';
+import { API_URL } from '../../../constants';
 
 interface BlogPost {
 	num: number;
@@ -46,7 +47,7 @@ function PostDetail() {
 	const [post, setPost] = useState<BlogPost | null>(null);
 
 	async function fetchPost() {
-		const response = await fetch(`http://localhost:5500/post/${num}`);
+		const response = await fetch(`${API_URL}/post/${num}`);
 		const data = await response.json();
 		console.log(data.post);
 		setPost(data.post);

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { API_URL } from "../../../constants";
 
 // Styled components for design
 const FirstMainDiv = styled.div`
@@ -55,8 +56,8 @@ function Adminsign() {
     formData.append("password", password);
 
     const loginUrl = isAdmin
-      ? "http://localhost:5500/process/login/admin"
-      : "http://localhost:5500/process/login";
+      ? `${API_URL}/process/login/admin`
+      : `${API_URL}/process/login`;
 
     try {
       const response = await fetch(loginUrl, {
