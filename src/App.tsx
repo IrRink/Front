@@ -1,14 +1,14 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Main from './views/Main/Main';
 import Navber from './components/navbar';
-import NotFound from './views/NotFound';
-import Adminsign from './views/login/admin/Adminsign';
-import Admincreate from './views/login/admin/Adminsignup';
-import PostDetail from './views/Main/post/PostDetail';
-import Write from './views/Main/post/Write';
-import Del from './views/Main/post/Del/Del';
+import CreateAccount from './components/login/CreateAccount';
+import PostDetail from './components/post/PostDetail';
+import Write from './components/post/Write';
+import Main from './components/Main';
+import NotFound from './components/notFound/NotFound';
+import Signin from './components/login/Adminsign';
+import Delete from './components/post/Del/Delete';
 
 function App() {
 	return (
@@ -17,11 +17,11 @@ function App() {
 			<Routes>
 				<Route path='/' element={<Main />} />
 				<Route path='/*' element={<NotFound />} />
-				<Route path='/signin' element={<Adminsign />} />
-				<Route path='/createAccount' element={<Admincreate />} />
+				<Route path='/signin' element={<Signin />} />
+				<Route path='/createAccount' element={<CreateAccount />} />
 				<Route path='/post/:num' element={<PostDetail />} />
 				<Route path='/write' element={<Write />} />
-				<Route path='/Del' element={<Del />} />
+				<Route path='/Del' element={<Delete />} />
 			</Routes>
 		</Router>
 	);

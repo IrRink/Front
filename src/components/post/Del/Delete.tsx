@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Loginnavbar from '../../../login/Loginnavbar';
-import { API_URL } from '../../../../constants';
+import { API_URL } from '../../../constants';
+import Loginnavbar from '../../login/Loginnavbar';
 
 const FirstMainDiv = styled.div`
 	width: calc(100% - 250px);
@@ -41,7 +41,7 @@ interface BlogPost {
 	bord_text: string;
 }
 
-function Del() {
+function Delete() {
 	const [posts, setPosts] = useState<BlogPost[]>([]);
 
 	// 게시물 목록 불러오기
@@ -118,4 +118,4 @@ function Del() {
 	);
 }
 
-export default Del;
+export default Delete;

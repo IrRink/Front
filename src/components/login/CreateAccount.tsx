@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { API_URL } from '../../../constants';
+import { API_URL } from '../../constants';
 
 // Styled components for maintaining the design
 const FirstMainDiv = styled.div`
@@ -30,13 +30,23 @@ const Filter = styled.div`
 	background-color: rgba(0, 2, 18, 0.568);
 `;
 
-function Signup() {
+const CheckButton = styled.button`
+	background-color: white;
+	border: 1px solid gray;
+	padding: 5px;
+	border-radius: 15px;
+	margin-left: 10px;
+	cursor: pointer;
+`;
+
+function CreateAccount() {
 	const [userId, setUserId] = useState('');
 	const [name, setName] = useState('');
 	const [age, setAge] = useState('');
 	const [password, setPassword] = useState('');
 	const [isAdmin, setIsAdmin] = useState(false);
 	const [idCheckResult, setIdCheckResult] = useState<string | null>(null);
+	const [isValid, setIsValid] = useState(false);
 
 	// 아이디 중복 체크 함수
 	const handleCheckId = async () => {
@@ -48,7 +58,6 @@ function Signup() {
 		try {
 			const response = await fetch(`${API_URL}/process/checkid/${userId}`);
 			const result = await response.json();
-			console.log(result);
 
 			if (result.message !== '이미 사용 중인 아이디입니다.') {
 				setIdCheckResult('사용 가능한 아이디입니다.');
@@ -61,19 +70,22 @@ function Signup() {
 		}
 	};
 
-	const [isValid, setIsValid] = useState(false);
-
 	const reg = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/;
 
-	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+	const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const value = event.target.value;
 		setPassword(value);
-		setIsValid(reg.test(value)); // 정규식 검사
+		setIsValid(reg.test(value)); // 비밀번호가 변경될 때마다 유효성 검사
 	};
 
 	// 회원가입 제출 함수
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
+
+		if (!isValid) {
+			alert('비밀번호가 올바르지 않습니다.');
+			return;
+		}
 
 		const data = {
 			adminId: userId,
@@ -82,7 +94,7 @@ function Signup() {
 			password: password,
 			isAdmin: isAdmin,
 		};
-		// 관리자 여부에 따라 URL 결정
+
 		const signupUrl =
 			isAdmin === true
 				? `${API_URL}/process/adduseroradmin`
@@ -90,26 +102,18 @@ function Signup() {
 
 		try {
 			let ageTest = parseInt(age);
-			if ((0 < ageTest && ageTest < 100) !== false) {
+			if (ageTest <= 0 || ageTest >= 100) {
 				alert('나이가 올바르지 않습니다.');
 				return;
 			}
-			setIsValid(reg.test(password));
-			if (isValid === false) {
-				alert('비밀번호가 올바르지 않습니다.');
-				return;
-			}
-			console.log(isAdmin);
-			console.log(signupUrl);
+
 			const response = await fetch(signupUrl, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify(data), // URLSearchParams 대신 JSON 형식으로 데이터 전송
+				body: JSON.stringify(data),
 			});
-			console.log(isAdmin);
-			console.log(signupUrl);
 
 			const result = await response.json();
 			if (response.ok) {
@@ -141,26 +145,18 @@ function Signup() {
 					<h1 style={{ marginBottom: '30px' }}>회원가입</h1>
 					<form id='signupForm' onSubmit={handleSubmit}>
 						<div>
-							<label htmlFor='userId'>아이디:</label> <br />
+							<label htmlFor='userId'>E-mail:</label> <br />
 							<Input
 								type='email'
 								id='userId'
 								value={userId}
 								onChange={(e) => setUserId(e.target.value)}
 								required
+								placeholder='E-mail을 입력하세요'
 							/>
-							<button
-								type='button'
-								onClick={handleCheckId}
-								style={{
-									backgroundColor: 'white',
-									border: '1px solid gray',
-									padding: '5px',
-									borderRadius: '15px',
-								}}
-							>
+							<CheckButton type='button' onClick={handleCheckId}>
 								아이디 중복 체크
-							</button>
+							</CheckButton>
 							<div>
 								{idCheckResult && (
 									<span
@@ -185,6 +181,7 @@ function Signup() {
 								value={name}
 								onChange={(e) => setName(e.target.value)}
 								required
+								placeholder='이름을 입력하세요.'
 							/>
 						</div>
 						<div>
@@ -196,6 +193,7 @@ function Signup() {
 								value={age}
 								onChange={(e) => setAge(e.target.value)}
 								required
+								placeholder='나이를 입력하세요'
 							/>
 						</div>
 						<div>
@@ -205,9 +203,11 @@ function Signup() {
 								type='password'
 								id='password'
 								value={password}
-								onChange={(e) => setPassword(e.target.value)}
+								onChange={handlePasswordChange}
 								required
-							/>
+								placeholder='비밀번호를 입력하세요. ' 	
+							/>{' '}
+							<br />
 							<p style={{ color: isValid ? 'green' : 'red' }}>
 								{isValid
 									? '비밀번호가 유효합니다.'
@@ -259,5 +259,4 @@ function Signup() {
 		</FirstMainDiv>
 	);
 }
-
-export default Signup;
+export default CreateAccount;

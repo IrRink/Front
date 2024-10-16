@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { API_URL } from '../../../constants';
+import { API_URL } from '../../constants';
 
 // Styled components for design
 const FirstMainDiv = styled.div`
@@ -41,7 +41,7 @@ const ResultMessage = styled.div<ResultMessageProps>`
 	color: ${(props) => (props.success ? 'green' : 'red')};
 `;
 
-function Adminsign() {
+function Signin() {
 	const [userId, setUserId] = useState('');
 	const [password, setPassword] = useState('');
 	const [isAdmin, setIsAdmin] = useState(false);
@@ -70,12 +70,12 @@ function Adminsign() {
 			const data = response.json;
 			console.log(data);
 			setSuccess(response.ok);
-			setResult(data);
+			// setResult(data);
 
 			if (response.ok) {
 				setSuccess(response.ok);
-				localStorage.setItem('userName', data.userName);
-				localStorage.setItem('jwtToken', data.token);
+				// localStorage.setItem('userName', data.userName);
+				// localStorage.setItem('jwtToken', data.token);
 				window.location.href = '../';
 			}
 		} catch (error) {
@@ -172,4 +172,4 @@ function Adminsign() {
 	);
 }
 
-export default Adminsign;
+export default Signin;

@@ -1,12 +1,13 @@
 import styled from 'styled-components';
-import Footer from '../../components/footer/footer';
-import Navber from '../../components/navbar';
-import Loginnavbar from '../login/Loginnavbar';
-import Fistmainpage from './Firstpage';
+
+import { useEffect } from 'react';
+import { API_URL } from '../constants';
+import Loginnavbar from './login/Loginnavbar';
+import Navber from './navbar';
+import FirstMainPage from './firstpage';
 import Second from './Second';
 import Third from './Third';
-import { useEffect } from 'react';
-import { API_URL } from '../../constants';
+import Footer from './footer/footer';
 
 const Container = styled.div`
 	display: flex;
@@ -49,7 +50,7 @@ function Main() {
 				<div style={{ display: 'flex' }} id='goRoot'>
 					<Loginnavbar />
 					<Navber />
-					<Fistmainpage />
+					<FirstMainPage />
 				</div>
 				<div></div>
 				<div style={{ marginLeft: '250px', height: '60vh' }} id='section1'>

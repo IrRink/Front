@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import React, { useEffect, useRef, useState } from 'react';
-import { API_URL } from '../../constants';
+import { API_URL } from '../constants';
 
 const Box = styled.div`
 	margin: 0 auto;

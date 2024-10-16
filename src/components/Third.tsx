@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import Post from './post/Post';
-import Footer from '../../components/footer/footer';
 
 function Third() {
 	const AllTextText = styled.h1`
