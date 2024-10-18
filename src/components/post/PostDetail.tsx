@@ -10,7 +10,7 @@ interface BlogPost {
 	subtitle: string;
 	id: string;
 	uptime: string;
-	bord_text: string;
+	board_text: string;
 }
 
 const FirstMainDiv = styled.div`
@@ -47,7 +47,7 @@ function PostDetail() {
 	const [post, setPost] = useState<BlogPost | null>(null);
 
 	async function fetchPost() {
-		const response = await fetch(`${API_URL}/post/${num}`);
+		const response = await fetch(`${API_URL}/board/blogboard/${num}`);
 		const data = await response.json();
 		console.log(data.post);
 		setPost(data.post);
@@ -68,7 +68,7 @@ function PostDetail() {
 					<h1 style={{ textAlign: 'center' }}>{post.title}</h1>
 					<h2 style={{ textAlign: 'center' }}>{post.subtitle}</h2>
 					<p style={{ textAlign: 'left', paddingTop: '80px' }}>
-						{post.bord_text}
+						{post.board_text}
 					</p>
 					<div style={{ bottom: '20px ', right: '40px' }}>
 						<p style={{ textAlign: 'right' }}>작성자: {post.id}</p>

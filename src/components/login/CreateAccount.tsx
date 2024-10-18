@@ -40,7 +40,7 @@ const CheckButton = styled.button`
 `;
 
 function CreateAccount() {
-	const [userId, setUserId] = useState('');
+	const [email, setEmail] = useState('');
 	const [name, setName] = useState('');
 	const [age, setAge] = useState('');
 	const [password, setPassword] = useState('');
@@ -50,13 +50,15 @@ function CreateAccount() {
 
 	// 아이디 중복 체크 함수
 	const handleCheckId = async () => {
-		if (!userId) {
+		if (!email) {
 			setIdCheckResult('아이디를 입력해주세요.');
 			return;
 		}
 
 		try {
-			const response = await fetch(`${API_URL}/process/checkid/${userId}`);
+			const response = await fetch(
+				`${API_URL}/process/checkEmail?email=${email}`
+			);
 			const result = await response.json();
 
 			if (result.message !== '이미 사용 중인 아이디입니다.') {
@@ -88,9 +90,8 @@ function CreateAccount() {
 			alert('비밀번호가 올바르지 않습니다.');
 			return;
 		}
-
 		const data = {
-			adminId: userId,
+			email: email,
 			adminName: name,
 			adminAge: age,
 			password: password,
@@ -109,7 +110,7 @@ function CreateAccount() {
 				return;
 			}
 
-			if (!emailRegex.test(userId)) {
+			if (!emailRegex.test(email)) {
 				alert('이메일 형식이 올바르지 않습니다.');
 				return;
 			}
@@ -167,8 +168,8 @@ function CreateAccount() {
 							<Input
 								type='email'
 								id='userId'
-								value={userId}
-								onChange={(e) => setUserId(e.target.value)}
+								value={email}
+								onChange={(e) => setEmail(e.target.value)}
 								required
 								placeholder='E-mail을 입력하세요'
 							/>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { API_URL } from '../../../constants';
-import Loginnavbar from '../../login/Loginnavbar';
+import { API_URL } from '../../constants';
+import Loginnavbar from '../login/Loginnavbar';
 
 const FirstMainDiv = styled.div`
 	width: calc(100% - 250px);
@@ -41,7 +41,7 @@ interface BlogPost {
 	board_text: string;
 }
 
-function Delete() {
+function Update() {
 	const [posts, setPosts] = useState<BlogPost[]>([]);
 
 	// 게시물 목록 불러오기
@@ -52,20 +52,6 @@ function Delete() {
 	};
 
 	// 게시물 삭제
-	const deletePost = async (postId: number) => {
-		const response = await fetch(`${API_URL}/board/delete/${postId}`, {
-			method: 'DELETE',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		});
-		if (response.ok) {
-			alert('삭제가 완료되었습니다.');
-			viewPosts(); // 게시물 목록 다시 불러오기
-		} else {
-			alert('삭제 중 오류가 발생했습니다.');
-		}
-	};
 
 	useEffect(() => {
 		viewPosts(); // 컴포넌트 마운트 시 게시물 목록 불러오기
@@ -98,16 +84,15 @@ function Delete() {
 								<p style={{ textAlign: 'right' }}>날짜: {item.uptime}</p>
 								<button
 									style={{
-										backgroundColor: 'red',
+										backgroundColor: 'green',
 										color: 'white',
 										border: 'none',
 										padding: '10px',
 										borderRadius: '5px',
 										fontWeight: '800',
 									}}
-									onClick={() => deletePost(item.num)}
 								>
-									삭제하기
+									수정하기
 								</button>
 							</li>
 						</div>
@@ -118,4 +103,4 @@ function Delete() {
 	);
 }
 
-export default Delete;
+export default Update;

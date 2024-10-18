@@ -20,7 +20,7 @@ function Second() {
 	const box2Ref = useRef<HTMLHeadingElement>(null);
 	const [length, setLength] = useState(0);
 	async function view() {
-		const response = await fetch(`${API_URL}/blogbord`);
+		const response = await fetch(`${API_URL}/board/blogboard`);
 		const data = await response.json();
 		setLength(parseInt(data.length));
 	}

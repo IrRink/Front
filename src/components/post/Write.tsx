@@ -40,19 +40,22 @@ function Write() {
 	async function submit() {
 		const title = titleref.current?.value;
 		const subtitle = subtitleref.current?.value;
-		const bord_text = detailref.current?.value;
+		const board_text = detailref.current?.value;
 
-		if (title && subtitle && bord_text) {
-			const response = await fetch(`${API_URL}/add-post`, {
+		const data = {
+			title: title,
+			subtitle: subtitle,
+			board_text: board_text,
+		};
+
+		if (title && subtitle && board_text) {
+			console.log(data);
+			const response = await fetch(`${API_URL}/board/add-post`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify({
-					title,
-					subtitle,
-					bord_text,
-				}),
+				body: JSON.stringify(data),
 			});
 
 			if (response.ok) {

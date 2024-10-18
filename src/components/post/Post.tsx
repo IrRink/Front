@@ -9,7 +9,7 @@ interface BlogPost {
 	subtitle: string;
 	id: string;
 	uptime: string;
-	bord_text: string;
+	board_text: string;
 }
 
 function Post() {
@@ -18,7 +18,7 @@ function Post() {
 	const postsPerPage = 10; // 한 페이지에 표시할 게시물 수
 
 	async function view() {
-		const response = await fetch(`${API_URL}/blogbord`);
+		const response = await fetch(`${API_URL}/board/blogboard`);
 		const data = await response.json();
 		console.log(data);
 		setJson(data);

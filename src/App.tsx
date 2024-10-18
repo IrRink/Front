@@ -9,6 +9,7 @@ import Main from './components/Main';
 import NotFound from './components/notFound/NotFound';
 import Signin from './components/login/Adminsign';
 import Delete from './components/post/Del/Delete';
+import Update from './components/post/Update';
 
 function App() {
 	return (
@@ -22,6 +23,7 @@ function App() {
 				<Route path='/post/:num' element={<PostDetail />} />
 				<Route path='/write' element={<Write />} />
 				<Route path='/Del' element={<Delete />} />
+				<Route path='/update' element={<Update />} />
 			</Routes>
 		</Router>
 	);

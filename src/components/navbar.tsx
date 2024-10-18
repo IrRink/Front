@@ -130,8 +130,11 @@ function Navber() {
 					<a href='#Footer'>
 						<SideAndText>Footer ▶</SideAndText>
 					</a>
-					<Link to='/Write'>글쓰기</Link> <br />
+					<Link to='/Write'>글쓰기</Link>
+					<br />
 					<Link to='/Del'>글 삭제</Link>
+					<br />
+					<Link to='/update'>글 수정</Link>
 				</MenuLi>
 			</ul>
 		</NavberMainDiv>
