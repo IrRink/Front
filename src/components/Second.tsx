@@ -23,6 +23,7 @@ function Second() {
 		const response = await fetch(`${API_URL}/board/blogboard`);
 		const data = await response.json();
 		setLength(parseInt(data.length));
+		localStorage.setItem('postingCount', length.toString());
 	}
 
 	async function info() {
@@ -31,8 +32,8 @@ function Second() {
 
 		const num = Number(data.userCount);
 		setMember(num);
-		if (data.admin_date) {
-			setDate(data.admin_date.split('T')[0]);
+		if (data.adminDate) {
+			setDate(data.adminDate);
 		} else {
 			alert('현재 관리자가 없습니다.');
 			window.location.href = './signin';
@@ -49,9 +50,9 @@ function Second() {
 	};
 
 	useEffect(() => {
-		info(); // 데이터 가져오기
+		info();
 	}, []);
-
+	console.log('asdf', length);
 	useEffect(() => {
 		if (date) {
 			const today = new Date();
@@ -76,7 +77,10 @@ function Second() {
 	};
 
 	const counting2 = () => {
-		for (let i = 0; i <= length; i++) {
+		let postingcount = localStorage.getItem('postingCount') || '0';
+		const count: number = parseInt(postingcount, 10); // 숫자로 변환하여 저장
+
+		for (let i = 0; i <= count; i++) {
 			setTimeout(() => {
 				if (box2Ref.current) {
 					box2Ref.current.innerText = i.toString();
@@ -84,10 +88,8 @@ function Second() {
 			}, i * 30);
 		}
 	};
-
-	useEffect(() => {
-		view();
-	}, []);
+	view();
+	useEffect(() => {}, []);
 
 	useEffect(() => {
 		const handleScroll = () => {

@@ -49,8 +49,8 @@ function PostDetail() {
 	async function fetchPost() {
 		const response = await fetch(`${API_URL}/board/blogboard/${num}`);
 		const data = await response.json();
-		console.log(data.post);
-		setPost(data.post);
+		console.log(data);
+		setPost(data);
 	}
 
 	useEffect(() => {

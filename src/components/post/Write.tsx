@@ -46,6 +46,7 @@ function Write() {
 			title: title,
 			subtitle: subtitle,
 			board_text: board_text,
+			namee: localStorage.getItem('userName'),
 		};
 
 		if (title && subtitle && board_text) {
