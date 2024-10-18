@@ -71,6 +71,8 @@ function CreateAccount() {
 	};
 
 	const reg = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/;
+	const emailRegex =
+		/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
 
 	const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const value = event.target.value;
@@ -107,6 +109,21 @@ function CreateAccount() {
 				return;
 			}
 
+			if (!emailRegex.test(userId)) {
+				alert('이메일 형식이 올바르지 않습니다.');
+				return;
+			}
+
+			if (!isValid) {
+				alert('비밀번호 형식이 올바르지 않습니다.');
+				return;
+			}
+
+			if (password.includes(' ')) {
+				alert('비밀번호에 공백이 포함되어 있습니다.');
+				return;
+			}
+
 			const response = await fetch(signupUrl, {
 				method: 'POST',
 				headers: {
@@ -115,12 +132,13 @@ function CreateAccount() {
 				body: JSON.stringify(data),
 			});
 
-			const result = await response.json();
+			const result = await response.text();
 			if (response.ok) {
-				alert(result.message);
+				alert(result);
 				window.location.href = '/signin';
 			} else {
-				alert('회원가입 실패: ' + result.message);
+				alert('회원가입 실패: ' + result);
+				console.log(data);
 			}
 		} catch (error) {
 			console.error('회원가입 요청 중 오류 발생:', error);
@@ -205,7 +223,7 @@ function CreateAccount() {
 								value={password}
 								onChange={handlePasswordChange}
 								required
-								placeholder='비밀번호를 입력하세요. ' 	
+								placeholder='비밀번호를 입력하세요. '
 							/>{' '}
 							<br />
 							<p style={{ color: isValid ? 'green' : 'red' }}>

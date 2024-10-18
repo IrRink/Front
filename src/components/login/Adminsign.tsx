@@ -75,7 +75,8 @@ function Signin() {
 			if (response.ok) {
 				setSuccess(response.ok);
 				// localStorage.setItem('userName', data.userName);
-				// localStorage.setItem('jwtToken', data.token);
+				// localStorage.setItem('accessToken', data.accessToken);
+				// localStorage.setItem('refreshToken', data.refreshToken);
 				window.location.href = '../';
 			}
 		} catch (error) {
