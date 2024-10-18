@@ -10,6 +10,7 @@ import NotFound from './components/notFound/NotFound';
 import Signin from './components/login/Adminsign';
 import Delete from './components/post/Del/Delete';
 import Update from './components/post/Update';
+import UpdateDetail from './components/post/UpdateDetail';
 
 function App() {
 	return (
@@ -24,6 +25,8 @@ function App() {
 				<Route path='/write' element={<Write />} />
 				<Route path='/Del' element={<Delete />} />
 				<Route path='/update' element={<Update />} />
+				<Route path='/post/:num' element={<PostDetail />} />
+				<Route path='/postdetail/:num' element={<UpdateDetail />} />
 			</Routes>
 		</Router>
 	);

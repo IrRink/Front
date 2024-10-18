@@ -54,17 +54,20 @@ function CreateAccount() {
 			setIdCheckResult('아이디를 입력해주세요.');
 			return;
 		}
-
 		try {
 			const response = await fetch(
 				`${API_URL}/process/checkEmail?email=${email}`
 			);
 			const result = await response.json();
-
-			if (result.message !== '이미 사용 중인 아이디입니다.') {
-				setIdCheckResult('사용 가능한 아이디입니다.');
+			// 이메일 존재 여부에 따라 결과 메시지 설정
+			if (response.ok) {
+				if (result.exists) {
+					setIdCheckResult('이미 사용 중인 아이디입니다.');
+				} else {
+					setIdCheckResult('사용 가능한 아이디입니다.');
+				}
 			} else {
-				setIdCheckResult('이미 사용 중인 아이디입니다.');
+				setIdCheckResult('이메일 확인 오류 발생.');
 			}
 		} catch (error) {
 			console.error('아이디 중복 체크 중 오류 발생:', error);
@@ -92,8 +95,8 @@ function CreateAccount() {
 		}
 		const data = {
 			email: email,
-			adminName: name,
-			adminAge: age,
+			name: name,
+			age: age,
 			password: password,
 			isAdmin: isAdmin,
 		};

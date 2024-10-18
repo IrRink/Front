@@ -51,15 +51,16 @@ function Signin() {
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
-		const formData = new URLSearchParams();
-		formData.append('userId', userId);
-		formData.append('password', password);
-
 		const loginUrl = isAdmin
 			? `${API_URL}/process/login/admin`
 			: `${API_URL}/process/login`;
 
 		try {
+			const formData = new URLSearchParams();
+			formData.append('email', userId);
+			formData.append('password', password);
+			formData.append('isAdmin', isAdmin.toString());
+			console.log(formData);
 			const response = await fetch(loginUrl, {
 				method: 'POST',
 				headers: {
@@ -67,16 +68,14 @@ function Signin() {
 				},
 				body: formData.toString(),
 			});
-			const data = response.json;
-			console.log(data);
+			const data = await response.json();
+			console.log('data', data.user.name);
 			setSuccess(response.ok);
-			// setResult(data);
 
 			if (response.ok) {
 				setSuccess(response.ok);
-				// localStorage.setItem('userName', data.userName);
-				// localStorage.setItem('accessToken', data.accessToken);
-				// localStorage.setItem('refreshToken', data.refreshToken);
+				localStorage.setItem('userName', data.user.name);
+				localStorage.setItem('token', data.token);
 				window.location.href = '../';
 			}
 		} catch (error) {

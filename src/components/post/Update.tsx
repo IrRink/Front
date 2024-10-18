@@ -91,6 +91,9 @@ function Update() {
 										borderRadius: '5px',
 										fontWeight: '800',
 									}}
+									onClick={() =>
+										(window.location.href = `/postdetail/${item.num}`)
+									}
 								>
 									수정하기
 								</button>
