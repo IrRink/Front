@@ -2,7 +2,7 @@ import styled from 'styled-components';
 const FirstMainDiv = styled.div`
 	width: calc(100% - 250px);
 	height: 100vh;
-	background-image: url('404.jpg');
+	background-image: url('/img/404.jpg');
 	background-size: cover;
 	background-position: center;
 	background-repeat: no-repeat;

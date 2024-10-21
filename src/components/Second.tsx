@@ -155,12 +155,12 @@ function Second() {
 				}}
 			>
 				<img
-					src='bomb.gif'
+					src='img/bomb.gif'
 					alt=''
 					style={{ position: 'absolute', left: '0' }}
 				/>
 				<img
-					src='bomb.gif'
+					src='img/bomb.gif'
 					alt=''
 					style={{
 						position: 'absolute',

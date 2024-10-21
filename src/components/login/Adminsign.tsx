@@ -82,8 +82,7 @@ function Signin() {
 			setSuccess(response.ok);
 
 			if (response.ok) {
-				if (adminEmail === userId) {
-					console.log('data');
+				if (isAdmin == true) {
 					localStorage.setItem('token', data.token);
 					if (ADMIN_USER_KEY) {
 						localStorage.setItem('id', ADMIN_USER_KEY);

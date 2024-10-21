@@ -50,11 +50,6 @@ function UpdateDetail() {
 	const subtitleRef = useRef<HTMLInputElement | null>(null);
 	const [get, setGet] = useState('');
 
-	function got() {
-		console.log(get);
-		console.log(titleRef.current?.value);
-	}
-
 	async function fetchPost() {
 		console.log(num);
 		const response = await fetch(`${API_URL}/board/blogboard/${num}`);
@@ -81,6 +76,7 @@ function UpdateDetail() {
 			const result = await response2.text();
 			if (response2.ok) {
 				alert(result);
+				window.location.href = '../';
 			} else {
 				alert(result);
 			}
