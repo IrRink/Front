@@ -19,7 +19,7 @@ function Main() {
 	if (localStorage.getItem('userName')) {
 		console.log('로그인 성공');
 	} else {
-		alert('세션이 만료되었거나 로그인을 하지 않으셨습니다. 재 로그인 해주세요');
+		alert('로그인이 되어있지 않습니다. 재 로그인 해주세요');
 		window.location.href = '/signin';
 	}
 

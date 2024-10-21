@@ -47,6 +47,15 @@ function Signin() {
 	const [isAdmin, setIsAdmin] = useState(false);
 	const [result, setResult] = useState<string | null>(null);
 	const [success, setSuccess] = useState(false);
+	const [adminEmail, setAdminEmail] = useState('');
+
+	async function getAdminEmail() {
+		const responses = await fetch(`${API_URL}/process/aminEmail`);
+		const dataa = await responses.json();
+		console.log(dataa);
+		setAdminEmail(dataa);
+	}
+	getAdminEmail();
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -73,10 +82,22 @@ function Signin() {
 			setSuccess(response.ok);
 
 			if (response.ok) {
-				setSuccess(response.ok);
-				localStorage.setItem('userName', data.user.name);
-				localStorage.setItem('token', data.token);
-				window.location.href = '../';
+				if (adminEmail === userId) {
+					console.log('data');
+					localStorage.setItem('token', data.token);
+					localStorage.setItem('userName', data.admin.name);
+					window.location.href = '../';
+					return;
+				} else {
+					setSuccess(response.ok);
+					localStorage.setItem('userName', data.user.name);
+					localStorage.setItem('token', data.token);
+					window.location.href = '../';
+				}
+			} else {
+				alert(
+					'비밀번호나 아이디가 잘못되었을 가능성이 없지않아 있습니다. 확인해보세요.'
+				);
 			}
 		} catch (error) {
 			console.error('로그인 요청 중 오류 발생:', error);
