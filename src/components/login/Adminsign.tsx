@@ -69,7 +69,7 @@ function Signin() {
 				body: formData.toString(),
 			});
 			const data = await response.json();
-			console.log('data', data.user.name);
+			console.log('data', data);
 			setSuccess(response.ok);
 
 			if (response.ok) {

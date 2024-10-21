@@ -23,7 +23,9 @@ function Loginnavbar() {
 		try {
 			const response = await fetch(`${API_URL}/process/logout`, {
 				method: 'POST',
-				credentials: 'include',
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem('token')}`,
+				},
 			});
 
 			if (response.ok) {
