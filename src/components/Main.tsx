@@ -1,7 +1,5 @@
 import styled from 'styled-components';
-
 import { useEffect } from 'react';
-import { API_URL } from '../constants';
 import Loginnavbar from './login/Loginnavbar';
 import Navber from './navbar';
 import FirstMainPage from './firstpage';

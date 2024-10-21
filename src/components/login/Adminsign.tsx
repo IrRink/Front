@@ -127,7 +127,7 @@ function Signin() {
 					<h1 style={{ marginBottom: '30px' }}>로그인</h1>
 					<form id='loginForm' onSubmit={handleSubmit}>
 						<Input
-							type='text'
+							type='email'
 							name='userId'
 							placeholder='사용자 ID'
 							value={userId}

@@ -124,6 +124,7 @@ function CreateAccount() {
 			}
 
 			if (password.includes(' ')) {
+				setIsValid(false);
 				alert('비밀번호에 공백이 포함되어 있습니다.');
 				return;
 			}
