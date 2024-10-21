@@ -1,6 +1,8 @@
 import styled from 'styled-components'; // createGlobalStyle 추가
 import irlinkLogoImg from '../assets/irlinklogo.png';
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { ADMIN_USER_KEY } from '../constants';
 
 const NavberMainDiv = styled.div`
 	width: 250px;
@@ -74,6 +76,22 @@ const SideAndText = styled.p`
 	margin-bottom: 20px;
 `;
 function Navber() {
+	const [btntf, setBtntf] = useState('none');
+
+	function verification() {
+		console.log(localStorage.getItem('id'));
+		console.log(ADMIN_USER_KEY);
+		if (localStorage.getItem('id') === ADMIN_USER_KEY) {
+			setBtntf('block');
+		} else {
+			setBtntf('none');
+		}
+	}
+
+	useEffect(() => {
+		verification();
+	}, []);
+
 	return (
 		<NavberMainDiv>
 			<img
@@ -130,11 +148,17 @@ function Navber() {
 					<a href='#Footer'>
 						<SideAndText>Footer ▶</SideAndText>
 					</a>
-					<Link to='/Write'>글쓰기</Link>
+					<Link to='/Write' style={{ display: btntf }}>
+						글쓰기
+					</Link>
 					<br />
-					<Link to='/Del'>글 삭제</Link>
+					<Link to='/Del' style={{ display: btntf }}>
+						글 삭제
+					</Link>
 					<br />
-					<Link to='/update'>글 수정</Link>
+					<Link to='/update' style={{ display: btntf }}>
+						글 수정
+					</Link>
 				</MenuLi>
 			</ul>
 		</NavberMainDiv>

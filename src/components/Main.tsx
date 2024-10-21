@@ -16,34 +16,19 @@ const Container = styled.div`
 `;
 
 function Main() {
-	if (localStorage.getItem('userName')) {
-		console.log('로그인 성공');
-	} else {
-		alert('로그인이 되어있지 않습니다. 재 로그인 해주세요');
-		window.location.href = '/signin';
-	}
-
-	async function session() {
-		try {
-			const response = await fetch(`${API_URL}/session`, {
-				method: 'GET',
-				credentials: 'include',
-			});
-
-			if (response.ok) {
-				alert('세션이 연결되었습니다');
-				const resultname = response.text();
-				console.log('dataName', resultname);
-			}
-		} catch {
-			alert('세션 확인중 오류 발생');
+	function login() {
+		if (localStorage.getItem('userName') || localStorage.getItem('id')) {
+			console.log('로그인 성공');
+		} else {
+			localStorage.clear();
+			alert('로그인이 되어있지 않습니다. 재 로그인 해주세요');
+			window.location.href = '/signin';
 		}
 	}
 
 	useEffect(() => {
-		session();
+		login();
 	}, []);
-
 	return (
 		<>
 			<Container>

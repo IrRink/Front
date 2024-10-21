@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { API_URL } from '../../constants';
+import { ADMIN_USER_KEY, API_URL } from '../../constants';
 
 // Styled components for design
 const FirstMainDiv = styled.div`
@@ -85,7 +85,13 @@ function Signin() {
 				if (adminEmail === userId) {
 					console.log('data');
 					localStorage.setItem('token', data.token);
-					localStorage.setItem('userName', data.admin.name);
+					if (ADMIN_USER_KEY) {
+						localStorage.setItem('id', ADMIN_USER_KEY);
+					} else {
+						alert('어드민 전용 키가 부여되지 않았습니다.');
+						return;
+					}
+
 					window.location.href = '../';
 					return;
 				} else {
@@ -95,9 +101,7 @@ function Signin() {
 					window.location.href = '../';
 				}
 			} else {
-				alert(
-					'비밀번호나 아이디가 잘못되었을 가능성이 없지않아 있습니다. 확인해보세요.'
-				);
+				setResult(data.error);
 			}
 		} catch (error) {
 			console.error('로그인 요청 중 오류 발생:', error);
