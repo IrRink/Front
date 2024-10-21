@@ -64,7 +64,7 @@ function Update() {
 			<ScrollableContent>
 				<div style={{ padding: '50px', textAlign: 'center' }}>
 					<h1 style={{ marginBottom: '30px' }}>
-						삭제하고 싶은 글을 선택하세요.
+						수정하고 싶은 글을 선택하세요.
 					</h1>
 					{posts.map((item) => (
 						<div key={item.num} style={{ color: 'black' }}>

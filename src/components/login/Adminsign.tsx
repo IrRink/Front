@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ADMIN_USER_KEY, API_URL } from '../../constants';
 
@@ -50,12 +50,14 @@ function Signin() {
 	const [adminEmail, setAdminEmail] = useState('');
 
 	async function getAdminEmail() {
-		const responses = await fetch(`${API_URL}/process/aminEmail`);
+		const responses = await fetch(`${API_URL}/process/adminEmail`);
 		const dataa = await responses.json();
 		console.log(dataa);
 		setAdminEmail(dataa);
 	}
-	getAdminEmail();
+	useEffect(() => {
+		getAdminEmail();
+	});
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
