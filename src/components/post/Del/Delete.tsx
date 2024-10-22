@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { API_URL } from '../../../constants';
+import { ADMIN_USER_KEY, API_URL } from '../../../constants';
 import Loginnavbar from '../../login/Loginnavbar';
 
 const FirstMainDiv = styled.div`
@@ -42,6 +42,21 @@ interface BlogPost {
 }
 
 function Delete() {
+	function verification() {
+		console.log(localStorage.getItem('id'));
+		console.log(ADMIN_USER_KEY);
+		if (localStorage.getItem('id') === ADMIN_USER_KEY) {
+			console.log('통과');
+		} else {
+			alert('현재 권한이 없습니다.');
+			window.location.href = '/signin';
+		}
+	}
+
+	useEffect(() => {
+		verification();
+	}, []);
+
 	const [posts, setPosts] = useState<BlogPost[]>([]);
 
 	// 게시물 목록 불러오기

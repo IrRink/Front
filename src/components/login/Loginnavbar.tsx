@@ -68,7 +68,8 @@ function Loginnavbar() {
 					}}
 				>
 					<div style={{ flex: '1', textAlign: 'center', marginTop: '25px' }}>
-						{localStorage.getItem('userName')}님 반가워요.
+						{localStorage.getItem('userName') || localStorage.getItem('adName')}
+						님 반가워요.
 					</div>
 					<div style={{ flex: '1', textAlign: 'center', marginTop: '25px' }}>
 						{adname} 블로그

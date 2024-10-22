@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { API_URL } from '../../constants';
+import { ADMIN_USER_KEY, API_URL } from '../../constants';
 import Loginnavbar from '../login/Loginnavbar';
 
 interface BlogPost {
@@ -43,6 +43,21 @@ const ScrollableContent = styled.div`
 `;
 
 function UpdateDetail() {
+	function verification() {
+		console.log(localStorage.getItem('id'));
+		console.log(ADMIN_USER_KEY);
+		if (localStorage.getItem('id') === ADMIN_USER_KEY) {
+			console.log('통과');
+		} else {
+			alert('현재 권한이 없습니다.');
+			window.location.href = '/signin';
+		}
+	}
+
+	useEffect(() => {
+		verification();
+	}, []);
+
 	const { num } = useParams<{ num: any }>();
 
 	const [post, setPost] = useState<BlogPost | null>(null);
@@ -87,7 +102,7 @@ function UpdateDetail() {
 
 	useEffect(() => {
 		fetchPost();
-	}, [num]);
+	});
 
 	if (!post) return <div>Loading...</div>;
 

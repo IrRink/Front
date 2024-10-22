@@ -15,10 +15,9 @@ function Second() {
 	const [member, setMember] = useState(0);
 
 	const [date, setDate] = useState('');
-	const [getdays, setGetdays] = useState(0);
 	const box1Ref = useRef<HTMLHeadingElement>(null);
 	const box2Ref = useRef<HTMLHeadingElement>(null);
-	const [length, setLength] = useState(0);
+	const [length, setLength] = useState(20);
 	async function view() {
 		const response = await fetch(`${API_URL}/board/blogboard`);
 		const data = await response.json();
@@ -40,31 +39,9 @@ function Second() {
 		}
 	}
 
-	const getDateDiff = (d1: string, d2: string) => {
-		const date1 = new Date(d1);
-		const date2 = new Date(d2);
-
-		const diffDate = date1.getTime() - date2.getTime();
-
-		return Math.abs(diffDate / (1000 * 60 * 60 * 24));
-	};
-
 	useEffect(() => {
 		info();
 	}, []);
-	console.log('asdf', length);
-	useEffect(() => {
-		if (date) {
-			const today = new Date();
-			const year = today.getFullYear();
-			const month = String(today.getMonth() + 1).padStart(2, '0');
-			const day = String(today.getDate()).padStart(2, '0');
-
-			const nowDay = `${year}-${month}-${day}`;
-			const dats = getDateDiff(date, nowDay);
-			setGetdays(dats);
-		}
-	}, [date]);
 
 	const counting = () => {
 		for (let i = 0; i <= member; i++) {
@@ -105,7 +82,7 @@ function Second() {
 		return () => {
 			window.removeEventListener('scroll', handleScroll);
 		};
-	}, [member]);
+	});
 
 	return (
 		<div style={{ display: 'flex' }}>
@@ -113,7 +90,9 @@ function Second() {
 				<div style={{ margin: '0 auto', width: '70%' }}>
 					<Box style={{ borderBottom: '10px solid rgb(54, 85, 255)' }}>
 						총 회원수
-						<h1 id='box1' style={{ textAlign: 'center' }} ref={box1Ref}></h1>
+						<h1 id='box1' style={{ textAlign: 'center' }} ref={box1Ref}>
+							1
+						</h1>
 					</Box>
 					<div style={{ display: 'flex', marginTop: '30px' }}>
 						<Box
@@ -129,7 +108,9 @@ function Second() {
 							<h1
 								style={{ textAlign: 'center', marginTop: '15px' }}
 								ref={box2Ref}
-							></h1>
+							>
+								20
+							</h1>
 						</Box>
 
 						<Box

@@ -1,6 +1,6 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { API_URL } from '../../constants';
+import { ADMIN_USER_KEY, API_URL } from '../../constants';
 import Loginnavbar from '../login/Loginnavbar';
 
 const FirstMainDiv = styled.div`
@@ -33,6 +33,20 @@ const ScrollableContent = styled.div`
 `;
 
 function Write() {
+	function verification() {
+		console.log(localStorage.getItem('id'));
+		console.log(ADMIN_USER_KEY);
+		if (localStorage.getItem('id') === ADMIN_USER_KEY) {
+			console.log('통과');
+		} else {
+			alert('현재 권한이 없습니다.');
+			window.location.href = '/signin';
+		}
+	}
+
+	useEffect(() => {
+		verification();
+	}, []);
 	const titleref = useRef<HTMLInputElement>(null);
 	const subtitleref = useRef<HTMLInputElement>(null);
 	const detailref = useRef<HTMLTextAreaElement>(null);
@@ -43,7 +57,6 @@ function Write() {
 		let board_text: string = '';
 		if (detailref.current?.value) {
 			board_text = detailref.current?.value;
-			board_text = board_text.replace(/\n/g, '<br />');
 		}
 
 		const data = {

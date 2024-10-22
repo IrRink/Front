@@ -10,7 +10,7 @@ interface BlogPost {
 	subtitle: string;
 	id: string;
 	uptime: string;
-	board_text: string; // HTML 문자열을 포함할 수 있음
+	board_text: string;
 }
 
 const FirstMainDiv = styled.div`
@@ -43,7 +43,7 @@ const ScrollableContent = styled.div`
 `;
 
 function PostDetail() {
-	const { num } = useParams<{ num: string }>(); // num의 타입을 string으로 지정
+	const { num } = useParams<{ num: any }>();
 	const [post, setPost] = useState<BlogPost | null>(null);
 
 	async function fetchPost() {
@@ -55,7 +55,7 @@ function PostDetail() {
 
 	useEffect(() => {
 		fetchPost();
-	}, [num]);
+	});
 
 	if (!post) return <div>Loading...</div>;
 
@@ -69,14 +69,15 @@ function PostDetail() {
 					<h2 style={{ textAlign: 'center' }}>{post.subtitle}</h2>
 					<div
 						style={{ textAlign: 'left', paddingTop: '80px' }}
-						dangerouslySetInnerHTML={{ __html: post.board_text }}
+						dangerouslySetInnerHTML={{
+							__html: post.board_text.replace(/\n/g, '<br />'),
+						}}
 					/>
 
 					<div style={{ bottom: '20px', right: '40px' }}>
 						<p style={{ textAlign: 'right' }}>작성자: {post.id}</p>
 						<p style={{ textAlign: 'right' }}>날짜: {post.uptime}</p>
 					</div>
-					<div>{post.board_text}</div>
 				</div>
 			</ScrollableContent>
 		</FirstMainDiv>

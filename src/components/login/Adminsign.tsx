@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { ADMIN_USER_KEY, API_URL } from '../../constants';
 
@@ -47,17 +47,6 @@ function Signin() {
 	const [isAdmin, setIsAdmin] = useState(false);
 	const [result, setResult] = useState<string | null>(null);
 	const [success, setSuccess] = useState(false);
-	const [adminEmail, setAdminEmail] = useState('');
-
-	async function getAdminEmail() {
-		const responses = await fetch(`${API_URL}/process/adminEmail`);
-		const dataa = await responses.json();
-		console.log(dataa);
-		setAdminEmail(dataa);
-	}
-	useEffect(() => {
-		getAdminEmail();
-	});
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -71,7 +60,7 @@ function Signin() {
 			formData.append('email', userId);
 			formData.append('password', password);
 			formData.append('isAdmin', isAdmin.toString());
-			console.log(formData);
+
 			const response = await fetch(loginUrl, {
 				method: 'POST',
 				headers: {
@@ -80,11 +69,10 @@ function Signin() {
 				body: formData.toString(),
 			});
 			const data = await response.json();
-			console.log('data', data);
 			setSuccess(response.ok);
 
 			if (response.ok) {
-				if (isAdmin == true) {
+				if (isAdmin === true) {
 					localStorage.setItem('token', data.token);
 					if (ADMIN_USER_KEY) {
 						localStorage.setItem('id', ADMIN_USER_KEY);

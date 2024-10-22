@@ -16,7 +16,6 @@ const Container = styled.div`
 function Main() {
 	function login() {
 		if (localStorage.getItem('userName') || localStorage.getItem('id')) {
-			console.log('로그인 성공');
 		} else {
 			localStorage.clear();
 			alert('로그인이 되어있지 않습니다. 재 로그인 해주세요');

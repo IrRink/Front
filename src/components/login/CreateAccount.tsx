@@ -143,7 +143,6 @@ function CreateAccount() {
 				window.location.href = '/signin';
 			} else {
 				alert('회원가입 실패: ' + result);
-				console.log(data);
 			}
 		} catch (error) {
 			console.error('회원가입 요청 중 오류 발생:', error);

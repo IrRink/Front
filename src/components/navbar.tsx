@@ -79,8 +79,6 @@ function Navber() {
 	const [btntf, setBtntf] = useState('none');
 
 	function verification() {
-		console.log(localStorage.getItem('id'));
-		console.log(ADMIN_USER_KEY);
 		if (localStorage.getItem('id') === ADMIN_USER_KEY) {
 			setBtntf('block');
 		} else {

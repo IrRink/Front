@@ -20,7 +20,6 @@ function Post() {
 	async function view() {
 		const response = await fetch(`${API_URL}/board/blogboard`);
 		const data = await response.json();
-		console.log(data);
 		setJson(data);
 	}
 
