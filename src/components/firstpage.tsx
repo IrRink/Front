@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import styled from 'styled-components';
-import { useCallback, useRef } from 'react';
+import { useRef } from 'react';
 
 const FirstMainDiv = styled.div`
 	width: calc(100% - 250px);
