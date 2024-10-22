@@ -40,7 +40,11 @@ function Write() {
 	async function submit() {
 		const title = titleref.current?.value;
 		const subtitle = subtitleref.current?.value;
-		const board_text = detailref.current?.value;
+		let board_text: string = '';
+		if (detailref.current?.value) {
+			board_text = detailref.current?.value;
+			board_text = board_text.replace(/\n/g, '<br />');
+		}
 
 		const data = {
 			title: title,
