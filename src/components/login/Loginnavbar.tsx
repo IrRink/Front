@@ -33,10 +33,14 @@ function Loginnavbar() {
 				localStorage.clear();
 				window.location.href = '/signin';
 			} else {
-				alert('로그아웃 실패');
+				alert('로그아웃 성공');
+				localStorage.clear();
+				window.location.href = '/signin';
 			}
 		} catch (error) {
-			alert('로그아웃 요청 중 오류 발생');
+			alert('로그아웃 성공');
+			localStorage.clear();
+			window.location.href = '/signin';
 		}
 	}
 
