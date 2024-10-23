@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import { API_URL } from '../../api/constants';
+import Auth from '../../api/auth';
+import useAuth from '../../hooks/useAuth';
+import REG from '../../constants/regularExpressions';
 
 // Styled components for maintaining the design
 const FirstMainDiv = styled.div`
@@ -45,46 +48,63 @@ function CreateAccount() {
 	const [age, setAge] = useState('');
 	const [password, setPassword] = useState('');
 	const [isAdmin, setIsAdmin] = useState(false);
-	const [idCheckResult, setIdCheckResult] = useState<string | null>(null);
+	const [idCheckResult, setIdCheckResult] = useState(null);
 	const [isValid, setIsValid] = useState(false);
+	const { signUp, checkDuplicate } = useAuth();
 
-	// 아이디 중복 체크 함수
-	const handleCheckId = async () => {
+	const checkDuplicated = () => {
 		if (!email) {
 			setIdCheckResult('아이디를 입력해주세요.');
 			return;
 		}
+	};
+
+	const validateSignUp = () => {
+		console.log('VALIDATESIGNUP');
+
+		let ageTest = parseInt(age);
+		if (ageTest <= 0 || ageTest >= 100) {
+			alert('나이가 올바르지 않습니다.');
+			return;
+		}
+
+		if (!REG.emailRegex.test(email)) {
+			alert('이메일 형식이 올바르지 않습니다.');
+			return;
+		}
+
+		if (!isValid) {
+			alert('비밀번호 형식이 올바르지 않습니다.');
+			return;
+		}
+
+		if (password.includes(' ')) {
+			setIsValid(false);
+			alert('비밀번호에 공백이 포함되어 있습니다.');
+			return;
+		}
+	};
+
+	// 아이디 중복 체크 함수
+	const handleCheckId = async () => {
+		checkDuplicate(API_URL, email);
+
 		try {
-			const response = await fetch(`${API_URL}/user/checkEmail?email=${email}`);
-			const result = await response.json();
-			// 이메일 존재 여부에 따라 결과 메시지 설정
-			if (response.ok) {
-				if (result.exists) {
-					setIdCheckResult('이미 사용 중인 아이디입니다.');
-				} else {
-					setIdCheckResult('사용 가능한 아이디입니다.');
-				}
-			} else {
-				setIdCheckResult('이메일 확인 오류 발생.');
-			}
 		} catch (error) {
 			console.error('아이디 중복 체크 중 오류 발생:', error);
+
 			setIdCheckResult('아이디 중복 체크 오류 발생.');
 		}
 	};
 
-	const reg = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/;
-	const emailRegex =
-		/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-
-	const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+	const handlePasswordChange = (event) => {
 		const value = event.target.value;
 		setPassword(value);
-		setIsValid(reg.test(value)); // 비밀번호가 변경될 때마다 유효성 검사
+		setIsValid(REG.passwordReg.test(value)); // 비밀번호가 변경될 때마다 유효성 검사
 	};
 
 	// 회원가입 제출 함수
-	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+	const handleSubmit = async (event) => {
 		event.preventDefault();
 
 		if (!isValid) {
@@ -98,52 +118,12 @@ function CreateAccount() {
 			password: password,
 			isAdmin: isAdmin,
 		};
+		validateSignUp();
 
 		const signupUrl =
 			isAdmin === true ? `${API_URL}/admin/signup` : `${API_URL}/user/signup`;
 
-		try {
-			let ageTest = parseInt(age);
-			if (ageTest <= 0 || ageTest >= 100) {
-				alert('나이가 올바르지 않습니다.');
-				return;
-			}
-
-			if (!emailRegex.test(email)) {
-				alert('이메일 형식이 올바르지 않습니다.');
-				return;
-			}
-
-			if (!isValid) {
-				alert('비밀번호 형식이 올바르지 않습니다.');
-				return;
-			}
-
-			if (password.includes(' ')) {
-				setIsValid(false);
-				alert('비밀번호에 공백이 포함되어 있습니다.');
-				return;
-			}
-
-			const response = await fetch(signupUrl, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(data),
-			});
-
-			const result = await response.text();
-			if (response.ok) {
-				alert(result);
-				window.location.href = '/signin';
-			} else {
-				alert('회원가입 실패: ' + result);
-			}
-		} catch (error) {
-			console.error('회원가입 요청 중 오류 발생:', error);
-			alert('회원가입 요청 중 오류가 발생했습니다.');
-		}
+		signUp(data, signupUrl);
 	};
 
 	return (
