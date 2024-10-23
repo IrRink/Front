@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 import { useEffect } from 'react';
-import Loginnavbar from './login/Loginnavbar';
-import Navber from './navbar';
-import FirstMainPage from './firstpage';
-import Second from './Second';
-import Third from './Third';
-import Footer from './footer/footer';
+import Loginnavbar from '../components/navbar/Loginnavbar';
+import FirstMainPage from '../components/firstpage';
+import Second from '../components/Second';
+import Third from '../components/Third';
+import Footer from '../components/footer/footer';
+import Navber from '../components/navbar/navbar';
 
 const Container = styled.div`
 	display: flex;

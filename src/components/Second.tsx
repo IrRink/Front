@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import React, { useEffect, useRef, useState } from 'react';
-import { API_URL } from '../constants';
+import { API_URL } from '../api/constants';
 
 const Box = styled.div`
 	margin: 0 auto;
@@ -26,7 +26,7 @@ function Second() {
 	}
 
 	async function info() {
-		const response = await fetch(`${API_URL}/process/adminAndUserCount`);
+		const response = await fetch(`${API_URL}/info/adminAndUserCount`);
 		const data = await response.json();
 
 		const num = Number(data.userCount);
@@ -49,7 +49,7 @@ function Second() {
 				if (box1Ref.current) {
 					box1Ref.current.innerText = i.toString();
 				}
-			}, i * 30);
+			}, i * 1);
 		}
 	};
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { ADMIN_USER_KEY, API_URL } from '../../constants';
+import { ADMIN_USER_KEY, API_URL } from '../../api/constants';
 
 // Styled components for design
 const FirstMainDiv = styled.div`
@@ -52,8 +52,8 @@ function Signin() {
 		event.preventDefault();
 
 		const loginUrl = isAdmin
-			? `${API_URL}/process/login/admin`
-			: `${API_URL}/process/login`;
+			? `${API_URL}/admin/login`
+			: `${API_URL}/user/login`;
 
 		try {
 			const formData = new URLSearchParams();

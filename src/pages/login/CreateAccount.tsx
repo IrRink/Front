@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { API_URL } from '../../constants';
+import { API_URL } from '../../api/constants';
 
 // Styled components for maintaining the design
 const FirstMainDiv = styled.div`
@@ -55,9 +55,7 @@ function CreateAccount() {
 			return;
 		}
 		try {
-			const response = await fetch(
-				`${API_URL}/process/checkEmail?email=${email}`
-			);
+			const response = await fetch(`${API_URL}/user/checkEmail?email=${email}`);
 			const result = await response.json();
 			// 이메일 존재 여부에 따라 결과 메시지 설정
 			if (response.ok) {
@@ -102,9 +100,7 @@ function CreateAccount() {
 		};
 
 		const signupUrl =
-			isAdmin === true
-				? `${API_URL}/process/adduseroradmin`
-				: `${API_URL}/process/adduseroruser`;
+			isAdmin === true ? `${API_URL}/admin/signup` : `${API_URL}/user/signup`;
 
 		try {
 			let ageTest = parseInt(age);

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { ADMIN_USER_KEY, API_URL } from '../../constants';
-import Loginnavbar from '../login/Loginnavbar';
+import { ADMIN_USER_KEY, API_URL } from '../../api/constants';
+import Loginnavbar from '../navbar/Loginnavbar';
 
 const FirstMainDiv = styled.div`
 	width: calc(100% - 250px);

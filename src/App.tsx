@@ -1,15 +1,16 @@
-import './App.css';
+import './assets/styles/App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navber from './components/navbar';
-import CreateAccount from './components/login/CreateAccount';
 import PostDetail from './components/post/PostDetail';
 import Write from './components/post/Write';
-import Main from './components/Main';
-import NotFound from './components/notFound/NotFound';
-import Signin from './components/login/Adminsign';
+import Main from './pages/Main';
 import Delete from './components/post/Del/Delete';
 import Update from './components/post/Update';
 import UpdateDetail from './components/post/UpdateDetail';
+import Inject from './Inject';
+import Navber from './components/navbar/navbar';
+import NotFound from './pages/notFound/NotFound';
+import CreateAccount from './pages/login/CreateAccount';
+import Signin from './pages/login/Adminsign';
 
 function App() {
 	return (
@@ -26,6 +27,7 @@ function App() {
 				<Route path='/update' element={<Update />} />
 				<Route path='/post/:num' element={<PostDetail />} />
 				<Route path='/postdetail/:num' element={<UpdateDetail />} />
+				<Route path='/inject' element={<Inject />} />
 			</Routes>
 		</Router>
 	);

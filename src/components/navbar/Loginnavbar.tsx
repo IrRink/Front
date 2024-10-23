@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { API_URL } from '../../constants';
+import { API_URL } from '../../api/constants';
 
 function Loginnavbar() {
 	var name = localStorage.getItem('name');
@@ -7,7 +7,7 @@ function Loginnavbar() {
 
 	const [adname, setAdname] = useState('');
 	async function adminName() {
-		const res = await fetch(`${API_URL}/process/adminname`);
+		const res = await fetch(`${API_URL}/info/adminname`);
 		let data = await res.text();
 		data = data.replace('"', '');
 		data = data.replace('"', '');
@@ -21,7 +21,7 @@ function Loginnavbar() {
 
 	async function logout() {
 		try {
-			const response = await fetch(`${API_URL}/process/logout`, {
+			const response = await fetch(`${API_URL}/user/logout`, {
 				method: 'POST',
 				headers: {
 					Authorization: `Bearer ${localStorage.getItem('token')}`,
