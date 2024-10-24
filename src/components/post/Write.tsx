@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { ADMIN_USER_KEY, API_URL } from '../../api/constants';
 import Loginnavbar from '../navbar/Loginnavbar';
+import Cud from '../../api/cud';
 
 const FirstMainDiv = styled.div`
 	width: calc(100% - 250px);
@@ -61,28 +62,13 @@ function Write() {
 
 		const data = {
 			title: title,
-			subtitle: subtitle,
+			sub_title: subtitle,
 			board_text: board_text,
-			namee: localStorage.getItem('adName'),
 		};
 
 		if (title && subtitle && board_text) {
 			console.log(data);
-			const response = await fetch(`${API_URL}/board/add-post`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(data),
-			});
-
-			if (response.ok) {
-				alert('정상적으로 작성되었습니다.');
-			} else {
-				alert('오류 발생');
-			}
-		} else {
-			alert('모든 필드를 입력하세요.');
+			Cud.create(JSON.stringify(data));
 		}
 	}
 
