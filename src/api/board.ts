@@ -23,6 +23,12 @@ class Board {
 		const data = await response.json();
 		return data;
 	};
+
+	static fetchPost = async (id: string) => {
+		const response = await fetch(`${API_URL}/api/board/${id}`);
+		const data = await response.json();
+		return data;
+	};
 }
 
 export default Board;

@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { API_URL } from '../../api/constants';
 import Loginnavbar from '../navbar/Loginnavbar';
+import Board from '../../api/board';
 
 interface BlogPost {
-	num: number;
+	id: number;
 	title: string;
-	subtitle: string;
-	id: string;
+	sub_title: string;
+	writer: string;
 	uptime: string;
 	board_text: string;
 }
@@ -43,19 +43,16 @@ const ScrollableContent = styled.div`
 `;
 
 function PostDetail() {
-	const { num } = useParams<{ num: any }>();
+	const { id } = useParams<{ id: any }>();
 	const [post, setPost] = useState<BlogPost | null>(null);
 
-	async function fetchPost() {
-		const response = await fetch(`${API_URL}/board/blogboard/${num}`);
-		const data = await response.json();
-		console.log(data);
-		setPost(data);
-	}
-
 	useEffect(() => {
-		fetchPost();
-	});
+		const PostOne = async () => {
+			const data = await Board.fetchPost(id);
+			setPost(data);
+		};
+		PostOne();
+	}, []);
 
 	if (!post) return <div>Loading...</div>;
 
@@ -66,7 +63,7 @@ function PostDetail() {
 			<ScrollableContent>
 				<div style={{ padding: '50px' }}>
 					<h1 style={{ textAlign: 'center' }}>{post.title}</h1>
-					<h2 style={{ textAlign: 'center' }}>{post.subtitle}</h2>
+					<h2 style={{ textAlign: 'center' }}>{post.sub_title}</h2>
 					<div
 						style={{ textAlign: 'left', paddingTop: '80px' }}
 						dangerouslySetInnerHTML={{
@@ -75,8 +72,10 @@ function PostDetail() {
 					/>
 
 					<div style={{ bottom: '20px', right: '40px' }}>
-						<p style={{ textAlign: 'right' }}>작성자: {post.id}</p>
-						<p style={{ textAlign: 'right' }}>날짜: {post.uptime}</p>
+						<p style={{ textAlign: 'right' }}>작성자: {post.writer}</p>
+						<p style={{ textAlign: 'right' }}>
+							날짜: {post.uptime.split(' ')[0]}
+						</p>
 					</div>
 				</div>
 			</ScrollableContent>

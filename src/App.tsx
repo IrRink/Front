@@ -21,7 +21,7 @@ function App() {
 				<Route path='/*' element={<NotFound />} />
 				<Route path='/signin' element={<Signin />} />
 				<Route path='/createAccount' element={<CreateAccount />} />
-				<Route path='/post/:num' element={<PostDetail />} />
+				<Route path='/post/:id' element={<PostDetail />} />
 				<Route path='/write' element={<Write />} />
 				<Route path='/Del' element={<Delete />} />
 				<Route path='/update' element={<Update />} />

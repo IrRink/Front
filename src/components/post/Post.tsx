@@ -3,11 +3,12 @@ import { Link } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
 import './New.css';
 import { API_URL } from '../../api/constants';
+import Board from '../../api/board';
 interface BlogPost {
-	num: number;
+	id: number;
 	title: string;
-	subtitle: string;
-	id: string;
+	sub_title: string;
+	writer: string;
 	uptime: string;
 	board_text: string;
 }
@@ -17,14 +18,12 @@ function Post() {
 	const [currentPage, setCurrentPage] = useState(0);
 	const postsPerPage = 10; // 한 페이지에 표시할 게시물 수
 
-	async function view() {
-		const response = await fetch(`${API_URL}/api/board`);
-		const data = await response.json();
-		setJson(data);
-	}
-
 	useEffect(() => {
-		view();
+		const viewall = async () => {
+			const data = await Board.viewAll(API_URL as string);
+			setJson(data);
+		};
+		viewall();
 	}, []);
 
 	// 현재 페이지에 따라 보여줄 게시물 결정
@@ -44,15 +43,15 @@ function Post() {
 			<ul
 				style={{
 					margin: '0 auto',
-					padding: '0', // 패딩 제거
-					width: '80%', // 너비를 설정
+					padding: '0',
+					width: '80%',
 				}}
 			>
 				{currentPosts.map((item) => (
 					<Link
-						to={`/post/${item.num}`}
+						to={`/post/${item.id}`}
 						style={{ color: 'black' }}
-						key={item.num}
+						key={item.id}
 					>
 						<li
 							style={{
@@ -65,9 +64,11 @@ function Post() {
 							}}
 						>
 							<h2>{item.title}</h2>
-							<h3>{item.subtitle}</h3>
-							<p style={{ textAlign: 'right' }}>작성자: {item.id}</p>
-							<p style={{ textAlign: 'right' }}>날짜: {item.uptime}</p>
+							<h3>{item.sub_title}</h3>
+							<p style={{ textAlign: 'right' }}>작성자: {item.writer}</p>
+							<p style={{ textAlign: 'right' }}>
+								날짜: {item.uptime.split(' ')[0]}
+							</p>
 						</li>
 					</Link>
 				))}
