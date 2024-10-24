@@ -52,16 +52,58 @@ function CreateAccount() {
 	const [isValid, setIsValid] = useState(false);
 	const { signUp, checkDuplicate } = useAuth();
 
-	const checkDuplicated = () => {
-		if (!email) {
-			setIdCheckResult('아이디를 입력해주세요.');
-			return;
-		}
+	// const validateSignUp = () => {
+	// 	console.log('VALIDATESIGNUP');
+
+	// 	let ageTest = parseInt(age);
+	// 	if (ageTest <= 0 || ageTest >= 100) {
+	// 		alert('나이가 올바르지 않습니다.');
+	// 		return;
+	// 	}
+
+	// 	if (!REG.emailRegex.test(email)) {
+	// 		alert('이메일 형식이 올바르지 않습니다.');
+	// 		return;
+	// 	}
+
+	// 	if (!isValid) {
+	// 		alert('비밀번호 형식이 올바르지 않습니다.');
+	// 		return;
+	// 	}
+
+	// 	if (password.includes(' ')) {
+	// 		setIsValid(false);
+	// 		alert('비밀번호에 공백이 포함되어 있습니다.');
+	// 		return;
+	// 	}
+	// };
+
+	const handleCheckId = async () => {
+		const result = await checkDuplicate(API_URL, email);
+		setIdCheckResult(result);
 	};
 
-	const validateSignUp = () => {
-		console.log('VALIDATESIGNUP');
+	const handlePasswordChange = (event) => {
+		const value = event.target.value;
+		setPassword(value);
+		setIsValid(REG.passwordReg.test(value));
+	};
 
+	// 회원가입 제출 함수
+	const handleSubmit = async (event) => {
+		event.preventDefault();
+
+		if (!isValid) {
+			alert('비밀번호가 올바르지 않습니다.');
+			return;
+		}
+		const data = {
+			email: email,
+			name: name,
+			age: age,
+			password: password,
+			isAdmin: isAdmin,
+		};
 		let ageTest = parseInt(age);
 		if (ageTest <= 0 || ageTest >= 100) {
 			alert('나이가 올바르지 않습니다.');
@@ -83,47 +125,12 @@ function CreateAccount() {
 			alert('비밀번호에 공백이 포함되어 있습니다.');
 			return;
 		}
-	};
-
-	// 아이디 중복 체크 함수
-	const handleCheckId = async () => {
-		checkDuplicate(API_URL, email);
-
-		try {
-		} catch (error) {
-			console.error('아이디 중복 체크 중 오류 발생:', error);
-
-			setIdCheckResult('아이디 중복 체크 오류 발생.');
-		}
-	};
-
-	const handlePasswordChange = (event) => {
-		const value = event.target.value;
-		setPassword(value);
-		setIsValid(REG.passwordReg.test(value)); // 비밀번호가 변경될 때마다 유효성 검사
-	};
-
-	// 회원가입 제출 함수
-	const handleSubmit = async (event) => {
-		event.preventDefault();
-
-		if (!isValid) {
-			alert('비밀번호가 올바르지 않습니다.');
-			return;
-		}
-		const data = {
-			email: email,
-			name: name,
-			age: age,
-			password: password,
-			isAdmin: isAdmin,
-		};
-		validateSignUp();
-
 		const signupUrl =
-			isAdmin === true ? `${API_URL}/admin/signup` : `${API_URL}/user/signup`;
+			isAdmin === true
+				? `${API_URL}/api/admin/signup`
+				: `${API_URL}/api/user/signup`;
 
-		signUp(data, signupUrl);
+		signUp(signupUrl, data);
 	};
 
 	return (

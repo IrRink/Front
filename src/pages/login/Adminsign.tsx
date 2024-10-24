@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { ADMIN_USER_KEY, API_URL } from '../../api/constants';
+import useAuth from '../../hooks/useAuth';
 
 // Styled components for design
 const FirstMainDiv = styled.div`
@@ -47,56 +48,19 @@ function Signin() {
 	const [isAdmin, setIsAdmin] = useState(false);
 	const [result, setResult] = useState<string | null>(null);
 	const [success, setSuccess] = useState(false);
-
+	const { signIn } = useAuth();
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
 		const loginUrl = isAdmin
-			? `${API_URL}/admin/login`
-			: `${API_URL}/user/login`;
+			? `${API_URL}/api/admin/login`
+			: `${API_URL}/api/user/login`;
 
-		try {
-			const formData = new URLSearchParams();
-			formData.append('email', userId);
-			formData.append('password', password);
-			formData.append('isAdmin', isAdmin.toString());
-
-			const response = await fetch(loginUrl, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/x-www-form-urlencoded',
-				},
-				body: formData.toString(),
-			});
-			const data = await response.json();
-			setSuccess(response.ok);
-
-			if (response.ok) {
-				if (isAdmin === true) {
-					localStorage.setItem('token', data.token);
-					if (ADMIN_USER_KEY) {
-						localStorage.setItem('id', ADMIN_USER_KEY);
-					} else {
-						alert('어드민 전용 키가 부여되지 않았습니다.');
-						return;
-					}
-
-					window.location.href = '../';
-					return;
-				} else {
-					setSuccess(response.ok);
-					localStorage.setItem('userName', data.user.name);
-					localStorage.setItem('token', data.token);
-					window.location.href = '../';
-				}
-			} else {
-				setResult(data.error);
-			}
-		} catch (error) {
-			console.error('로그인 요청 중 오류 발생:', error);
-			setSuccess(false);
-			setResult('로그인 요청 중 오류가 발생했습니다.');
-		}
+		const formData = new URLSearchParams();
+		formData.append('email', userId);
+		formData.append('password', password);
+		formData.append('isAdmin', isAdmin.toString());
+		signIn(loginUrl, formData, isAdmin);
 	};
 
 	return (
