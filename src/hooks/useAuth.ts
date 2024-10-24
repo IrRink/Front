@@ -38,6 +38,7 @@ const useAuth = () => {
 		try {
 			const signInResponse = await Auth.fetchSginIn(loginUrl, formData);
 			const data = await signInResponse.json();
+
 			if (signInResponse.ok) {
 				if (isAdmin === true) {
 					localStorage.setItem('token', data.token);
@@ -48,19 +49,38 @@ const useAuth = () => {
 						return;
 					}
 					alert('관리자 로그인 성공');
-					window.location.href = '../';
-					return;
+					window.location.href = '/';
 				} else {
 					alert('로그인 성공');
 					localStorage.setItem('userName', data.user.name);
 					localStorage.setItem('token', data.token);
-					window.location.href = '../';
+					window.location.href = '/';
 				}
 			} else {
-				alert('로그인 하는 중 실패하였습니다.');
+				alert('로그인 실패: ' + JSON.stringify(data));
 			}
 		} catch (error) {
-			console.log(error);
+			console.log('로그인 중 오류 발생:', error);
+		}
+	};
+
+	const logOut = async (apiUrl: string) => {
+		try {
+			const response = await Auth.fetchLogOut(apiUrl);
+
+			if (response.ok) {
+				alert('로그아웃 성공');
+				localStorage.clear();
+				window.location.href = '/signin';
+			} else {
+				alert('로그아웃 성공');
+				localStorage.clear();
+				window.location.href = '/signin';
+			}
+		} catch (error) {
+			alert('로그아웃 성공');
+			localStorage.clear();
+			window.location.href = '/signin';
 		}
 	};
 
@@ -68,6 +88,7 @@ const useAuth = () => {
 		signUp,
 		checkDuplicate,
 		signIn,
+		logOut,
 	};
 };
 

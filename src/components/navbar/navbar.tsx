@@ -99,7 +99,13 @@ function Navber() {
 			/>
 			<Profilimg src={irlinkLogoImg} alt='' />
 			<div style={{ height: '60px' }}></div>
-			<p style={{ textAlign: 'center', marginTop: '10px' }}>
+			<p
+				style={{
+					textAlign: 'center',
+					marginTop: '10px',
+					height: '10px',
+				}}
+			>
 				{localStorage.getItem('adName')}
 			</p>
 			<div>

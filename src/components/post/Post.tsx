@@ -18,7 +18,7 @@ function Post() {
 	const postsPerPage = 10; // 한 페이지에 표시할 게시물 수
 
 	async function view() {
-		const response = await fetch(`${API_URL}/board/blogboard`);
+		const response = await fetch(`${API_URL}/api/board`);
 		const data = await response.json();
 		setJson(data);
 	}

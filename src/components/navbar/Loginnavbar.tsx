@@ -1,48 +1,19 @@
 import { useEffect, useState } from 'react';
 import { API_URL } from '../../api/constants';
+import Info from '../../api/info';
+import useAuth from '../../hooks/useAuth';
 
 function Loginnavbar() {
-	var name = localStorage.getItem('name');
-	console.log(name);
-
 	const [adname, setAdname] = useState('');
-	async function adminName() {
-		const res = await fetch(`${API_URL}/info/adminname`);
-		let data = await res.text();
-		data = data.replace('"', '');
-		data = data.replace('"', '');
-		setAdname(data);
-	}
-	localStorage.setItem('adName', adname);
-
 	useEffect(() => {
-		adminName();
+		const fetchAdminName = async () => {
+			const data = await Info.adminName(API_URL as string);
+			setAdname(data);
+		};
+		fetchAdminName();
 	}, []);
 
-	async function logout() {
-		try {
-			const response = await fetch(`${API_URL}/user/logout`, {
-				method: 'POST',
-				headers: {
-					Authorization: `Bearer ${localStorage.getItem('token')}`,
-				},
-			});
-
-			if (response.ok) {
-				alert('로그아웃 성공');
-				localStorage.clear();
-				window.location.href = '/signin';
-			} else {
-				alert('로그아웃 성공');
-				localStorage.clear();
-				window.location.href = '/signin';
-			}
-		} catch (error) {
-			alert('로그아웃 성공');
-			localStorage.clear();
-			window.location.href = '/signin';
-		}
-	}
+	const { logOut } = useAuth();
 
 	return (
 		<>
@@ -75,7 +46,10 @@ function Loginnavbar() {
 						{adname} 블로그
 					</div>
 					<div style={{ flex: '1', textAlign: 'center', marginTop: '25px' }}>
-						<p style={{ cursor: 'pointer' }} onClick={logout}>
+						<p
+							style={{ cursor: 'pointer' }}
+							onClick={() => logOut(API_URL as string)}
+						>
 							로그아웃
 						</p>
 					</div>

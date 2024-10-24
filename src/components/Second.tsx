@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import React, { useEffect, useRef, useState } from 'react';
 import { API_URL } from '../api/constants';
+import Board from '../api/board';
+import useBoard from '../hooks/useBoard';
 
 const Box = styled.div`
 	margin: 0 auto;
@@ -17,16 +19,17 @@ function Second() {
 	const [date, setDate] = useState('');
 	const box1Ref = useRef<HTMLHeadingElement>(null);
 	const box2Ref = useRef<HTMLHeadingElement>(null);
-	const [length, setLength] = useState(20);
+	const [length, setLength] = useState(0);
+	const { countPostLength } = useBoard();
+
 	async function view() {
-		const response = await fetch(`${API_URL}/board/blogboard`);
-		const data = await response.json();
-		setLength(parseInt(data.length));
-		localStorage.setItem('postingCount', length.toString());
+		const data = await countPostLength(API_URL as string);
+		setLength(data);
 	}
+	view();
 
 	async function info() {
-		const response = await fetch(`${API_URL}/info/adminAndUserCount`);
+		const response = await fetch(`${API_URL}/api/info/adminAndUserCount`);
 		const data = await response.json();
 
 		const num = Number(data.userCount);
@@ -54,8 +57,8 @@ function Second() {
 	};
 
 	const counting2 = () => {
-		let postingcount = localStorage.getItem('postingCount') || '0';
-		const count: number = parseInt(postingcount, 10); // 숫자로 변환하여 저장
+		let postingcount = length;
+		const count: number = postingcount; // 숫자로 변환하여 저장
 
 		for (let i = 0; i <= count; i++) {
 			setTimeout(() => {
@@ -65,8 +68,6 @@ function Second() {
 			}, i * 30);
 		}
 	};
-	view();
-	useEffect(() => {}, []);
 
 	useEffect(() => {
 		const handleScroll = () => {

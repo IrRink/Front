@@ -60,6 +60,7 @@ function Signin() {
 		formData.append('email', userId);
 		formData.append('password', password);
 		formData.append('isAdmin', isAdmin.toString());
+		console.log(password);
 		signIn(loginUrl, formData, isAdmin);
 	};
 

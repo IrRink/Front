@@ -28,6 +28,7 @@ class Auth {
 	};
 
 	static fetchSginIn = async (loginUrl: string, formData: any) => {
+		console.log(formData);
 		const response = await fetch(loginUrl, {
 			method: 'POST',
 			headers: {
@@ -35,6 +36,17 @@ class Auth {
 			},
 			body: formData.toString(),
 		});
+		return response;
+	};
+
+	static fetchLogOut = async (apiUrl: string) => {
+		const response = await fetch(`${apiUrl}/api/user/logout`, {
+			method: 'POST',
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem('token')}`,
+			},
+		});
+
 		return response;
 	};
 }
