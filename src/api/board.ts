@@ -8,6 +8,8 @@
 //     })
 // }
 
+import { API_URL } from './constants';
+
 class Board {
 	static viewAll = async (apiUrl: string) => {
 		const response = await fetch(`${apiUrl}/api/board`);
@@ -16,7 +18,11 @@ class Board {
 		return data;
 	};
 
-	static UserCount = async();
+	static UserCount = async () => {
+		const response = await fetch(`${API_URL}/api/info/adminAndUserCount`);
+		const data = await response.json();
+		return data;
+	};
 }
 
 export default Board;

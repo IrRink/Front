@@ -20,7 +20,7 @@ function Second() {
 	const box1Ref = useRef<HTMLHeadingElement>(null);
 	const box2Ref = useRef<HTMLHeadingElement>(null);
 	const [length, setLength] = useState(0);
-	const { countPostLength } = useBoard();
+	const { countPostLength, userCount } = useBoard();
 
 	async function view() {
 		const data = await countPostLength(API_URL as string);
@@ -28,22 +28,16 @@ function Second() {
 	}
 	view();
 
-	async function info() {
-		const response = await fetch(`${API_URL}/api/info/adminAndUserCount`);
-		const data = await response.json();
-
-		const num = Number(data.userCount);
-		setMember(num);
-		if (data.adminDate) {
-			setDate(data.adminDate);
-		} else {
-			alert('현재 관리자가 없습니다.');
-			window.location.href = './signin';
-		}
-	}
-
 	useEffect(() => {
-		info();
+		const fetchData = async () => {
+			const getUserData = await userCount();
+			if (getUserData) {
+				setDate(getUserData.adminDate);
+				setMember(getUserData.num);
+			}
+		};
+
+		fetchData();
 	}, []);
 
 	const counting = () => {
@@ -58,7 +52,7 @@ function Second() {
 
 	const counting2 = () => {
 		let postingcount = length;
-		const count: number = postingcount; // 숫자로 변환하여 저장
+		const count: number = postingcount;
 
 		for (let i = 0; i <= count; i++) {
 			setTimeout(() => {
