@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { ADMIN_USER_KEY, API_URL } from '../../api/constants';
 import Loginnavbar from '../navbar/Loginnavbar';
 import Cud from '../../api/cud';
+import useBoard from '../../hooks/useBoard';
 
 const FirstMainDiv = styled.div`
 	width: calc(100% - 250px);
@@ -34,16 +35,7 @@ const ScrollableContent = styled.div`
 `;
 
 function Write() {
-	function verification() {
-		console.log(localStorage.getItem('id'));
-		console.log(ADMIN_USER_KEY);
-		if (localStorage.getItem('id') === ADMIN_USER_KEY) {
-			console.log('통과');
-		} else {
-			alert('현재 권한이 없습니다.');
-			window.location.href = '/signin';
-		}
-	}
+	const { verification } = useBoard();
 
 	useEffect(() => {
 		verification();

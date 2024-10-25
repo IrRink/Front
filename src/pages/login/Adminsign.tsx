@@ -54,7 +54,7 @@ function Signin() {
 
 		const loginUrl = isAdmin
 			? `${API_URL}/api/admin/login`
-			: `${API_URL}/api/user/login`;
+			: `${API_URL}/api/users/login`;
 
 		const formData = new URLSearchParams();
 		formData.append('email', userId);

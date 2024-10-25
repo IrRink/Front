@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { ADMIN_USER_KEY, API_URL } from '../../api/constants';
 import Loginnavbar from '../navbar/Loginnavbar';
 import Board from '../../api/board';
+import useBoard from '../../hooks/useBoard';
 
 interface BlogPost {
 	id: number;
@@ -49,17 +50,7 @@ function UpdateDetail() {
 	const titleRef = useRef<HTMLInputElement | null>(null);
 	const subtitleRef = useRef<HTMLInputElement | null>(null);
 	const [get, setGet] = useState('');
-
-	function verification() {
-		console.log(localStorage.getItem('id'));
-		console.log(ADMIN_USER_KEY);
-		if (localStorage.getItem('id') === ADMIN_USER_KEY) {
-			console.log('통과');
-		} else {
-			alert('현재 권한이 없습니다.');
-			window.location.href = '/signin';
-		}
-	}
+	const { verification } = useBoard();
 
 	useEffect(() => {
 		verification();
@@ -73,12 +64,12 @@ function UpdateDetail() {
 
 	const yes = async () => {
 		const data = {
-			title: titleRef.current?.value,
-			sub_title: subtitleRef.current?.value,
+			title: titleRef.current?.value || '',
+			sub_title: subtitleRef.current?.value || '',
 			board_text: get,
 		};
 		console.log(data);
-		Board.fetchUpdate(id, JSON.stringify(data));
+		await Board.fetchUpdate(id, data);
 	};
 
 	if (!post) return <div>Loading...</div>;

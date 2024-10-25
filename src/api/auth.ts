@@ -22,7 +22,7 @@ class Auth {
 	};
 
 	static fetchCheckDuplicatedEmail = async (url: string, email: string) => {
-		const response = await fetch(`${url}/api/user/checkEmail?email=${email}`);
+		const response = await fetch(`${url}/api/users/checkEmail?email=${email}`);
 		const data = await response.json();
 		return data;
 	};

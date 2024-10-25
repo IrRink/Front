@@ -17,14 +17,10 @@ function Post() {
 	const [json, setJson] = useState<BlogPost[]>([]);
 	const [currentPage, setCurrentPage] = useState(0);
 	const postsPerPage = 10; // 한 페이지에 표시할 게시물 수
-
-	useEffect(() => {
-		const viewall = async () => {
-			const data = await Board.viewAll();
-			setJson(data);
-		};
-		viewall();
-	}, []);
+	const viewall = async () => {
+		const data = await Board.viewAll();
+		setJson(data);
+	};
 
 	// 현재 페이지에 따라 보여줄 게시물 결정
 	const offset = currentPage * postsPerPage;
@@ -37,6 +33,9 @@ function Post() {
 
 	// 총 페이지 수 계산
 	const pageCount = Math.ceil(json.length / postsPerPage);
+	useEffect(() => {
+		viewall();
+	}, []);
 
 	return (
 		<div style={{ paddingTop: '30px', position: 'relative' }}>

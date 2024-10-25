@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ADMIN_USER_KEY, API_URL } from '../../../api/constants';
 import Loginnavbar from '../../navbar/Loginnavbar';
-
+import Board from '../../../api/board';
+import Cud from '../../../api/cud';
+import useBoard from '../../../hooks/useBoard';
 const FirstMainDiv = styled.div`
 	width: calc(100% - 250px);
 	height: 100vh;
@@ -33,25 +35,26 @@ const ScrollableContent = styled.div`
 `;
 
 interface BlogPost {
-	num: number;
-	title: string;
-	subtitle: string;
 	id: string;
+	title: string;
+	sub_title: string;
+	writer: string;
 	uptime: string;
 	board_text: string;
 }
 
 function Delete() {
-	function verification() {
-		console.log(localStorage.getItem('id'));
-		console.log(ADMIN_USER_KEY);
-		if (localStorage.getItem('id') === ADMIN_USER_KEY) {
-			console.log('통과');
-		} else {
-			alert('현재 권한이 없습니다.');
-			window.location.href = '/signin';
-		}
-	}
+	const { verification } = useBoard();
+	// function verification() {
+	// 	console.log(localStorage.getItem('id'));
+	// 	console.log(ADMIN_USER_KEY);
+	// 	if (localStorage.getItem('id') === ADMIN_USER_KEY) {
+	// 		console.log('통과');
+	// 	} else {
+	// 		alert('현재 권한이 없습니다.');
+	// 		window.location.href = '/signin';
+	// 	}
+	// }
 
 	useEffect(() => {
 		verification();
@@ -59,31 +62,16 @@ function Delete() {
 
 	const [posts, setPosts] = useState<BlogPost[]>([]);
 
-	// 게시물 목록 불러오기
 	const viewPosts = async () => {
-		const response = await fetch(`${API_URL}/board/blogboard`);
-		const data = await response.json();
+		const data = await Board.viewAll();
 		setPosts(data);
 	};
 
-	// 게시물 삭제
-	const deletePost = async (postId: number) => {
-		const response = await fetch(`${API_URL}/board/delete/${postId}`, {
-			method: 'DELETE',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		});
-		if (response.ok) {
-			alert('삭제가 완료되었습니다.');
-			viewPosts(); // 게시물 목록 다시 불러오기
-		} else {
-			alert('삭제 중 오류가 발생했습니다.');
-		}
-	};
-
+	async function deletePost(id: string) {
+		Cud.delete(id);
+	}
 	useEffect(() => {
-		viewPosts(); // 컴포넌트 마운트 시 게시물 목록 불러오기
+		viewPosts();
 	}, []);
 
 	return (
@@ -96,7 +84,7 @@ function Delete() {
 						삭제하고 싶은 글을 선택하세요.
 					</h1>
 					{posts.map((item) => (
-						<div key={item.num} style={{ color: 'black' }}>
+						<div key={item.id} style={{ color: 'black' }}>
 							<li
 								style={{
 									listStyleType: 'none',
@@ -108,8 +96,8 @@ function Delete() {
 								}}
 							>
 								<h2>{item.title}</h2>
-								<h3>{item.subtitle}</h3>
-								<p style={{ textAlign: 'right' }}>작성자: {item.id}</p>
+								<h3>{item.sub_title}</h3>
+								<p style={{ textAlign: 'right' }}>작성자: {item.writer}</p>
 								<p style={{ textAlign: 'right' }}>날짜: {item.uptime}</p>
 								<button
 									style={{
@@ -120,7 +108,7 @@ function Delete() {
 										borderRadius: '5px',
 										fontWeight: '800',
 									}}
-									onClick={() => deletePost(item.num)}
+									onClick={() => deletePost(item.id)}
 								>
 									삭제하기
 								</button>
