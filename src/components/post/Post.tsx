@@ -20,7 +20,7 @@ function Post() {
 
 	useEffect(() => {
 		const viewall = async () => {
-			const data = await Board.viewAll(API_URL as string);
+			const data = await Board.viewAll();
 			setJson(data);
 		};
 		viewall();

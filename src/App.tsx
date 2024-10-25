@@ -11,25 +11,29 @@ import Navber from './components/navbar/navbar';
 import NotFound from './pages/notFound/NotFound';
 import CreateAccount from './pages/login/CreateAccount';
 import Signin from './pages/login/Adminsign';
-
+import { useState } from 'react';
+import { branchContext } from './context/Branch';
 function App() {
+	const [getitemtoken, setgetitemtoken] = useState('');
 	return (
-		<Router>
-			<Navber />
-			<Routes>
-				<Route path='/' element={<Main />} />
-				<Route path='/*' element={<NotFound />} />
-				<Route path='/signin' element={<Signin />} />
-				<Route path='/createAccount' element={<CreateAccount />} />
-				<Route path='/post/:id' element={<PostDetail />} />
-				<Route path='/write' element={<Write />} />
-				<Route path='/Del' element={<Delete />} />
-				<Route path='/update' element={<Update />} />
-				<Route path='/post/:num' element={<PostDetail />} />
-				<Route path='/postdetail/:num' element={<UpdateDetail />} />
-				<Route path='/inject' element={<Inject />} />
-			</Routes>
-		</Router>
+		<branchContext.Provider value={{ getitemtoken, setgetitemtoken }}>
+			<Router>
+				<Navber />
+				<Routes>
+					<Route path='/' element={<Main />} />
+					<Route path='/*' element={<NotFound />} />
+					<Route path='/signin' element={<Signin />} />
+					<Route path='/createAccount' element={<CreateAccount />} />
+					<Route path='/post/:id' element={<PostDetail />} />
+					<Route path='/write' element={<Write />} />
+					<Route path='/Del' element={<Delete />} />
+					<Route path='/update' element={<Update />} />
+					<Route path='/post/:id' element={<PostDetail />} />
+					<Route path='/postdetail/:id' element={<UpdateDetail />} />
+					<Route path='/inject' element={<Inject />} />
+				</Routes>
+			</Router>
+		</branchContext.Provider>
 	);
 }
 

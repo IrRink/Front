@@ -23,7 +23,7 @@ function Second() {
 	const { countPostLength, userCount } = useBoard();
 
 	async function view() {
-		const data = await countPostLength(API_URL as string);
+		const data = await countPostLength();
 		setLength(data);
 	}
 	view();

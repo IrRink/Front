@@ -1,8 +1,8 @@
 import Board from '../api/board';
 
 const useBoard = () => {
-	const countPostLength = async (url: string) => {
-		const data = await Board.viewAll(url);
+	const countPostLength = async () => {
+		const data = await Board.viewAll();
 		return parseInt(data.length);
 	};
 

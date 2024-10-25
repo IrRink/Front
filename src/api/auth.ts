@@ -40,7 +40,7 @@ class Auth {
 	};
 
 	static fetchLogOut = async (apiUrl: string) => {
-		const response = await fetch(`${apiUrl}/api/user/logout`, {
+		const response = await fetch(`${apiUrl}/api/users/logout`, {
 			method: 'POST',
 			headers: {
 				Authorization: `Bearer ${localStorage.getItem('token')}`,

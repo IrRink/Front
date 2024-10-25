@@ -3,7 +3,7 @@ import { API_URL } from './constants';
 class Cud {
 	static create = async (data: string) => {
 		try {
-			const response = await fetch(`${API_URL}/api/board`, {
+			const response = await fetch(`${API_URL}/api/boards`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',

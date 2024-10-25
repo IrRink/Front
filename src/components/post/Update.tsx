@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ADMIN_USER_KEY, API_URL } from '../../api/constants';
 import Loginnavbar from '../navbar/Loginnavbar';
+import Board from '../../api/board';
 
 const FirstMainDiv = styled.div`
 	width: calc(100% - 250px);
@@ -33,18 +34,16 @@ const ScrollableContent = styled.div`
 `;
 
 interface BlogPost {
-	num: number;
+	id: number;
 	title: string;
-	subtitle: string;
-	id: string;
+	sub_title: string;
+	writer: string;
 	uptime: string;
 	board_text: string;
 }
 
 function Update() {
 	function verification() {
-		console.log(localStorage.getItem('id'));
-		console.log(ADMIN_USER_KEY);
 		if (localStorage.getItem('id') === ADMIN_USER_KEY) {
 			console.log('통과');
 		} else {
@@ -61,8 +60,7 @@ function Update() {
 
 	// 게시물 목록 불러오기
 	const viewPosts = async () => {
-		const response = await fetch(`${API_URL}/board/blogboard`);
-		const data = await response.json();
+		const data = await Board.viewAll();
 		setPosts(data);
 	};
 
@@ -82,7 +80,7 @@ function Update() {
 						수정하고 싶은 글을 선택하세요.
 					</h1>
 					{posts.map((item) => (
-						<div key={item.num} style={{ color: 'black' }}>
+						<div key={item.id} style={{ color: 'black' }}>
 							<li
 								style={{
 									listStyleType: 'none',
@@ -94,9 +92,11 @@ function Update() {
 								}}
 							>
 								<h2>{item.title}</h2>
-								<h3>{item.subtitle}</h3>
-								<p style={{ textAlign: 'right' }}>작성자: {item.id}</p>
-								<p style={{ textAlign: 'right' }}>날짜: {item.uptime}</p>
+								<h3>{item.sub_title}</h3>
+								<p style={{ textAlign: 'right' }}>작성자: {item.writer}</p>
+								<p style={{ textAlign: 'right' }}>
+									날짜: {item.uptime.split(' ')[0]}
+								</p>
 								<button
 									style={{
 										backgroundColor: 'green',
@@ -107,7 +107,7 @@ function Update() {
 										fontWeight: '800',
 									}}
 									onClick={() =>
-										(window.location.href = `/postdetail/${item.num}`)
+										(window.location.href = `/postdetail/${item.id}`)
 									}
 								>
 									수정하기

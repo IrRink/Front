@@ -3,12 +3,13 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { ADMIN_USER_KEY, API_URL } from '../../api/constants';
 import Loginnavbar from '../navbar/Loginnavbar';
+import Board from '../../api/board';
 
 interface BlogPost {
-	num: number;
+	id: number;
 	title: string;
-	subtitle: string;
-	id: string;
+	sub_title: string;
+	writer: string;
 	uptime: string;
 	board_text: string;
 }
@@ -43,6 +44,12 @@ const ScrollableContent = styled.div`
 `;
 
 function UpdateDetail() {
+	const [post, setPost] = useState<BlogPost | null>(null);
+	const { id } = useParams<{ id: any }>();
+	const titleRef = useRef<HTMLInputElement | null>(null);
+	const subtitleRef = useRef<HTMLInputElement | null>(null);
+	const [get, setGet] = useState('');
+
 	function verification() {
 		console.log(localStorage.getItem('id'));
 		console.log(ADMIN_USER_KEY);
@@ -56,53 +63,23 @@ function UpdateDetail() {
 
 	useEffect(() => {
 		verification();
+
+		const viewall = async () => {
+			const data = await Board.fetchPost(id);
+			setPost(data);
+		};
+		viewall();
 	}, []);
 
-	const { num } = useParams<{ num: any }>();
-
-	const [post, setPost] = useState<BlogPost | null>(null);
-	const titleRef = useRef<HTMLInputElement | null>(null);
-	const subtitleRef = useRef<HTMLInputElement | null>(null);
-	const [get, setGet] = useState('');
-
-	async function fetchPost() {
-		console.log(num);
-		const response = await fetch(`${API_URL}/board/blogboard/${num}`);
-		const data = await response.json();
-		console.log(data);
-		setPost(data);
-	}
-
-	async function yes() {
-		const data2 = {
+	const yes = async () => {
+		const data = {
 			title: titleRef.current?.value,
-			subtitle: subtitleRef.current?.value,
+			sub_title: subtitleRef.current?.value,
 			board_text: get,
 		};
-		try {
-			const response2 = await fetch(`${API_URL}/board/update-post/${num}`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(data2),
-			});
-
-			const result = await response2.text();
-			if (response2.ok) {
-				alert(result);
-				window.location.href = '../';
-			} else {
-				alert(result);
-			}
-		} catch (error) {
-			console.log('cath 에러', error);
-		}
-	}
-
-	useEffect(() => {
-		fetchPost();
-	});
+		console.log(data);
+		Board.fetchUpdate(id, JSON.stringify(data));
+	};
 
 	if (!post) return <div>Loading...</div>;
 
@@ -125,7 +102,7 @@ function UpdateDetail() {
 					<br />
 					<input
 						type='text'
-						defaultValue={post.subtitle}
+						defaultValue={post.sub_title}
 						style={{ width: '70%', height: '30px', padding: '5px' }}
 						ref={subtitleRef}
 					/>
@@ -143,7 +120,7 @@ function UpdateDetail() {
 						onChange={(e) => setGet(e.target.value)}
 					/>
 					<div style={{ bottom: '20px ', right: '40px' }}>
-						<p style={{ textAlign: 'right' }}>작성자: {post.id}</p>
+						<p style={{ textAlign: 'right' }}>작성자: {post.writer}</p>
 						<p style={{ textAlign: 'right' }}>날짜: {post.uptime}</p>
 					</div>
 				</div>

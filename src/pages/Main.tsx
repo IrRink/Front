@@ -26,6 +26,7 @@ function Main() {
 	useEffect(() => {
 		login();
 	}, []);
+
 	return (
 		<>
 			<Container>

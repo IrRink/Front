@@ -11,8 +11,8 @@
 import { API_URL } from './constants';
 
 class Board {
-	static viewAll = async (apiUrl: string) => {
-		const response = await fetch(`${apiUrl}/api/board`);
+	static viewAll = async () => {
+		const response = await fetch(`${API_URL}/api/boards`);
 		const data = await response.json();
 
 		return data;
@@ -25,9 +25,38 @@ class Board {
 	};
 
 	static fetchPost = async (id: string) => {
-		const response = await fetch(`${API_URL}/api/board/${id}`);
+		const response = await fetch(`${API_URL}/api/boards/${id}`);
 		const data = await response.json();
 		return data;
+	};
+
+	static fetchUpdate = async (id: number, data: any) => {
+		const response = await fetch(`${API_URL}/api/boards/${id}`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('token')}`,
+			},
+			body: JSON.stringify(data),
+		});
+		const result = await response.text();
+		try {
+			if (response.ok) {
+				alert(result);
+				window.location.href = '../';
+				return;
+			} else if (response.status === 403) {
+				alert('토큰이 만료되었습니다 다시 로그인 해주세요.');
+				window.location.href = '/signin';
+				return;
+			} else {
+				alert(result);
+				return;
+			}
+		} catch (error) {
+			alert(error);
+			return;
+		}
 	};
 }
 

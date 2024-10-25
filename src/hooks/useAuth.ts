@@ -38,7 +38,6 @@ const useAuth = () => {
 		try {
 			const signInResponse = await Auth.fetchSginIn(loginUrl, formData);
 			const data = await signInResponse.json();
-
 			if (signInResponse.ok) {
 				if (isAdmin === true) {
 					localStorage.setItem('token', data.token);
