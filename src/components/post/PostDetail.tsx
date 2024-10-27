@@ -56,9 +56,10 @@ const ScrollableContent = styled.div`
 `;
 
 function PostDetail() {
-	const { id } = useParams<{ id: string }>(); // ID를 string으로 설정
+	const { id } = useParams<{ id: string }>();
 	const [post, setPost] = useState<BlogPost | null>(null);
-	const [comment, setComment] = useState<Comment[]>([]); // Comment 배열로 타입 설정
+	const [comment, setComment] = useState<Comment[]>([]);
+	const [input, setInput] = useState('');
 
 	useEffect(() => {
 		const PostOne = async () => {
@@ -69,8 +70,8 @@ function PostDetail() {
 		const commentView = async (id: string) => {
 			try {
 				const result = await Member.Viewcomment(id);
-				setComment(result.comments); // 댓글 배열을 설정
-				console.log(result.comments); // 콘솔에 댓글 데이터 출력
+				setComment(result.comments);
+				console.log(result.comments);
 			} catch (error) {
 				console.error('Error fetching comments:', error);
 			}
@@ -78,7 +79,20 @@ function PostDetail() {
 
 		PostOne();
 		commentView(id as string);
-	}, [id]); // id 의존성 추가
+	}, [id]);
+
+	async function write() {
+		const data = {
+			comment_text: input,
+		};
+		await Member.CreateComment(id, data);
+			
+
+	}
+
+	function handlechange(e: any) {
+		setInput(e.target.value);
+	}
 
 	if (!post) return <div>Loading...</div>;
 
@@ -103,7 +117,11 @@ function PostDetail() {
 							날짜: {post.uptime.split(' ')[0]}
 						</p>
 						<div style={{ border: '1px solid black' }}></div>
-
+						<div>
+							<h2>댓글 작성하기</h2>
+							<input type='text' onchnage={handlechange} />
+							<button onclick={write}>작성하기</button>
+						</div>
 						<h2>댓글</h2>
 						{comment.map((item) => (
 							<ul
