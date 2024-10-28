@@ -2,7 +2,6 @@ import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import Loginnavbar from '../navbar/Loginnavbar';
 import Cud from '../../api/cud';
-import Auth from '../../api/auth';
 import useAuth from '../../hooks/useAuth';
 
 const FirstMainDiv = styled.div`
@@ -42,7 +41,7 @@ function Write() {
 
 	useEffect(() => {
 		authority();
-	}, []);
+	});
 
 	async function submit() {
 		const title = titleref.current?.value;

@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import { API_URL } from '../../api/constants';
-import Auth from '../../api/auth';
 import useAuth from '../../hooks/useAuth';
 import REG from '../../constants/regularExpressions';
 

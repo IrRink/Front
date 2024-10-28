@@ -2,8 +2,6 @@ import styled from 'styled-components'; // createGlobalStyle 추가
 import irlinkLogoImg from '../../assets/imgs/irlinklogo.png';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { ADMIN_USER_KEY } from '../../api/constants';
-import useAuth from '../../hooks/useAuth';
 import Auth from '../../api/auth';
 
 const NavberMainDiv = styled.div`
