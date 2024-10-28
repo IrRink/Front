@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
 import './New.css';
-import { API_URL } from '../../api/constants';
 import Board from '../../api/board';
 interface BlogPost {
 	id: number;

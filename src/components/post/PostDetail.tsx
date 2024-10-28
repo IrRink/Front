@@ -71,8 +71,9 @@ function PostDetail() {
 		const commentView = async (id: string) => {
 			try {
 				const result = await Member.Viewcomment(id);
-				setComment(result.comments);
-				setLengths(result.comments.length);
+				console.log(result);
+				setComment(result);
+				setLengths(result.length);
 			} catch (error) {
 				console.error('Error fetching comments:', error);
 			}
@@ -94,8 +95,8 @@ function PostDetail() {
 		setInput('');
 
 		const result = await Member.Viewcomment(id as string);
-		setComment(result.comments);
-		setLengths(result.comments.length);
+		setComment(result);
+		setLengths(result.length);
 	}
 
 	function handlechange(e: any) {
@@ -106,8 +107,8 @@ function PostDetail() {
 		await Member.deleteComments(commentsId as number);
 
 		const result = await Member.Viewcomment(id as string);
-		setComment(result.comments);
-		setLengths(result.comments.length);
+		setComment(result);
+		setLengths(result.length);
 	};
 
 	if (!post) return <div>Loading...</div>;
@@ -151,7 +152,7 @@ function PostDetail() {
 							</button>
 						</div>
 						<h2>댓글 {lengths}개</h2>
-						{comment.map((item) => (
+						{(comment || []).map((item) => (
 							<ul
 								key={item.id}
 								style={{ listStyleType: 'none', margin: '30px' }}
@@ -177,7 +178,7 @@ function PostDetail() {
 									<span
 										style={{
 											display:
-												item.writer_email == localStorage.getItem('userId')
+												item.writer_email === localStorage.getItem('userId')
 													? 'block'
 													: 'none',
 										}}

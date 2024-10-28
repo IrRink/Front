@@ -52,32 +52,6 @@ function CreateAccount() {
 	const [isValid, setIsValid] = useState(false);
 	const { signUp, checkDuplicate } = useAuth();
 
-	// const validateSignUp = () => {
-	// 	console.log('VALIDATESIGNUP');
-
-	// 	let ageTest = parseInt(age);
-	// 	if (ageTest <= 0 || ageTest >= 100) {
-	// 		alert('나이가 올바르지 않습니다.');
-	// 		return;
-	// 	}
-
-	// 	if (!REG.emailRegex.test(email)) {
-	// 		alert('이메일 형식이 올바르지 않습니다.');
-	// 		return;
-	// 	}
-
-	// 	if (!isValid) {
-	// 		alert('비밀번호 형식이 올바르지 않습니다.');
-	// 		return;
-	// 	}
-
-	// 	if (password.includes(' ')) {
-	// 		setIsValid(false);
-	// 		alert('비밀번호에 공백이 포함되어 있습니다.');
-	// 		return;
-	// 	}
-	// };
-
 	const handleCheckId = async () => {
 		const result = await checkDuplicate(API_URL, email);
 		setIdCheckResult(result);
@@ -128,7 +102,7 @@ function CreateAccount() {
 		const signupUrl =
 			isAdmin === true
 				? `${API_URL}/api/admin/signup`
-				: `${API_URL}/api/user/signup`;
+				: `${API_URL}/api/users/signup`;
 
 		signUp(signupUrl, data);
 	};
