@@ -85,7 +85,6 @@ function Navber() {
 			const branchProcessing = async () => {
 				const data = await Auth.fetchAuthority();
 				if (data.user.role === 'admin') {
-					console.log('트룹니다');
 					setBtntf('block');
 				} else {
 					setBtntf('none');

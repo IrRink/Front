@@ -52,14 +52,14 @@ const useAuth = () => {
 					alert('관리자 로그인 성공');
 					console.log(data);
 					localStorage.setItem('userId', data.admin.email);
-					// window.location.href = '/';
+					window.location.href = '/';
 				} else {
 					alert('로그인 성공');
 					console.log('로그인 성공, 역할:', data.user.role);
 					localStorage.setItem('userName', data.user.name);
 					localStorage.setItem('token', data.token);
 					localStorage.setItem('userId', data.user.email);
-					// window.location.href = '/';
+					window.location.href = '/';
 				}
 			} else {
 				alert('로그인 실패: ' + JSON.stringify(data));

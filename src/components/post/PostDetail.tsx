@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Loginnavbar from '../navbar/Loginnavbar';
 import Board from '../../api/board';
 import Member from '../../api/member';
+import Auth from '../../api/auth';
 
 // 블로그 포스트 인터페이스
 interface BlogPost {
@@ -61,6 +62,7 @@ function PostDetail() {
 	const [comment, setComment] = useState<Comment[]>([]);
 	const [input, setInput] = useState('');
 	const [lengths, setLengths] = useState(0);
+	const [auth, setAuth] = useState(false);
 	const PostOne = async () => {
 		const data = await Board.fetchPost(id as string);
 		setPost(data);
@@ -76,7 +78,17 @@ function PostDetail() {
 		}
 	};
 
+	const authoritys = async () => {
+		const data = await Auth.fetchAuthority();
+		if (data.user.role === 'admin') {
+			setAuth(true);
+		} else {
+			setAuth(false);
+		}
+	};
+
 	useEffect(() => {
+		authoritys();
 		PostOne();
 		commentView(id as string);
 	}, []);
@@ -176,7 +188,8 @@ function PostDetail() {
 									<span
 										style={{
 											display:
-												item.writer_email === localStorage.getItem('userId')
+												item.writer_email === localStorage.getItem('userId') ||
+												auth
 													? 'block'
 													: 'none',
 										}}
