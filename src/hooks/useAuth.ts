@@ -55,7 +55,6 @@ const useAuth = () => {
 					window.location.href = '/';
 				} else {
 					alert('로그인 성공');
-					console.log('로그인 성공, 역할:', data.user.role);
 					localStorage.setItem('userName', data.user.name);
 					localStorage.setItem('token', data.token);
 					localStorage.setItem('userId', data.user.email);
@@ -89,15 +88,19 @@ const useAuth = () => {
 		}
 	};
 	const authority = async () => {
-		const data = await Auth.fetchAuthority();
-		if (data.user.role !== 'admin') {
-			alert('현재 권한이 없습니다.');
-			window.location.href = '../';
-			const bool = false;
-			return bool;
-		} else {
-			const bool = false;
-			return bool;
+		try {
+			const data = await Auth.fetchAuthority();
+			if (data.user.role !== 'admin') {
+				alert('현재 권한이 없습니다.');
+				window.location.href = '../';
+				const bool = false;
+				return bool;
+			} else {
+				const bool = false;
+				return bool;
+			}
+		} catch (error) {
+			console.log(error);
 		}
 	};
 	return {

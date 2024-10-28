@@ -79,16 +79,24 @@ function Navber() {
 	const [btntf, setBtntf] = useState('none');
 
 	useEffect(() => {
-		if (localStorage.getItem('token')) {
-			const branchProcessing = async () => {
-				const data = await Auth.fetchAuthority();
-				if (data.user.role === 'admin') {
-					setBtntf('block');
-				} else {
-					setBtntf('none');
-				}
-			};
-			branchProcessing();
+		try {
+			if (localStorage.getItem('token')) {
+				const branchProcessing = async () => {
+					const data = await Auth.fetchAuthority();
+					if (data.user.role) {
+						if (data.user.role === 'admin') {
+							setBtntf('block');
+						} else {
+							setBtntf('none');
+						}
+					} else {
+						return;
+					}
+				};
+				branchProcessing();
+			}
+		} catch (error) {
+			console.log(error);
 		}
 	}, []);
 
