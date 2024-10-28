@@ -71,7 +71,6 @@ function PostDetail() {
 			try {
 				const result = await Member.Viewcomment(id);
 				setComment(result.comments);
-				console.log(result.comments);
 			} catch (error) {
 				console.error('Error fetching comments:', error);
 			}
@@ -85,9 +84,13 @@ function PostDetail() {
 		const data = {
 			comment_text: input,
 		};
-		await Member.CreateComment(id, data);
-			
-
+		if (data.comment_text === '') {
+			return alert('댓글을 입력하세요.');
+		}
+		console.log(data);
+		await Member.CreateComment(id as string, data);
+		const result = await Member.Viewcomment(id as string);
+		setComment(result.comments);
 	}
 
 	function handlechange(e: any) {
@@ -117,10 +120,19 @@ function PostDetail() {
 							날짜: {post.uptime.split(' ')[0]}
 						</p>
 						<div style={{ border: '1px solid black' }}></div>
-						<div>
+						<div
+							style={{
+								marginBottom: '50px',
+								marginTop: '50px',
+							}}
+						>
 							<h2>댓글 작성하기</h2>
-							<input type='text' onchnage={handlechange} />
-							<button onclick={write}>작성하기</button>
+							<input
+								type='text'
+								onChange={handlechange}
+								style={{ width: '90%' }}
+							/>
+							<button onClick={write}>작성하기</button>
 						</div>
 						<h2>댓글</h2>
 						{comment.map((item) => (
