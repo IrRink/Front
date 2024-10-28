@@ -89,15 +89,18 @@ const useAuth = () => {
 	};
 	const authority = async () => {
 		try {
-			const data = await Auth.fetchAuthority();
-			if (data.user.role !== 'admin') {
-				alert('현재 권한이 없습니다.');
-				window.location.href = '../';
-				const bool = false;
-				return bool;
-			} else {
-				const bool = false;
-				return bool;
+			const response = await Auth.fetchAuthority();
+			const data = await response.json();
+			if (response.ok) {
+				if (data.user.role !== 'admin') {
+					alert('현재 권한이 없습니다.');
+					window.location.href = '../';
+					const bool = false;
+					return bool;
+				} else {
+					const bool = false;
+					return bool;
+				}
 			}
 		} catch (error) {
 			console.log(error);

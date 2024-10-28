@@ -82,15 +82,18 @@ function Navber() {
 		try {
 			if (localStorage.getItem('token')) {
 				const branchProcessing = async () => {
-					const data = await Auth.fetchAuthority();
-					if (data.user.role) {
-						if (data.user.role === 'admin') {
-							setBtntf('block');
+					const response = await Auth.fetchAuthority();
+					const data = await response.json();
+					if (response.ok) {
+						if (data.user.role) {
+							if (data.user.role === 'admin') {
+								setBtntf('block');
+							} else {
+								setBtntf('none');
+							}
 						} else {
-							setBtntf('none');
+							return;
 						}
-					} else {
-						return;
 					}
 				};
 				branchProcessing();

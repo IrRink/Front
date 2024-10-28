@@ -8,7 +8,9 @@ function Loginnavbar() {
 	useEffect(() => {
 		const fetchAdminName = async () => {
 			const data = await Info.adminName(API_URL as string);
-			setAdname(data);
+			if (data) {
+				setAdname(data);
+			}
 		};
 		fetchAdminName();
 	}, []);

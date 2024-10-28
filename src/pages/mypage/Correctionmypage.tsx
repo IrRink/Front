@@ -8,7 +8,8 @@ function Correctionmypage() {
 	const [password, setPasswrd] = useState('');
 
 	const members = async () => {
-		let data = await Auth.fetchAuthority();
+		let response = await Auth.fetchAuthority();
+		let data = await response.json();
 		data = data.user;
 		setEmail(data.email);
 		setName(data.name);

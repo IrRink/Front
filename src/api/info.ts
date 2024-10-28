@@ -10,10 +10,22 @@
 
 class Info {
 	static adminName = async (signupUrl: string) => {
-		let response = await fetch(`${signupUrl}/api/info/adminname`);
-		let data = await response.text();
-		data = data.replaceAll('"', '');
-		return data;
+		try {
+			let response = await fetch(`${signupUrl}/api/info/adminname`);
+			if (response.ok) {
+				let data = await response.text();
+				data = data.replaceAll('"', '');
+				return data;
+			} else {
+				alert('관리자가 없습니다.');
+				window.location.href = './signin';
+				return;
+			}
+		} catch (error) {
+			alert('관리자가 없습니다.');
+			window.location.href = './signin';
+			return;
+		}
 	};
 }
 

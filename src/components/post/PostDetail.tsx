@@ -79,7 +79,8 @@ function PostDetail() {
 	};
 
 	const authoritys = async () => {
-		const data = await Auth.fetchAuthority();
+		const response = await Auth.fetchAuthority();
+		let data = await response.json();
 		if (data.user.role === 'admin') {
 			setAuth(true);
 		} else {
