@@ -5,6 +5,7 @@ import { ADMIN_USER_KEY, API_URL } from '../../api/constants';
 import Loginnavbar from '../navbar/Loginnavbar';
 import Board from '../../api/board';
 import useBoard from '../../hooks/useBoard';
+import useAuth from '../../hooks/useAuth';
 
 interface BlogPost {
 	id: number;
@@ -50,10 +51,10 @@ function UpdateDetail() {
 	const titleRef = useRef<HTMLInputElement | null>(null);
 	const subtitleRef = useRef<HTMLInputElement | null>(null);
 	const [get, setGet] = useState('');
-	const { verification } = useBoard();
+	const { authority } = useAuth();
 
 	useEffect(() => {
-		verification();
+		authority();
 
 		const viewall = async () => {
 			const data = await Board.fetchPost(id);

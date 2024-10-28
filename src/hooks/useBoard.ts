@@ -22,21 +22,10 @@ const useBoard = () => {
 			window.location.href = './signin';
 		}
 	};
-	function verification() {
-		console.log(localStorage.getItem('id'));
-		console.log(ADMIN_USER_KEY);
-		if (localStorage.getItem('id') === ADMIN_USER_KEY) {
-			console.log('통과');
-		} else {
-			alert('현재 권한이 없습니다.');
-			window.location.href = '/signin';
-		}
-	}
 
 	return {
 		countPostLength,
 		userCount,
-		verification,
 	};
 };
 

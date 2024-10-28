@@ -61,27 +61,25 @@ function PostDetail() {
 	const [comment, setComment] = useState<Comment[]>([]);
 	const [input, setInput] = useState('');
 	const [lengths, setLengths] = useState(0);
+	const PostOne = async () => {
+		const data = await Board.fetchPost(id as string);
+		setPost(data);
+	};
+	const commentView = async (id: string) => {
+		try {
+			const result = await Member.Viewcomment(id);
+			console.log(result);
+			setComment(result);
+			setLengths(result.length);
+		} catch (error) {
+			console.error('Error fetching comments:', error);
+		}
+	};
 
 	useEffect(() => {
-		const PostOne = async () => {
-			const data = await Board.fetchPost(id as string);
-			setPost(data);
-		};
-
-		const commentView = async (id: string) => {
-			try {
-				const result = await Member.Viewcomment(id);
-				console.log(result);
-				setComment(result);
-				setLengths(result.length);
-			} catch (error) {
-				console.error('Error fetching comments:', error);
-			}
-		};
-
 		PostOne();
 		commentView(id as string);
-	}, [id]);
+	}, []);
 
 	async function write() {
 		const data = {

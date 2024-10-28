@@ -4,6 +4,7 @@ import { ADMIN_USER_KEY, API_URL } from '../../api/constants';
 import Loginnavbar from '../navbar/Loginnavbar';
 import Board from '../../api/board';
 import useBoard from '../../hooks/useBoard';
+import useAuth from '../../hooks/useAuth';
 
 const FirstMainDiv = styled.div`
 	width: calc(100% - 250px);
@@ -44,24 +45,18 @@ interface BlogPost {
 }
 
 function Update() {
-	const { verification } = useBoard();
-
-	useEffect(() => {
-		verification();
-	}, []);
+	const { authority } = useAuth();
 
 	const [posts, setPosts] = useState<BlogPost[]>([]);
 
-	// 게시물 목록 불러오기
 	const viewPosts = async () => {
 		const data = await Board.viewAll();
 		setPosts(data);
 	};
 
-	// 게시물 삭제
-
 	useEffect(() => {
-		viewPosts(); // 컴포넌트 마운트 시 게시물 목록 불러오기
+		authority();
+		viewPosts();
 	}, []);
 
 	return (

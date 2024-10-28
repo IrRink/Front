@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { ADMIN_USER_KEY, API_URL } from '../../api/constants';
 import Loginnavbar from '../navbar/Loginnavbar';
 import Cud from '../../api/cud';
-import useBoard from '../../hooks/useBoard';
+import Auth from '../../api/auth';
+import useAuth from '../../hooks/useAuth';
 
 const FirstMainDiv = styled.div`
 	width: calc(100% - 250px);
@@ -35,32 +35,32 @@ const ScrollableContent = styled.div`
 `;
 
 function Write() {
-	const { verification } = useBoard();
-
-	useEffect(() => {
-		verification();
-	}, []);
 	const titleref = useRef<HTMLInputElement>(null);
 	const subtitleref = useRef<HTMLInputElement>(null);
 	const detailref = useRef<HTMLTextAreaElement>(null);
+	const { authority } = useAuth();
+
+	useEffect(() => {
+		authority();
+	}, []);
 
 	async function submit() {
 		const title = titleref.current?.value;
 		const subtitle = subtitleref.current?.value;
 		let board_text: string = '';
 		if (detailref.current?.value) {
-			board_text = detailref.current?.value;
+			board_text = detailref.current.value;
 		}
 
 		const data = {
-			title: title,
+			title,
 			sub_title: subtitle,
-			board_text: board_text,
+			board_text,
 		};
 
 		if (title && subtitle && board_text) {
 			console.log(data);
-			Cud.create(JSON.stringify(data));
+			await Cud.create(JSON.stringify(data));
 		}
 	}
 
@@ -117,7 +117,6 @@ function Write() {
 							borderRadius: '5px',
 							marginBottom: '30px',
 						}}
-						id='rap'
 						ref={detailref}
 					/>
 					<br />

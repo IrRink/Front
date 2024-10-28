@@ -5,6 +5,7 @@ import Loginnavbar from '../../navbar/Loginnavbar';
 import Board from '../../../api/board';
 import Cud from '../../../api/cud';
 import useBoard from '../../../hooks/useBoard';
+import useAuth from '../../../hooks/useAuth';
 const FirstMainDiv = styled.div`
 	width: calc(100% - 250px);
 	height: 100vh;
@@ -44,20 +45,10 @@ interface BlogPost {
 }
 
 function Delete() {
-	const { verification } = useBoard();
-	// function verification() {
-	// 	console.log(localStorage.getItem('id'));
-	// 	console.log(ADMIN_USER_KEY);
-	// 	if (localStorage.getItem('id') === ADMIN_USER_KEY) {
-	// 		console.log('통과');
-	// 	} else {
-	// 		alert('현재 권한이 없습니다.');
-	// 		window.location.href = '/signin';
-	// 	}
-	// }
+	const { authority } = useAuth();
 
 	useEffect(() => {
-		verification();
+		authority();
 	}, []);
 
 	const [posts, setPosts] = useState<BlogPost[]>([]);

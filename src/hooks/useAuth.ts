@@ -1,8 +1,10 @@
 import Auth from '../api/auth';
 import { ADMIN_USER_KEY } from '../api/constants';
+
 const useAuth = () => {
 	const signUp = async (signupUrl: string, data: any) => {
 		const singUpResponse = await Auth.fetchSignup(signupUrl, data);
+
 		let result = await singUpResponse.text();
 		result = result.replaceAll('"', '');
 
@@ -50,14 +52,14 @@ const useAuth = () => {
 					alert('관리자 로그인 성공');
 					console.log(data);
 					localStorage.setItem('userId', data.admin.email);
-					window.location.href = '/';
+					// window.location.href = '/';
 				} else {
 					alert('로그인 성공');
-					console.log(data);
+					console.log('로그인 성공, 역할:', data.user.role);
 					localStorage.setItem('userName', data.user.name);
 					localStorage.setItem('token', data.token);
-					localStorage.setItem('userId', data.email);
-					window.location.href = '/';
+					localStorage.setItem('userId', data.user.email);
+					// window.location.href = '/';
 				}
 			} else {
 				alert('로그인 실패: ' + JSON.stringify(data));
@@ -86,12 +88,24 @@ const useAuth = () => {
 			window.location.href = '/signin';
 		}
 	};
-
+	const authority = async () => {
+		const data = await Auth.fetchAuthority();
+		if (data.user.role !== 'admin') {
+			alert('현재 권한이 없습니다.');
+			window.location.href = '../';
+			const bool = false;
+			return bool;
+		} else {
+			const bool = false;
+			return bool;
+		}
+	};
 	return {
 		signUp,
 		checkDuplicate,
 		signIn,
 		logOut,
+		authority,
 	};
 };
 

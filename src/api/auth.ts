@@ -8,6 +8,8 @@
 //     })
 // }
 
+import { API_URL } from './constants';
+
 class Auth {
 	static fetchSignup = async (signupUrl: string, data: any) => {
 		let response = await fetch(signupUrl, {
@@ -48,6 +50,22 @@ class Auth {
 		});
 
 		return response;
+	};
+
+	static fetchAuthority = async () => {
+		const response = await fetch(`${API_URL}/api/info/profile`, {
+			method: 'GET',
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem('token')}`,
+			},
+		});
+		const data = response.json();
+		if (response.status === 403) {
+			alert('토큰이 만료되었습니다 다시 로그인 해주세요.');
+			window.location.href = './signin';
+			return;
+		}
+		return data;
 	};
 }
 

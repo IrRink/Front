@@ -3,6 +3,8 @@ import irlinkLogoImg from '../../assets/imgs/irlinklogo.png';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { ADMIN_USER_KEY } from '../../api/constants';
+import useAuth from '../../hooks/useAuth';
+import Auth from '../../api/auth';
 
 const NavberMainDiv = styled.div`
 	width: 250px;
@@ -78,16 +80,19 @@ const SideAndText = styled.p`
 function Navber() {
 	const [btntf, setBtntf] = useState('none');
 
-	function verification() {
-		if (localStorage.getItem('id') === ADMIN_USER_KEY) {
-			setBtntf('block');
-		} else {
-			setBtntf('none');
-		}
-	}
-
 	useEffect(() => {
-		verification();
+		if (localStorage.getItem('token')) {
+			const branchProcessing = async () => {
+				const data = await Auth.fetchAuthority();
+				if (data.user.role === 'admin') {
+					console.log('트룹니다');
+					setBtntf('block');
+				} else {
+					setBtntf('none');
+				}
+			};
+			branchProcessing();
+		}
 	}, []);
 
 	return (
