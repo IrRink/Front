@@ -91,7 +91,7 @@ function PostDetail() {
 		authoritys();
 		PostOne();
 		commentView(id as string);
-	});
+	}, []);
 
 	async function write() {
 		const data = {

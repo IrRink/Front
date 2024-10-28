@@ -53,7 +53,7 @@ class Auth {
 	};
 
 	static fetchAuthority = async () => {
-		const response = await fetch(`${API_URL}/api/info/profile`, {
+		const response = await fetch(`${API_URL}/api/info/auth`, {
 			method: 'GET',
 			headers: {
 				Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -66,6 +66,29 @@ class Auth {
 			return;
 		}
 		return data;
+	};
+
+	static memberDelete = async () => {
+		const response = await fetch(`${API_URL}/api/info/auth`, {
+			method: 'DELETE',
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem('token')}`,
+			},
+		});
+		const data = await response.json();
+		if (response.ok) {
+			alert(data.message);
+			window.location.href = './signin';
+			return;
+		} else if (response.status === 400) {
+			alert('유효하지 않은 토큰 입니다.');
+			window.location.href = './signin';
+		} else if (response.status === 403) {
+			alert('유효하지 않은 토큰 입니다.');
+			window.location.href = './signin';
+		} else {
+			alert('회원삭제를 실패하였습니다.');
+		}
 	};
 }
 

@@ -11,6 +11,7 @@ import Navber from './components/navbar/navbar';
 import NotFound from './pages/notFound/NotFound';
 import CreateAccount from './pages/login/CreateAccount';
 import Signin from './pages/login/Adminsign';
+import MyPage from './pages/mypage/myPage';
 
 function App() {
 	return (
@@ -28,6 +29,7 @@ function App() {
 				<Route path='/post/:id' element={<PostDetail />} />
 				<Route path='/postdetail/:id' element={<UpdateDetail />} />
 				<Route path='/inject' element={<Inject />} />
+				<Route path='/myPage' element={<MyPage />} />
 			</Routes>
 		</Router>
 	);
