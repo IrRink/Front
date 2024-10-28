@@ -89,6 +89,8 @@ function PostDetail() {
 		}
 		console.log(data);
 		await Member.CreateComment(id as string, data);
+		setInput('');
+
 		const result = await Member.Viewcomment(id as string);
 		setComment(result.comments);
 	}
@@ -130,9 +132,12 @@ function PostDetail() {
 							<input
 								type='text'
 								onChange={handlechange}
-								style={{ width: '90%' }}
+								style={{ width: '90%', padding: '10px' }}
+								value={input}
 							/>
-							<button onClick={write}>작성하기</button>
+							<button onClick={write} type='submit'>
+								작성하기
+							</button>
 						</div>
 						<h2>댓글</h2>
 						{comment.map((item) => (
