@@ -40,6 +40,29 @@ class Member {
 			return console.log(error);
 		}
 	};
+
+	static deleteComments = async (commentId: number) => {
+		try {
+			const response = await fetch(`${API_URL}/api/comments/${commentId}`, {
+				method: 'DELETE',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('token')}`,
+				},
+			});
+			const data = await response.text();
+			if (response.ok) {
+				return alert(data);
+			} else if (response.status === 403) {
+				window.location.href = '../signin';
+				return alert('현재 토큰이 만료되었습니다. 다시 로그인 해주세요');
+			} else {
+				return alert(data);
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	};
 }
 
 export default Member;

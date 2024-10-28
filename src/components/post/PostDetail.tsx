@@ -60,6 +60,7 @@ function PostDetail() {
 	const [post, setPost] = useState<BlogPost | null>(null);
 	const [comment, setComment] = useState<Comment[]>([]);
 	const [input, setInput] = useState('');
+	const [lengths, setLengths] = useState(0);
 
 	useEffect(() => {
 		const PostOne = async () => {
@@ -71,6 +72,7 @@ function PostDetail() {
 			try {
 				const result = await Member.Viewcomment(id);
 				setComment(result.comments);
+				setLengths(result.comments.length);
 			} catch (error) {
 				console.error('Error fetching comments:', error);
 			}
@@ -93,11 +95,20 @@ function PostDetail() {
 
 		const result = await Member.Viewcomment(id as string);
 		setComment(result.comments);
+		setLengths(result.comments.length);
 	}
 
 	function handlechange(e: any) {
 		setInput(e.target.value);
 	}
+
+	const deletes = async (commentsId: number) => {
+		await Member.deleteComments(commentsId as number);
+
+		const result = await Member.Viewcomment(id as string);
+		setComment(result.comments);
+		setLengths(result.comments.length);
+	};
 
 	if (!post) return <div>Loading...</div>;
 
@@ -139,7 +150,7 @@ function PostDetail() {
 								작성하기
 							</button>
 						</div>
-						<h2>댓글</h2>
+						<h2>댓글 {lengths}개</h2>
 						{comment.map((item) => (
 							<ul
 								key={item.id}
@@ -162,6 +173,16 @@ function PostDetail() {
 									<br />
 									<span style={{ position: 'absolute', right: 0, top: '0' }}>
 										{item.uptime.split(' ')[0]}
+									</span>
+									<span
+										style={{
+											display:
+												item.writer_email == localStorage.getItem('userId')
+													? 'block'
+													: 'none',
+										}}
+									>
+										<button onClick={() => deletes(item.id)}>삭제 버튼</button>
 									</span>
 								</li>
 							</ul>

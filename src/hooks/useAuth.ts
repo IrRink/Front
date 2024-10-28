@@ -48,11 +48,15 @@ const useAuth = () => {
 						return;
 					}
 					alert('관리자 로그인 성공');
+					console.log(data);
+					localStorage.setItem('userId', data.admin.email);
 					window.location.href = '/';
 				} else {
 					alert('로그인 성공');
+					console.log(data);
 					localStorage.setItem('userName', data.user.name);
 					localStorage.setItem('token', data.token);
+					localStorage.setItem('userId', data.email);
 					window.location.href = '/';
 				}
 			} else {
