@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { API_URL } from '../../api/constants';
 import useAuth from '../../hooks/useAuth';
@@ -52,6 +52,14 @@ function CreateAccount() {
 	const { signUp, checkDuplicate } = useAuth();
 	const [question, setQuestion] = useState('');
 	const [answer, setAnswer] = useState('');
+	const [recheck, setRecheck] = useState('');
+	const [recheckText, setRecheckText] = useState(false);
+
+	function handleRecheckPassword(e: any) {
+		const newRecheckValue = e.target.value;
+		setRecheck(newRecheckValue);
+		setRecheckText(newRecheckValue === password);
+	}
 
 	const handleChange = (event: any) => {
 		setQuestion(event.target.value);
@@ -92,6 +100,11 @@ function CreateAccount() {
 			return;
 		}
 
+		if (recheck !== password) {
+			alert('비밀번호가 동일하지 않습니다.');
+			return;
+		}
+
 		if (answer === '') {
 			alert('보안답을 작성해 주세요.');
 			return;
@@ -126,7 +139,7 @@ function CreateAccount() {
 	return (
 		<FirstMainDiv>
 			<Filter>
-				<div style={{ paddingTop: '12vh' }}></div>
+				<div style={{ paddingTop: '6vh' }}></div>
 				<div
 					style={{
 						margin: 'auto',
@@ -201,13 +214,35 @@ function CreateAccount() {
 								onChange={handlePasswordChange}
 								required
 								placeholder='비밀번호를 입력하세요. '
-							/>{' '}
+							/>
+
 							<br />
 							<p style={{ color: isValid ? 'green' : 'red' }}>
 								{isValid
 									? '비밀번호가 유효합니다.'
 									: '비밀번호는 8-15자, 숫자, 특수문자 포함해야 합니다.'}
 							</p>
+							<br />
+							<label htmlFor='password'>비밀번호 재확인:</label>
+							<br />
+							<Input
+								type='password'
+								id='password'
+								value={recheck}
+								onChange={handleRecheckPassword}
+								required
+								placeholder='비밀번호를 입력하세요. '
+							/>
+							<p
+								style={{
+									color: recheckText ? 'green' : 'red',
+								}}
+							>
+								{recheckText
+									? '동일한 비밀번호 입니다.'
+									: '다른 비밀번호 입니다.'}
+							</p>
+							<br />
 						</div>
 						<div style={{ marginTop: '20px' }}>
 							<label htmlFor='name'>보안 질문:</label>
