@@ -5,7 +5,6 @@ function Viewpage() {
 	const [email, setEmail] = useState('');
 	const [name, setName] = useState('');
 	const [age, setAge] = useState('');
-	const [password, setPasswrd] = useState('');
 
 	const members = async () => {
 		let response = await Auth.fetchAuthority();
@@ -15,7 +14,6 @@ function Viewpage() {
 			setEmail(data.email);
 			setName(data.name);
 			setAge(data.age);
-			setPasswrd(data.password);
 		} else {
 			alert('현재 유효한 토큰이 없습니다 재 로그인 해주세요.');
 			window.location.href = '../signin';

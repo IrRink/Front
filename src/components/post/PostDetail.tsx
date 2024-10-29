@@ -81,8 +81,12 @@ function PostDetail() {
 	const authoritys = async () => {
 		const response = await Auth.fetchAuthority();
 		let data = await response.json();
-		if (data.user.role === 'admin') {
-			setAuth(true);
+		if (response.ok) {
+			if (data.user.role === 'admin') {
+				setAuth(true);
+			} else {
+				setAuth(false);
+			}
 		} else {
 			setAuth(false);
 		}
@@ -152,15 +156,17 @@ function PostDetail() {
 							}}
 						>
 							<h2>댓글 작성하기</h2>
-							<input
-								type='text'
-								onChange={handlechange}
-								style={{ width: '90%', padding: '10px' }}
-								value={input}
-							/>
-							<button onClick={write} type='submit'>
-								작성하기
-							</button>
+							<div style={{ display: 'flex' }}>
+								<input
+									type='text'
+									onChange={handlechange}
+									style={{ width: '90%', padding: '10px' }}
+									value={input}
+								/>
+								<button onClick={write} type='submit'>
+									작성하기
+								</button>
+							</div>
 						</div>
 						<h2>댓글 {lengths}개</h2>
 						{(comment || []).map((item) => (

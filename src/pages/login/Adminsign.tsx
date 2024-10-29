@@ -157,7 +157,14 @@ function Signin() {
 							borderRadius: '10px',
 							cursor: 'pointer',
 						}}
-						onClick={() => alert('안타까운거죠ㅋ')}
+						onClick={() => {
+							var a = prompt('진짜요? ㅠㅠ  네/아니요');
+							if (a == '네') {
+								alert('안타까운거죠ㅋ');
+							} else {
+								alert('ㄲㅂ');
+							}
+						}}
 					>
 						비번을 까먹으셨나요?
 					</button>
