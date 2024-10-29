@@ -59,7 +59,12 @@ class Auth {
 				Authorization: `Bearer ${localStorage.getItem('token')}`,
 			},
 		});
-		return response;
+		if (response.ok) {
+			return response;
+		} else {
+			return response;
+		}
+
 		// const data = response.json();
 		// if (response.ok) {
 		// 	return data;
@@ -80,7 +85,7 @@ class Auth {
 		const data = await response.json();
 		if (response.ok) {
 			alert(data.message);
-			window.location.href = './signin';
+			window.location.href = '../signin';
 			return;
 		} else if (response.status === 400) {
 			alert('유효하지 않은 토큰 입니다.');
@@ -90,6 +95,23 @@ class Auth {
 			window.location.href = './signin';
 		} else {
 			alert('회원삭제를 실패하였습니다.');
+		}
+	};
+
+	static fetchChangeAuth = async (data: any) => {
+		const response = await fetch(`${API_URL}/api/info/auth`, {
+			method: 'PUT',
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem('token')}`,
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(data),
+		});
+		const result = response.json();
+		if (response.ok) {
+			return result;
+		} else {
+			return result;
 		}
 	};
 }

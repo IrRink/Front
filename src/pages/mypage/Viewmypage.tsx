@@ -10,11 +10,16 @@ function Viewpage() {
 	const members = async () => {
 		let response = await Auth.fetchAuthority();
 		let data = await response.json();
-		data = data.user;
-		setEmail(data.email);
-		setName(data.name);
-		setAge(data.age);
-		setPasswrd(data.password);
+		if (response.ok) {
+			data = data.user;
+			setEmail(data.email);
+			setName(data.name);
+			setAge(data.age);
+			setPasswrd(data.password);
+		} else {
+			alert('현재 유효한 토큰이 없습니다 재 로그인 해주세요.');
+			window.location.href = '../signin';
+		}
 	};
 
 	useEffect(() => {

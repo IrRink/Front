@@ -79,27 +79,28 @@ function Navber() {
 	const [btntf, setBtntf] = useState('none');
 
 	useEffect(() => {
-		try {
-			if (localStorage.getItem('token')) {
-				const branchProcessing = async () => {
+		const isSignInPage = window.location.pathname === '/signin';
+		if (!isSignInPage && !localStorage.getItem('token')) {
+			alert('현재 유효한 토큰이 없습니다. 로그인을 진행해주세요.');
+			window.location.href = '../signin';
+			return;
+		}
+
+		if (localStorage.getItem('token')) {
+			const branchProcessing = async () => {
+				try {
 					const response = await Auth.fetchAuthority();
 					const data = await response.json();
-					if (response.ok) {
-						if (data.user.role) {
-							if (data.user.role === 'admin') {
-								setBtntf('block');
-							} else {
-								setBtntf('none');
-							}
-						} else {
-							return;
-						}
+					if (response.ok && data.user.role === 'admin') {
+						setBtntf('block');
+					} else {
+						setBtntf('none');
 					}
-				};
-				branchProcessing();
-			}
-		} catch (error) {
-			console.log(error);
+				} catch (error) {
+					console.log(error);
+				}
+			};
+			branchProcessing();
 		}
 	}, []);
 
@@ -176,6 +177,7 @@ function Navber() {
 					<Link to='/update' style={{ display: btntf }}>
 						글 수정
 					</Link>
+					<Link to='/mypage'>My page</Link>
 				</MenuLi>
 			</ul>
 		</NavberMainDiv>
