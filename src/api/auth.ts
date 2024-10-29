@@ -1,4 +1,5 @@
 import { API_URL } from './constants';
+import { FetchForgotEmailRequest } from './dtos/auth/fetch-forgot-email.dto';
 
 class Auth {
 	static fetchSignup = async (signupUrl: string, data: any) => {
@@ -49,11 +50,7 @@ class Auth {
 				Authorization: `Bearer ${localStorage.getItem('token')}`,
 			},
 		});
-		if (response.ok) {
-			return response;
-		} else {
-			return response;
-		}
+		return response;
 	};
 
 	static memberDelete = async () => {
@@ -112,6 +109,24 @@ class Auth {
 			result,
 		};
 	};
+
+	static fetchForgotEmail = async (data: FetchForgotEmailRequest) => {
+		const response = await fetch(`${API_URL}/api/info/forget`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(data),
+		});
+		const result = await response.json();
+		return {
+			response,
+			result,
+		};
+	};
 }
 
 export default Auth;
+
+// 객체 interface 써서 any로 되어있는 부분 줄이기,
+// 단일 책임 원칙으로 수정하기

@@ -136,6 +136,21 @@ function Signin() {
 							backgroundColor: 'white',
 							color: 'gray',
 							border: 'none',
+							fontWeight: '600',
+							width: '60%',
+							borderRadius: '10px',
+							cursor: 'pointer',
+						}}
+						onClick={() => (window.location.href = '../ForgotEmail')}
+					>
+						이메일를 잊으셨나요?
+					</button>
+					<button
+						id='signupButton'
+						style={{
+							backgroundColor: 'white',
+							color: 'gray',
+							border: 'none',
 							padding: '10px',
 							fontWeight: '600',
 							width: '60%',

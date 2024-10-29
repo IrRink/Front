@@ -13,6 +13,7 @@ import CreateAccount from './pages/login/CreateAccount';
 import Signin from './pages/login/Adminsign';
 import MyPage from './pages/mypage/myPage';
 import ForgotPassword from './pages/login/ForgotPassword';
+import ForgotEmail from './pages/login/ForgotEmail';
 
 function App() {
 	return (
@@ -32,6 +33,7 @@ function App() {
 				<Route path='/inject' element={<Inject />} />
 				<Route path='/myPage' element={<MyPage />} />
 				<Route path='/ForgotPassword' element={<ForgotPassword />} />
+				<Route path='/ForgotEmail' element={<ForgotEmail />} />
 			</Routes>
 		</Router>
 	);

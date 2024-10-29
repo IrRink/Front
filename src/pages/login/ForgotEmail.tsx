@@ -2,25 +2,26 @@ import { useState } from 'react';
 import Auth from '../../api/auth';
 import { Link } from 'react-router-dom';
 
-function ForgotPassword() {
-	const [email, setEmail] = useState('');
+function ForgotEmail() {
+	const [name, setName] = useState('');
+	const [age, setAge] = useState('');
 	const [question, setQuestion] = useState('');
 	const [answer, setAnswer] = useState('');
-	const [result, setResult] = useState('');
 	const [error, setError] = useState('');
-	const [password, setPassword] = useState('');
+	const [email, setEmail] = useState('');
 
 	async function submit() {
 		const data = {
-			email: email,
+			name: name,
+			age: +age,
 			securityQuestion: question,
 			securityAnswer: answer,
 		};
-		const { response, result } = await Auth.fetchForgotPassword(data);
+		console.log(data);
+		const { response, result } = await Auth.fetchForgotEmail(data);
 		if (response.ok) {
 			setError('');
-			setResult(result.message);
-			setPassword(result.temporaryPassword);
+			setEmail(`찾으시는 이메일은 ''' ${result.email} ''' 입니다`);
 		} else {
 			setError(result.error);
 		}
@@ -29,7 +30,7 @@ function ForgotPassword() {
 	return (
 		<div
 			style={{
-				width: 'calc(100% - 250px)',
+				width: 'calc(100% -250px)',
 				marginLeft: '250px',
 				display: 'flex',
 				justifyContent: 'center',
@@ -48,12 +49,10 @@ function ForgotPassword() {
 					textAlign: 'center', // 중앙 정렬
 				}}
 			>
-				<h1 style={{ marginBottom: '20px', color: '#002be9' }}>
-					비밀번호 찾기
-				</h1>
+				<h1 style={{ marginBottom: '20px', color: '#002be9' }}>이메일 찾기</h1>
 				<input
-					type='email'
-					placeholder='이메일'
+					type='text'
+					placeholder='이름'
 					style={{
 						width: '100%',
 						padding: '10px',
@@ -61,9 +60,20 @@ function ForgotPassword() {
 						borderRadius: '4px',
 						border: '1px solid #007bff', // 푸른색 테두리
 					}}
-					onChange={(e) => setEmail(e.target.value)}
+					onChange={(e) => setName(e.target.value)}
 				/>
-				<br />
+				<input
+					type='number'
+					placeholder='나이'
+					style={{
+						width: '100%',
+						padding: '10px',
+						margin: '10px 0',
+						borderRadius: '4px',
+						border: '1px solid #007bff', // 푸른색 테두리
+					}}
+					onChange={(e) => setAge(e.target.value)}
+				/>
 				<select
 					id='security-question-select'
 					style={{
@@ -88,7 +98,6 @@ function ForgotPassword() {
 						첫 번째 애완동물의 이름은?
 					</option>
 				</select>
-				<br />
 				<input
 					type='text'
 					placeholder='정답'
@@ -101,10 +110,9 @@ function ForgotPassword() {
 					}}
 					onChange={(e) => setAnswer(e.target.value)}
 				/>
-				<br />
 				<button
 					style={{
-						backgroundColor: '#002be9', // 푸른색 버튼
+						backgroundColor: '#004fe2', // 푸른색 버튼
 						color: 'white',
 						border: 'none',
 						padding: '10px',
@@ -119,12 +127,11 @@ function ForgotPassword() {
 					제출하기
 				</button>
 				<p style={{ color: 'red' }}>{error}</p>
-				<p style={{ color: 'green' }}>{result}</p>
-				<p>{password}</p>
+				<p style={{ color: 'green' }}>{email}</p>
 				<Link to={'../signin'}>로그인으로 돌아가기</Link>
 			</div>
 		</div>
 	);
 }
 
-export default ForgotPassword;
+export default ForgotEmail;
