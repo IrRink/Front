@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { API_URL } from '../../api/constants';
 import useAuth from '../../hooks/useAuth';
@@ -47,39 +47,57 @@ function CreateAccount() {
 	const [age, setAge] = useState('');
 	const [password, setPassword] = useState('');
 	const [isAdmin, setIsAdmin] = useState(false);
-	const [idCheckResult, setIdCheckResult] = useState(null);
+	const [idCheckResult, setIdCheckResult] = useState('');
 	const [isValid, setIsValid] = useState(false);
 	const { signUp, checkDuplicate } = useAuth();
+	const [question, setQuestion] = useState('');
+	const [answer, setAnswer] = useState('');
+
+	const handleChange = (event: any) => {
+		setQuestion(event.target.value);
+	};
 
 	const handleCheckId = async () => {
-		const result = await checkDuplicate(API_URL, email);
+		const result = await checkDuplicate(API_URL as string, email);
 		setIdCheckResult(result);
 	};
 
-	const handlePasswordChange = (event) => {
+	const handlePasswordChange = (event: any) => {
 		const value = event.target.value;
 		setPassword(value);
 		setIsValid(REG.passwordReg.test(value));
 	};
 
 	// 회원가입 제출 함수
-	const handleSubmit = async (event) => {
+	const handleSubmit = async (event: any) => {
 		event.preventDefault();
 
 		if (!isValid) {
 			alert('비밀번호가 올바르지 않습니다.');
 			return;
 		}
-		const data = {
+		const data = await {
 			email: email,
 			name: name,
 			age: age,
 			password: password,
 			isAdmin: isAdmin,
+			securityQuestion: question,
+			securityAnswer: answer,
 		};
+		console.log(data);
 		let ageTest = parseInt(age);
 		if (ageTest <= 0 || ageTest >= 100) {
 			alert('나이가 올바르지 않습니다.');
+			return;
+		}
+
+		if (answer === '') {
+			alert('보안답을 작성해 주세요.');
+			return;
+		}
+		if (question === '') {
+			alert('보안 질문을 선택해 주세요.');
 			return;
 		}
 
@@ -105,11 +123,10 @@ function CreateAccount() {
 
 		signUp(signupUrl, data);
 	};
-
 	return (
 		<FirstMainDiv>
 			<Filter>
-				<div style={{ paddingTop: '25vh' }}></div>
+				<div style={{ paddingTop: '12vh' }}></div>
 				<div
 					style={{
 						margin: 'auto',
@@ -191,6 +208,35 @@ function CreateAccount() {
 									? '비밀번호가 유효합니다.'
 									: '비밀번호는 8-15자, 숫자, 특수문자 포함해야 합니다.'}
 							</p>
+						</div>
+						<div style={{ marginTop: '20px' }}>
+							<label htmlFor='name'>보안 질문:</label>
+							<br />
+							<select
+								id='security-question-select'
+								style={{ marginBottom: '20px' }}
+								value={question}
+								onChange={handleChange}
+							>
+								<option value=''>보안 질문을 선택하세요.</option>
+								<option value='어렸을 때 가장 친한 친구의 이름은?'>
+									어렸을 때 가장 친한 친구의 이름은?
+								</option>
+								<option value='첫 번째 학교의 이름은?'>
+									첫 번째 학교의 이름은?
+								</option>
+								<option value='hometown'>어릴 때 살던 동네의 이름은?</option>
+								<option value='어릴 때 살던 동네의 이름은?'>
+									어린 시절 가장 좋아했던 영화는?
+								</option>
+								<option value='첫 번째 애완동물의 이름은?'>
+									첫 번째 애완동물의 이름은?
+								</option>
+							</select>
+							<br />
+							<label>보안 질문 답</label>
+							<br />
+							<Input onChange={(e) => setAnswer(e.target.value)} />
 						</div>
 						<div>
 							<label>
