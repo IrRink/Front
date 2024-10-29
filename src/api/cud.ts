@@ -14,7 +14,7 @@ class Cud {
 
 			if (response.ok) {
 				alert('정상적으로 작성되었습니다.');
-				window.location.href = '../';
+				// window.location.href = '../';
 			} else if (response.status === 403) {
 				alert('현재 토큰이 만료되었습니다.');
 				alert('다시 로그인 해주세요');

@@ -107,11 +107,14 @@ class Auth {
 			},
 			body: JSON.stringify(data),
 		});
-		const result = response.json();
+		const result = response.text();
 		if (response.ok) {
-			return result;
+			alert('변경되었습니다. 다시 로그인하세요');
+			window.location.href = '../signin';
+			localStorage.clear();
+			return;
 		} else {
-			return result;
+			return alert('유효한 것을 입력하고 다시 도전하세요.');
 		}
 	};
 }

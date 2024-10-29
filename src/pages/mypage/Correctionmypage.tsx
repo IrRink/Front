@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react';
 import Auth from '../../api/auth';
+import useAuth from '../../hooks/useAuth';
+import { API_URL } from '../../api/constants';
 
 function Correctionmypage() {
 	const [email, setEmail] = useState('');
 	const [name, setName] = useState('');
 	const [age, setAge] = useState<number | undefined>(undefined);
 	const [password, setPassword] = useState('');
+	const [massage, setmassage] = useState('');
+	const { checkDuplicate } = useAuth();
 
 	const members = async () => {
 		let response = await Auth.fetchAuthority();
@@ -33,9 +37,13 @@ function Correctionmypage() {
 			password: password,
 		};
 
-		const result = await Auth.fetchChangeAuth(data);
-		alert(result);
+		await Auth.fetchChangeAuth(data);
 	}
+
+	const handleCheckId = async () => {
+		const result = await checkDuplicate(API_URL as string, email);
+		setmassage(result);
+	};
 	return (
 		<div>
 			<h1 style={{ marginTop: '80px' }}>내 정보 수정하기</h1>
@@ -45,11 +53,15 @@ function Correctionmypage() {
 					<br />
 					<input
 						id='email'
-						type='text'
+						type='email'
 						defaultValue={email}
 						placeholder='이메일'
 						onChange={(e) => setEmail(e.target.value)}
 					/>
+					<br />
+					<button onClick={handleCheckId}>이메일 중복체크</button>
+					<br />
+					{massage}
 				</li>
 				<li style={{ marginTop: '20px' }}>
 					<label htmlFor='name'>이름</label>
@@ -83,7 +95,22 @@ function Correctionmypage() {
 						onChange={(e) => setPassword(e.target.value)}
 					/>
 				</li>
-				<button onClick={submit}>제출</button>
+				<button
+					onClick={submit}
+					style={{
+						backgroundColor: '#28a745',
+						color: 'white',
+						padding: '7px',
+						width: '100px',
+						fontWeight: '800',
+						border: 'none',
+						borderRadius: '15px',
+						marginBottom: '20px',
+						marginTop: '20px',
+					}}
+				>
+					제출
+				</button>
 			</ul>
 		</div>
 	);

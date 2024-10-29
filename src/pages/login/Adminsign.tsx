@@ -145,6 +145,22 @@ function Signin() {
 					>
 						회원이 아니신가요? 회원가입
 					</button>
+					<button
+						id='signupButton'
+						style={{
+							backgroundColor: 'white',
+							color: 'gray',
+							border: 'none',
+							padding: '10px',
+							fontWeight: '600',
+							width: '60%',
+							borderRadius: '10px',
+							cursor: 'pointer',
+						}}
+						onClick={() => alert('안타까운거죠ㅋ')}
+					>
+						비번을 까먹으셨나요?
+					</button>
 				</div>
 			</Filter>
 		</FirstMainDiv>
