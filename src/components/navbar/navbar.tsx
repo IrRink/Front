@@ -79,22 +79,33 @@ function Navber() {
 	const [btntf, setBtntf] = useState('none');
 
 	useEffect(() => {
-		const isSignInPage = window.location.pathname === '/signin';
-		if (!isSignInPage && !localStorage.getItem('token')) {
-			alert('현재 유효한 토큰이 없습니다. 로그인을 진행해주세요.');
-			window.location.href = '../signin';
-			return;
-		}
+		// const isSignInPage =
+		// 	window.location.pathname === '/signin' || '/createAccount';
+		// if (!isSignInPage && !localStorage.getItem('token')) {
+		// 	alert('현재 유효한 토큰이 없습니다. 로그인을 진행해주세요.');
+		// 	window.location.href = '../signin';
+		// 	return;
+		// }
 
 		if (localStorage.getItem('token')) {
 			const branchProcessing = async () => {
 				try {
 					const response = await Auth.fetchAuthority();
 					const data = await response.json();
-					if (response.ok && data.user.role === 'admin') {
-						setBtntf('block');
+					if (response.ok) {
+						if (data.user.role === 'admin') {
+							setBtntf('block');
+						} else {
+							setBtntf('none');
+						}
+					} else if (
+						window.location.pathname === '/signin' ||
+						'/createAccount'
+					) {
+						console.log('지금 로그인이나 회원가입 페이지에 있군요');
 					} else {
-						setBtntf('none');
+						alert('토큰이 만료되었습니다. 재로그인 해주세요.');
+						window.location.href = '../signin';
 					}
 				} catch (error) {
 					console.log(error);

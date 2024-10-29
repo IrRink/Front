@@ -19,7 +19,7 @@ function Main() {
 		} else {
 			localStorage.clear();
 			alert('로그인이 되어있지 않습니다. 재 로그인 해주세요');
-			window.location.href = '/signin';
+			window.location.href = '../signin';
 		}
 	}
 
