@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Auth from '../../api/auth';
 import useAuth from '../../hooks/useAuth';
 import { API_URL } from '../../api/constants';
+import REG from '../../constants/regularExpressions';
 
 function Correctionmypage() {
 	const [email, setEmail] = useState('');
@@ -36,6 +37,28 @@ function Correctionmypage() {
 			age: age,
 			password: password,
 		};
+		if (((age as number) <= 0 || (age as number) >= 100) && age !== undefined) {
+			alert('나이가 올바르지 않습니다.');
+			return;
+		}
+
+		if (!REG.emailRegex.test(email) && email !== '') {
+			alert('이메일 형식이 올바르지 않습니다.');
+			return;
+		}
+
+		if (!REG.passwordReg.test(password) && password !== '') {
+			alert(
+				'비밀번호는 8~15자 사이에 문자, 숫자와 특수문자가 하나이상 포함되어야 합니다.'
+			);
+			return;
+		}
+
+		if (password.includes(' ') && password !== '') {
+			alert('비밀번호에 공백이 포함되어 있습니다.');
+			return;
+		}
+		//
 
 		await Auth.fetchChangeAuth(data);
 	}
@@ -109,7 +132,7 @@ function Correctionmypage() {
 						marginTop: '20px',
 					}}
 				>
-					제출
+					변경하기
 				</button>
 			</ul>
 		</div>

@@ -39,7 +39,6 @@ function Post() {
 	// 컴포넌트가 처음 마운트될 때 한 번만 호출
 	useEffect(() => {
 		viewall();
-		console.log(1);
 	}, [viewall]);
 
 	return (

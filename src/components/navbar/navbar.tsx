@@ -188,6 +188,7 @@ function Navber() {
 					<Link to='/update' style={{ display: btntf }}>
 						글 수정
 					</Link>
+					<br />
 					<Link to='/mypage'>My page</Link>
 				</MenuLi>
 			</ul>

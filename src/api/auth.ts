@@ -1,13 +1,3 @@
-// export const fetchSignUp = async (url: string, data: any) => {
-//     await fetch(url, {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify(data),
-//     })
-// }
-
 import { API_URL } from './constants';
 
 class Auth {
@@ -64,15 +54,6 @@ class Auth {
 		} else {
 			return response;
 		}
-
-		// const data = response.json();
-		// if (response.ok) {
-		// 	return data;
-		// } else {
-		// 	alert('토큰이 만료되었습니다 다시 로그인 해주세요.');
-		// 	window.location.href = './signin';
-		// 	return;
-		// }
 	};
 
 	static memberDelete = async () => {
@@ -107,7 +88,6 @@ class Auth {
 			},
 			body: JSON.stringify(data),
 		});
-		const result = response.text();
 		if (response.ok) {
 			alert('변경되었습니다. 다시 로그인하세요');
 			window.location.href = '../signin';

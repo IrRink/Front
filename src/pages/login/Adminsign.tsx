@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { ADMIN_USER_KEY, API_URL } from '../../api/constants';
+import { API_URL } from '../../api/constants';
 import useAuth from '../../hooks/useAuth';
 
 // Styled components for design
@@ -31,23 +31,10 @@ const Filter = styled.div`
 	background-color: rgba(0, 2, 18, 0.568);
 `;
 
-// ResultMessage를 위한 styled-components에서 props를 처리하는 방법 수정
-interface ResultMessageProps {
-	success: boolean;
-}
-
-const ResultMessage = styled.div<ResultMessageProps>`
-	margin-top: 10px;
-	font-size: 14px;
-	color: ${(props) => (props.success ? 'green' : 'red')};
-`;
-
 function Signin() {
 	const [userId, setUserId] = useState('');
 	const [password, setPassword] = useState('');
 	const [isAdmin, setIsAdmin] = useState(false);
-	const [result, setResult] = useState<string | null>(null);
-	const [success, setSuccess] = useState(false);
 	const { signIn } = useAuth();
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -126,8 +113,6 @@ function Signin() {
 						</button>
 					</form>
 
-					{result && <ResultMessage success={success}>{result}</ResultMessage>}
-
 					<button
 						id='signupButton'
 						style={{
@@ -157,16 +142,9 @@ function Signin() {
 							borderRadius: '10px',
 							cursor: 'pointer',
 						}}
-						onClick={() => {
-							var a = prompt('진짜요? ㅠㅠ  네/아니요');
-							if (a == '네') {
-								alert('안타까운거죠ㅋ');
-							} else {
-								alert('ㄲㅂ');
-							}
-						}}
+						onClick={() => alert('안타까운거죠ㅋ')}
 					>
-						비번을 까먹으셨나요?
+						이메일이나 비빔반 일
 					</button>
 				</div>
 			</Filter>

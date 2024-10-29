@@ -13,7 +13,7 @@ function MyPage() {
 
 	function change() {
 		setToggle(!toggle);
-		setChangeText(toggle ? '수정하기' : '수정 마치기');
+		setChangeText(toggle ? '수정하기' : '프로필 보기');
 	}
 
 	function openModal() {
@@ -126,6 +126,7 @@ function MyPage() {
 					</button>
 				</div>
 			</ReactModal>
+			<h1 style={{ textAlign: 'left' }}>내 좋아요 목록</h1>
 		</div>
 	);
 }
