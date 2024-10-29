@@ -142,9 +142,9 @@ function Signin() {
 							borderRadius: '10px',
 							cursor: 'pointer',
 						}}
-						onClick={() => alert('안타까운거죠ㅋ')}
+						onClick={() => (window.location.href = '../ForgotPassword')}
 					>
-						이메일이나 비빔반 일
+						비밀번호를 잊으셨나요?
 					</button>
 				</div>
 			</Filter>

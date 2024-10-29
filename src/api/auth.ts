@@ -97,6 +97,21 @@ class Auth {
 			return alert('유효한 것을 입력하고 다시 도전하세요.');
 		}
 	};
+
+	static fetchForgotPassword = async (data: any) => {
+		const response = await fetch(`${API_URL}/api/info/auth`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(data),
+		});
+		const result = await response.json();
+		return {
+			response,
+			result,
+		};
+	};
 }
 
 export default Auth;
