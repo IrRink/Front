@@ -108,9 +108,9 @@ function PostDetail() {
 		const data = {
 			comment_text: input,
 		};
-		if (data.comment_text === '') {
-			return alert('댓글을 입력하세요.');
-		}
+		// if (data.comment_text === '') {
+		// 	return alert('댓글을 입력하세요.');
+		// }
 		console.log(data);
 		await Member.CreateComment(id as string, data);
 		setInput('');

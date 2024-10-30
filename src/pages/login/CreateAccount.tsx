@@ -260,8 +260,10 @@ function CreateAccount() {
 								<option value='첫 번째 학교의 이름은?'>
 									첫 번째 학교의 이름은?
 								</option>
-								<option value='hometown'>어릴 때 살던 동네의 이름은?</option>
 								<option value='어릴 때 살던 동네의 이름은?'>
+									어릴 때 살던 동네의 이름은?
+								</option>
+								<option value='어린 시절 가장 좋아했던 영화는?'>
 									어린 시절 가장 좋아했던 영화는?
 								</option>
 								<option value='첫 번째 애완동물의 이름은?'>
