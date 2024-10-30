@@ -11,7 +11,7 @@ interface BlogPost {
 	id: number;
 	title: string;
 	sub_title: string;
-	writer: string;
+	name: string;
 	uptime: string;
 	board_text: string;
 }
@@ -20,10 +20,11 @@ interface BlogPost {
 interface Comment {
 	id: number;
 	comment_text: string;
-	writer_name: string;
+	name: string;
 	writer_email: string;
 	board_id: number;
 	uptime: string;
+	user_id: string;
 }
 
 // 스타일링
@@ -63,6 +64,7 @@ function PostDetail() {
 	const [input, setInput] = useState('');
 	const [lengths, setLengths] = useState(0);
 	const [auth, setAuth] = useState(false);
+	const [key, setKey] = useState('');
 	const PostOne = async () => {
 		const data = await Board.fetchPost(id as string);
 		setPost(data);
@@ -84,11 +86,15 @@ function PostDetail() {
 		if (response.ok) {
 			if (data.user.role === 'admin') {
 				setAuth(true);
+				setKey(data.user.id);
 			} else {
 				setAuth(false);
+				setKey(data.user.id);
 			}
 		} else {
 			setAuth(false);
+			alert('토큰이 유효하지 않습니다. 재로그인 해주세요.');
+			window.location.href = '../signin';
 		}
 	};
 
@@ -144,7 +150,7 @@ function PostDetail() {
 					/>
 
 					<div style={{ bottom: '20px', right: '40px' }}>
-						<p style={{ textAlign: 'right' }}>작성자: {post.writer}</p>
+						<p style={{ textAlign: 'right' }}>작성자: {post.name}</p>
 						<p style={{ textAlign: 'right' }}>
 							날짜: {post.uptime.split(' ')[0]}
 						</p>
@@ -187,18 +193,14 @@ function PostDetail() {
 										transform: 'translate(-50%, 0)',
 									}}
 								>
-									<strong>{item.writer_name}</strong>: {item.comment_text}
+									<strong>{item.name}</strong>: {item.comment_text}
 									<br />
 									<span style={{ position: 'absolute', right: 0, top: '0' }}>
 										{item.uptime.split(' ')[0]}
 									</span>
 									<span
 										style={{
-											display:
-												item.writer_email === localStorage.getItem('userId') ||
-												auth
-													? 'block'
-													: 'none',
+											display: item.user_id == key || auth ? 'block' : 'none',
 										}}
 									>
 										<button onClick={() => deletes(item.id)}>삭제 버튼</button>
