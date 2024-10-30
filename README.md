@@ -8,8 +8,8 @@
 
 - 플랫폼: Web / 웹
 - 제작인원: 3 인 ( 팀 구성: Frontend 1명, Backend 2명 )
-- 제작 기간: 30 일 (2024.10.01 ~ 2024.31.)
-- 사용 기술: React, Express
+- 제작 기간: 30 일 (2024.10.01 ~ 2024.10.30)
+- 사용 기술: React, Express, mySQL
 
 'Study-Blog'는 공부에 대한 지식을 필요로 하는 사람들의 대한 웹입니다.
 기존에 공부자료가 흩어져 있어 찾기 불편했다면 접근성이 용이한 웹으로 언제 어디서든 접속하여 필요한 공부자료를 찾아볼 수 있습니다.
@@ -18,16 +18,28 @@
 
 ![alt text](image-1.png)
 메인화면
-![alt text](image-2.png)
+![alt text](image-7.png)
 admin 데이터 화면
-![alt text](image-3.png)
+![alt text](image-2.png)
 전체 글 목록 화면
-![alt text](image-4.png)
+![alt text](image-3.png)
+글 상세보기 페이지
+![alt text](image-8.png)
+댓글기능 구현
+![alt text](image-9.png)
+페이지네이션 구현
+![alt text](image-11.png)
 로그인 페이지
+![alt text](image-10.png)
+이메일 찾기
 ![alt text](image-5.png)
+비밀번호 찾기
+![alt text](image-4.png)
 회원가입 페이지
 ![alt text](image-6.png)
 글쓰기 페이지
+![alt text](image-12.png)
+마이페이지
 
 ### 구현기능
 
@@ -35,9 +47,14 @@ admin 데이터 화면
 
 - 회원가입
   - 아이디 중복체크
+  - 비밀번호 더블체크
+  - 보안 질문
   - 관리자 추가
 - 로그인
+  - 일반유저로 로그인
   - 관리자로 로그인
+- 이메일 찾기
+- 비밀번호 찾기
 - 메인
   - 총회원 수 보기
   - 총 포스팅 수 보기
@@ -45,16 +62,28 @@ admin 데이터 화면
 - 전체글 보기
   - 자세히 보기
 - 글 쓰기 기능
+- 글 수정 기능
 - 글 삭제 기능
+- 댓글
+  - 댓글 조회
+  - 댓글 쓰기
+  - 댓글삭제
+- 관리자 권한 분기처리
+
+- 회원정보 조회
+- 회원정보 수정
+- 회원정보 삭제
 - 페이지네이션 구현
 
 ---
 
 ### 배운 것
 
-React의 pagination 라이브러리(react-paginate)을 사용하여 페이지네이션을 구현하였다.
-API의 DELECT 메소드를 사용하여 데이터 삭제 기능을 구현하였다.
-React의 CSS 라이브러리(Styled-Components)를 사용하여 디자인해보고 사용이유를 깨닳았다.
+react-paginate(React의 pagination 라이브러리)
+3way Architecture
+API 관리
+권한 분기처리 로직
+Styled-Components ()
 
 - 사용이유
   - CSS 파일을 갯수를 최소화 할 수 있음.
@@ -69,27 +98,4 @@ React의 CSS 라이브러리(Styled-Components)를 사용하여 디자인해보�
 
 ### 아쉬운 점
 
-디렉토리 관리와 컴포넌트 분리가 잘 이루어지지 않았다..
-
-React 컴포넌트를 분리하는 기준
-
-1. 재사용성
-   - 다른 부분에서도 사용될 수 있는지 여부
-2. 단일 책임 원칙
-   - 각 컴포넌트는 하나의 기능만 수행
-3. 가독성
-   - 너무 많은 JSX, 로직 포함 → 더 작은 단위로 분리
-4. 상태와 라이프사이클
-   - 컴포넌트의 성능과 동작에 미치는 영향을 고려하여 분리
-5. UI 요소
-   - 서로 다른 시각적 요소는 컴포넌트로 분리
-
-컴포넌트 분리의 중요성
-
-1. 유지보수성
-2. 확장성
-3. 재사용성
-
-```
-console.log('hello')
-```
+타입 선언이 제대로 잘 이루어져 있어 아쉽다.

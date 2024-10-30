@@ -126,7 +126,6 @@ function MyPage() {
 					</button>
 				</div>
 			</ReactModal>
-			<h1 style={{ textAlign: 'left' }}>내 좋아요 목록</h1>
 		</div>
 	);
 }
