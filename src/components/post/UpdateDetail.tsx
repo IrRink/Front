@@ -11,7 +11,7 @@ interface BlogPost {
 	id: number;
 	title: string;
 	sub_title: string;
-	writer: string;
+	name: string;
 	uptime: string;
 	board_text: string;
 }
@@ -112,8 +112,8 @@ function UpdateDetail() {
 						onChange={(e) => setGet(e.target.value)}
 					/>
 					<div style={{ bottom: '20px ', right: '40px' }}>
-						<p style={{ textAlign: 'right' }}>작성자: {post.writer}</p>
-						<p style={{ textAlign: 'right' }}>날짜: {post.uptime}</p>
+						<p style={{ textAlign: 'right' }}>작성자: {post.name}</p>
+						<p style={{ textAlign: 'right' }}>날짜: {post.uptime.split(' ')[0]}</p>
 					</div>
 				</div>
 

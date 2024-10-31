@@ -39,7 +39,7 @@ interface BlogPost {
 	id: string;
 	title: string;
 	sub_title: string;
-	writer: string;
+	name: string;
 	uptime: string;
 	board_text: string;
 }
@@ -88,8 +88,8 @@ function Delete() {
 							>
 								<h2>{item.title}</h2>
 								<h3>{item.sub_title}</h3>
-								<p style={{ textAlign: 'right' }}>작성자: {item.writer}</p>
-								<p style={{ textAlign: 'right' }}>날짜: {item.uptime}</p>
+								<p style={{ textAlign: 'right' }}>작성자: {item.name}</p>
+								<p style={{ textAlign: 'right' }}>날짜: {item.uptime.split(' ')[0]}</p>
 								<button
 									style={{
 										backgroundColor: 'red',
