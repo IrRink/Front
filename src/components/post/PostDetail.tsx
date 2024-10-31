@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
@@ -108,9 +109,9 @@ function PostDetail() {
 		const data = {
 			comment_text: input,
 		};
-		// if (data.comment_text === '') {
-		// 	return alert('댓글을 입력하세요.');
-		// }
+		if (data.comment_text === '') {
+			return alert('댓글을 입력하세요.');
+		}
 		console.log(data);
 		await Member.CreateComment(id as string, data);
 		setInput('');
@@ -200,7 +201,7 @@ function PostDetail() {
 									</span>
 									<span
 										style={{
-											display: item.user_id == key || auth ? 'block' : 'none',
+											display: item.user_id === key || auth ? 'block' : 'none',
 										}}
 									>
 										<button onClick={() => deletes(item.id)}>삭제 버튼</button>

@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { ADMIN_USER_KEY, API_URL } from '../../api/constants';
 import Loginnavbar from '../navbar/Loginnavbar';
 import Board from '../../api/board';
-import useBoard from '../../hooks/useBoard';
 import useAuth from '../../hooks/useAuth';
 
 const FirstMainDiv = styled.div`
@@ -48,7 +46,6 @@ function Update() {
 	const { authority } = useAuth();
 
 	const [posts, setPosts] = useState<BlogPost[]>([]);
-
 	const viewPosts = async () => {
 		const data = await Board.viewAll();
 		setPosts(data);
