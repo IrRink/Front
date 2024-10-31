@@ -113,7 +113,7 @@ function UpdateDetail() {
 					/>
 					<div style={{ bottom: '20px ', right: '40px' }}>
 						<p style={{ textAlign: 'right' }}>작성자: {post.name}</p>
-						<p style={{ textAlign: 'right' }}>날짜: {post.uptime}</p>
+						<p style={{ textAlign: 'right' }}>날짜: {post.uptime.split(' ')[0]}</p>
 					</div>
 				</div>
 
